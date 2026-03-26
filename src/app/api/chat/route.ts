@@ -1,5 +1,5 @@
 import { streamText, stepCountIs } from "ai";
-import { anthropic } from "@ai-sdk/anthropic";
+import { vertex } from "@ai-sdk/google-vertex";
 import { buildSystemPrompt } from "@/lib/prompts";
 import { policyTools } from "@/lib/tools";
 
@@ -9,7 +9,7 @@ export async function POST(req: Request) {
   const { messages } = await req.json();
 
   const result = streamText({
-    model: anthropic("claude-sonnet-4-20250514"),
+    model: vertex("claude-sonnet-4@20250514"),
     system: buildSystemPrompt(),
     messages,
     tools: policyTools,

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^3.0.64",
+    "@ai-sdk/google-vertex": "^4.0.95",
     "@ai-sdk/react": "^3.0.140",
     "@tailwindcss/typography": "^0.5.19",
     "ai": "^6.0.138",
