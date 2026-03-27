@@ -1,0 +1,976 @@
+{
+  "market": "UAE",
+  "currency": "AED",
+  "vat_rate": 0.05,
+  "effective_date": "2025-09-01",
+  "min_referral_fee": 1.0,
+
+  "referral_fees": {
+    "fbn": {
+      "fashion.apparel_footwear": {
+        "category_name": "Apparel & Footwear",
+        "type": "flat",
+        "rate": 0.27
+      },
+      "fashion.watches": {
+        "category_name": "Watches",
+        "type": "tiered",
+        "tiers": [
+          { "up_to": 5000, "rate": 0.15 },
+          { "up_to": null, "rate": 0.05 }
+        ]
+      },
+      "fashion.eyewear": {
+        "category_name": "Eyewear",
+        "type": "flat",
+        "rate": 0.15
+      },
+      "fashion.jewelry.gold_bars": {
+        "category_name": "Gold Bars",
+        "type": "flat",
+        "rate": 0.05
+      },
+      "fashion.jewelry.silver_bars": {
+        "category_name": "Silver Bars",
+        "type": "flat",
+        "rate": 0.10
+      },
+      "fashion.jewelry.fine": {
+        "category_name": "Fine Jewelry",
+        "type": "tiered",
+        "tiers": [
+          { "up_to": 1000, "rate": 0.16 },
+          { "up_to": null, "rate": 0.05 }
+        ]
+      },
+      "fashion.jewelry.other": {
+        "category_name": "Other Jewelry",
+        "type": "flat",
+        "rate": 0.05
+      },
+      "fashion.bags.travel": {
+        "category_name": "Travel Bags",
+        "type": "flat",
+        "rate": 0.20
+      },
+      "fashion.bags.other": {
+        "category_name": "Other Bags",
+        "type": "flat",
+        "rate": 0.25
+      },
+
+      "home.cleaning_hygiene": {
+        "category_name": "Cleaning & Hygiene",
+        "type": "flat",
+        "rate": 0.09
+      },
+      "home.bath_bedding_decor_improvement_gardening_kitchen": {
+        "category_name": "Bath, Bedding, Decor, Home Improvement, Gardening & Kitchen",
+        "type": "flat",
+        "rate": 0.15
+      },
+      "home.furniture": {
+        "category_name": "Furniture",
+        "type": "tiered",
+        "tiers": [
+          { "up_to": 750, "rate": 0.15 },
+          { "up_to": null, "rate": 0.10 }
+        ]
+      },
+
+      "beauty.fragrance": {
+        "category_name": "Fragrance",
+        "type": "flat",
+        "rate": 0.14
+      },
+      "beauty.colour_cosmetics": {
+        "category_name": "Colour Cosmetics",
+        "type": "price_switch",
+        "rules": [
+          { "max_price": 50, "rate": 0.08 },
+          { "max_price": null, "rate": 0.15 }
+        ]
+      },
+      "beauty.hair_personal_care": {
+        "category_name": "Hair & Personal Care",
+        "type": "price_switch",
+        "rules": [
+          { "max_price": 50, "rate": 0.08 },
+          { "max_price": null, "rate": 0.15 }
+        ]
+      },
+      "beauty.electronic_personal_care": {
+        "category_name": "Electronic Personal Care",
+        "type": "price_switch",
+        "rules": [
+          { "max_price": 50, "rate": 0.08 },
+          { "max_price": null, "rate": 0.15 }
+        ]
+      },
+      "beauty.health_nutrition": {
+        "category_name": "Health & Nutrition",
+        "type": "price_switch",
+        "rules": [
+          { "max_price": 50, "rate": 0.08 },
+          { "max_price": null, "rate": 0.14 }
+        ]
+      },
+
+      "electronics.tv_projectors_streaming": {
+        "category_name": "TVs, Projectors & Streaming Devices",
+        "type": "flat",
+        "rate": 0.05
+      },
+      "electronics.audio_video_players_accessories": {
+        "category_name": "Audio, Video Players & Accessories",
+        "type": "flat",
+        "rate": 0.10
+      },
+      "electronics.tv_accessories_cases": {
+        "category_name": "TV Accessories & Cases",
+        "type": "flat",
+        "rate": 0.15
+      },
+      "electronics.phones_tablets": {
+        "category_name": "Phones & Tablets",
+        "type": "price_switch",
+        "rules": [
+          { "max_price": 500, "rate": 0.06 },
+          { "max_price": null, "rate": 0.05 }
+        ]
+      },
+      "electronics.phones_apple_samsung_intl": {
+        "category_name": "Phones (Apple, Samsung, International)",
+        "type": "flat",
+        "rate": 0.06
+      },
+      "electronics.sim_cards": {
+        "category_name": "SIM Cards",
+        "type": "flat",
+        "rate": 0.04
+      },
+      "electronics.stylus_pens": {
+        "category_name": "Stylus Pens",
+        "type": "flat",
+        "rate": 0.10
+      },
+      "electronics.accessories_top_brands": {
+        "category_name": "Accessories (Top Brands)",
+        "type": "flat",
+        "rate": 0.15
+      },
+      "electronics.accessories_other": {
+        "category_name": "Accessories (Other)",
+        "type": "flat",
+        "rate": 0.20
+      },
+      "electronics.laptops_desktop": {
+        "category_name": "Laptops & Desktop",
+        "type": "flat",
+        "rate": 0.06
+      },
+      "electronics.memory_card": {
+        "category_name": "Memory Cards",
+        "type": "flat",
+        "rate": 0.07
+      },
+      "electronics.flash_drives": {
+        "category_name": "Flash Drives",
+        "type": "price_switch",
+        "rules": [
+          { "max_price": 250, "rate": 0.15 },
+          { "max_price": null, "rate": 0.08 }
+        ]
+      },
+      "electronics.other_storage": {
+        "category_name": "Other Storage",
+        "type": "flat",
+        "rate": 0.06
+      },
+      "electronics.networking": {
+        "category_name": "Networking",
+        "type": "flat",
+        "rate": 0.06
+      },
+      "electronics.monitors_gpu": {
+        "category_name": "Monitors & GPUs",
+        "type": "flat",
+        "rate": 0.06
+      },
+      "electronics.other_hardware": {
+        "category_name": "Other Hardware",
+        "type": "flat",
+        "rate": 0.13
+      },
+      "electronics.other_pc_accessories": {
+        "category_name": "Other PC Accessories",
+        "type": "flat",
+        "rate": 0.13
+      },
+      "electronics.software": {
+        "category_name": "Software",
+        "type": "flat",
+        "rate": 0.15
+      },
+      "electronics.laptop_bags": {
+        "category_name": "Laptop Bags",
+        "type": "flat",
+        "rate": 0.15
+      },
+      "electronics.printers_scanners": {
+        "category_name": "Printers & Scanners",
+        "type": "flat",
+        "rate": 0.06
+      },
+      "electronics.other_office": {
+        "category_name": "Other Office Equipment",
+        "type": "flat",
+        "rate": 0.13
+      },
+      "electronics.headphones": {
+        "category_name": "Headphones",
+        "type": "price_switch",
+        "rules": [
+          { "max_price": 250, "rate": 0.15 },
+          { "max_price": null, "rate": 0.08 }
+        ]
+      },
+      "electronics.vr_headsets": {
+        "category_name": "VR Headsets",
+        "type": "flat",
+        "rate": 0.12
+      },
+      "electronics.smartwatches_fitness": {
+        "category_name": "Smartwatches & Fitness Trackers",
+        "type": "flat",
+        "rate": 0.15
+      },
+      "electronics.wearable_accessories": {
+        "category_name": "Wearable Accessories",
+        "type": "flat",
+        "rate": 0.15
+      },
+      "electronics.cameras_lenses": {
+        "category_name": "Cameras & Lenses",
+        "type": "flat",
+        "rate": 0.06
+      },
+      "electronics.camera_stabilizers": {
+        "category_name": "Camera Stabilizers",
+        "type": "flat",
+        "rate": 0.08
+      },
+      "electronics.camera_accessories": {
+        "category_name": "Camera Accessories",
+        "type": "price_switch",
+        "rules": [
+          { "max_price": 250, "rate": 0.15 },
+          { "max_price": null, "rate": 0.08 }
+        ]
+      },
+      "electronics.large_appliances": {
+        "category_name": "Large Appliances",
+        "type": "price_switch",
+        "rules": [
+          { "max_price": 50, "rate": 0.15 },
+          { "max_price": null, "rate": 0.05 }
+        ]
+      },
+      "electronics.small_appliances": {
+        "category_name": "Small Appliances",
+        "type": "flat",
+        "rate": 0.13
+      },
+      "electronics.vg_consoles": {
+        "category_name": "Video Game Consoles",
+        "type": "flat",
+        "rate": 0.06
+      },
+      "electronics.vg_games": {
+        "category_name": "Video Games",
+        "type": "flat",
+        "rate": 0.10
+      },
+      "electronics.gift_cards": {
+        "category_name": "Gift Cards",
+        "type": "flat",
+        "rate": 0.05
+      },
+      "electronics.other_accessories": {
+        "category_name": "Other Electronics Accessories",
+        "type": "flat",
+        "rate": 0.15
+      },
+
+      "books.books": {
+        "category_name": "Books",
+        "type": "flat",
+        "rate": 0.15
+      },
+      "books.music": {
+        "category_name": "Music",
+        "type": "flat",
+        "rate": 0.15
+      },
+      "books.video": {
+        "category_name": "Video",
+        "type": "flat",
+        "rate": 0.10
+      },
+
+      "baby.products": {
+        "category_name": "Baby Products",
+        "type": "price_switch",
+        "rules": [
+          { "max_price": 50, "rate": 0.08 },
+          { "max_price": null, "rate": 0.15 }
+        ]
+      },
+      "baby.toys": {
+        "category_name": "Toys",
+        "type": "flat",
+        "rate": 0.14
+      },
+
+      "pets.furniture": {
+        "category_name": "Pet Furniture",
+        "type": "price_switch",
+        "rules": [
+          { "max_price": 50, "rate": 0.08 },
+          { "max_price": null, "rate": 0.15 }
+        ]
+      },
+      "pets.toys": {
+        "category_name": "Pet Toys",
+        "type": "flat",
+        "rate": 0.14
+      },
+      "pets.other": {
+        "category_name": "Other Pet Products",
+        "type": "flat",
+        "rate": 0.09
+      },
+
+      "auto.audio_video": {
+        "category_name": "Auto Audio & Video",
+        "type": "flat",
+        "rate": 0.05
+      },
+      "auto.vehicles": {
+        "category_name": "Vehicles",
+        "type": "flat",
+        "rate": 0.05,
+        "effective_date": "2026-01-01"
+      },
+      "auto.garage_tyres": {
+        "category_name": "Garage & Tyres",
+        "type": "flat",
+        "rate": 0.06,
+        "effective_date": "2026-01-01"
+      },
+      "auto.other": {
+        "category_name": "Other Automotive",
+        "type": "flat",
+        "rate": 0.10
+      },
+
+      "food.food_beverages": {
+        "category_name": "Food & Beverages",
+        "type": "flat",
+        "rate": 0.09
+      },
+      "sports.sports_outdoors": {
+        "category_name": "Sports & Outdoors",
+        "type": "price_switch",
+        "rules": [
+          { "max_price": 30, "rate": 0.20 },
+          { "max_price": null, "rate": 0.13 }
+        ]
+      },
+      "stationery.office_supplies": {
+        "category_name": "Office Supplies & Stationery",
+        "type": "flat",
+        "rate": 0.12
+      },
+      "other.all": {
+        "category_name": "All Other Categories",
+        "type": "flat",
+        "rate": 0.14
+      }
+    },
+
+    "fbp_overrides": {
+      "_note": "FBP referral fees that differ from FBN. All other categories use FBN rates.",
+      "electronics.laptops_desktop": {
+        "category_name": "Laptops & Desktop",
+        "type": "flat",
+        "rate": 0.065
+      },
+      "electronics.memory_card": {
+        "category_name": "Memory Cards",
+        "type": "flat",
+        "rate": 0.075
+      },
+      "electronics.flash_drives": {
+        "category_name": "Flash Drives",
+        "type": "price_switch",
+        "rules": [
+          { "max_price": 250, "rate": 0.155 },
+          { "max_price": null, "rate": 0.085 }
+        ]
+      },
+      "electronics.other_storage": {
+        "category_name": "Other Storage",
+        "type": "flat",
+        "rate": 0.065
+      },
+      "electronics.networking": {
+        "category_name": "Networking",
+        "type": "flat",
+        "rate": 0.065
+      },
+      "electronics.monitors_gpu": {
+        "category_name": "Monitors & GPUs",
+        "type": "flat",
+        "rate": 0.065
+      },
+      "electronics.other_hardware": {
+        "category_name": "Other Hardware",
+        "type": "flat",
+        "rate": 0.135
+      },
+      "electronics.other_pc_accessories": {
+        "category_name": "Other PC Accessories",
+        "type": "flat",
+        "rate": 0.135
+      },
+      "electronics.software": {
+        "category_name": "Software",
+        "type": "flat",
+        "rate": 0.155
+      },
+      "electronics.laptop_bags": {
+        "category_name": "Laptop Bags",
+        "type": "flat",
+        "rate": 0.155
+      },
+      "electronics.printers_scanners": {
+        "category_name": "Printers & Scanners",
+        "type": "flat",
+        "rate": 0.065
+      },
+      "electronics.other_office": {
+        "category_name": "Other Office Equipment",
+        "type": "flat",
+        "rate": 0.135
+      }
+    }
+  },
+
+  "size_classifications": {
+    "small_envelope": {
+      "max_longest_cm": 20,
+      "max_median_cm": 15,
+      "max_shortest_cm": 1,
+      "max_weight_g": 100,
+      "packaging_weight_g": 20
+    },
+    "standard_envelope": {
+      "max_longest_cm": 33,
+      "max_median_cm": 23,
+      "max_shortest_cm": 2.5,
+      "max_weight_g": 500,
+      "packaging_weight_g": 40
+    },
+    "large_envelope": {
+      "max_longest_cm": 33,
+      "max_median_cm": 23,
+      "max_shortest_cm": 5,
+      "max_weight_g": 1000,
+      "packaging_weight_g": 40
+    },
+    "standard_parcel": {
+      "max_longest_cm": 45,
+      "max_median_cm": 34,
+      "max_shortest_cm": 26,
+      "max_weight_g": 12000,
+      "packaging_weight_g": 100
+    },
+    "oversize": {
+      "max_longest_cm": 130,
+      "max_median_cm": 34,
+      "max_shortest_cm": 26,
+      "max_weight_g": 30000,
+      "packaging_weight_g": 240
+    },
+    "extra_oversize": {
+      "max_longest_cm": 130,
+      "max_median_cm": 130,
+      "max_shortest_cm": 130,
+      "max_weight_g": 30000,
+      "packaging_weight_g": 240
+    },
+    "bulky": {
+      "max_longest_cm": null,
+      "max_median_cm": null,
+      "max_shortest_cm": null,
+      "max_weight_g": null,
+      "packaging_weight_g": 400
+    }
+  },
+
+  "fbn_outbound_fees": {
+    "asp_threshold": 25,
+    "small_envelope": {
+      "asp_low": 5.0,
+      "asp_high": 7.0
+    },
+    "standard_envelope": {
+      "asp_low": [
+        { "max_weight_g": 100, "fee": 5.5 },
+        { "max_weight_g": 250, "fee": 6.0 },
+        { "max_weight_g": 500, "fee": 6.0 }
+      ],
+      "asp_high": [
+        { "max_weight_g": 100, "fee": 7.5 },
+        { "max_weight_g": 250, "fee": 8.0 },
+        { "max_weight_g": 500, "fee": 8.0 }
+      ]
+    },
+    "large_envelope": {
+      "asp_low": 6.5,
+      "asp_high": 8.5
+    },
+    "standard_parcel": {
+      "asp_low": [
+        { "max_weight_g": 250, "fee": 7.0 },
+        { "max_weight_g": 500, "fee": 7.0 },
+        { "max_weight_g": 1000, "fee": 8.0 },
+        { "max_weight_g": 1500, "fee": 8.5 },
+        { "max_weight_g": 2000, "fee": 9.0 },
+        { "max_weight_g": 3000, "fee": 10.0 },
+        { "max_weight_g": 4000, "fee": 11.0 },
+        { "max_weight_g": 5000, "fee": 12.0 },
+        { "max_weight_g": 6000, "fee": 13.0 },
+        { "max_weight_g": 7000, "fee": 14.0 },
+        { "max_weight_g": 8000, "fee": 15.0 },
+        { "max_weight_g": 9000, "fee": 16.0 },
+        { "max_weight_g": 10000, "fee": 17.0 },
+        { "max_weight_g": 11000, "fee": 18.0 },
+        { "max_weight_g": 12000, "fee": 19.0 }
+      ],
+      "asp_low_additional_per_kg": 1.0,
+      "asp_high": [
+        { "max_weight_g": 250, "fee": 8.5 },
+        { "max_weight_g": 500, "fee": 9.0 },
+        { "max_weight_g": 1000, "fee": 10.0 },
+        { "max_weight_g": 1500, "fee": 10.5 },
+        { "max_weight_g": 2000, "fee": 11.0 },
+        { "max_weight_g": 3000, "fee": 12.0 },
+        { "max_weight_g": 4000, "fee": 13.0 },
+        { "max_weight_g": 5000, "fee": 14.0 },
+        { "max_weight_g": 6000, "fee": 15.0 },
+        { "max_weight_g": 7000, "fee": 16.0 },
+        { "max_weight_g": 8000, "fee": 17.0 },
+        { "max_weight_g": 9000, "fee": 18.0 },
+        { "max_weight_g": 10000, "fee": 19.0 },
+        { "max_weight_g": 11000, "fee": 20.0 },
+        { "max_weight_g": 12000, "fee": 21.0 }
+      ],
+      "asp_high_additional_per_kg": 1.0
+    },
+    "oversize": {
+      "asp_low": [
+        { "max_weight_g": 1000, "fee": 10.0 },
+        { "max_weight_g": 2000, "fee": 11.0 },
+        { "max_weight_g": 3000, "fee": 12.0 },
+        { "max_weight_g": 4000, "fee": 13.0 },
+        { "max_weight_g": 5000, "fee": 14.0 },
+        { "max_weight_g": 6000, "fee": 15.0 },
+        { "max_weight_g": 7000, "fee": 16.0 },
+        { "max_weight_g": 8000, "fee": 17.0 },
+        { "max_weight_g": 9000, "fee": 18.0 },
+        { "max_weight_g": 10000, "fee": 19.0 },
+        { "max_weight_g": 15000, "fee": 23.5 },
+        { "max_weight_g": 20000, "fee": 28.0 },
+        { "max_weight_g": 25000, "fee": 33.0 },
+        { "max_weight_g": 30000, "fee": 37.5 }
+      ],
+      "asp_low_additional_per_kg": 1.0,
+      "asp_high": [
+        { "max_weight_g": 1000, "fee": 12.0 },
+        { "max_weight_g": 2000, "fee": 13.0 },
+        { "max_weight_g": 3000, "fee": 14.0 },
+        { "max_weight_g": 4000, "fee": 14.5 },
+        { "max_weight_g": 5000, "fee": 15.5 },
+        { "max_weight_g": 6000, "fee": 16.5 },
+        { "max_weight_g": 7000, "fee": 17.5 },
+        { "max_weight_g": 8000, "fee": 18.5 },
+        { "max_weight_g": 9000, "fee": 19.5 },
+        { "max_weight_g": 10000, "fee": 20.5 },
+        { "max_weight_g": 15000, "fee": 25.0 },
+        { "max_weight_g": 20000, "fee": 30.0 },
+        { "max_weight_g": 25000, "fee": 34.5 },
+        { "max_weight_g": 30000, "fee": 39.5 }
+      ],
+      "asp_high_additional_per_kg": 1.0
+    },
+    "extra_oversize": {
+      "asp_low": [
+        { "max_weight_g": 1000, "fee": 14.0 },
+        { "max_weight_g": 2000, "fee": 15.0 },
+        { "max_weight_g": 3000, "fee": 16.0 },
+        { "max_weight_g": 4000, "fee": 17.0 },
+        { "max_weight_g": 5000, "fee": 18.0 },
+        { "max_weight_g": 6000, "fee": 19.0 },
+        { "max_weight_g": 7000, "fee": 20.0 },
+        { "max_weight_g": 8000, "fee": 21.0 },
+        { "max_weight_g": 9000, "fee": 22.0 },
+        { "max_weight_g": 10000, "fee": 23.0 },
+        { "max_weight_g": 15000, "fee": 28.0 },
+        { "max_weight_g": 20000, "fee": 33.0 },
+        { "max_weight_g": 25000, "fee": 38.0 },
+        { "max_weight_g": 30000, "fee": 43.0 }
+      ],
+      "asp_low_additional_per_kg": 1.0,
+      "asp_high": [
+        { "max_weight_g": 1000, "fee": 16.0 },
+        { "max_weight_g": 2000, "fee": 17.0 },
+        { "max_weight_g": 3000, "fee": 18.0 },
+        { "max_weight_g": 4000, "fee": 19.0 },
+        { "max_weight_g": 5000, "fee": 20.0 },
+        { "max_weight_g": 6000, "fee": 21.0 },
+        { "max_weight_g": 7000, "fee": 22.0 },
+        { "max_weight_g": 8000, "fee": 23.0 },
+        { "max_weight_g": 9000, "fee": 24.0 },
+        { "max_weight_g": 10000, "fee": 25.0 },
+        { "max_weight_g": 15000, "fee": 30.0 },
+        { "max_weight_g": 20000, "fee": 35.0 },
+        { "max_weight_g": 25000, "fee": 40.0 },
+        { "max_weight_g": 30000, "fee": 45.0 }
+      ],
+      "asp_high_additional_per_kg": 1.0
+    },
+    "bulky": {
+      "asp_low": [
+        { "max_weight_g": 1000, "fee": 18.0 },
+        { "max_weight_g": 2000, "fee": 19.0 },
+        { "max_weight_g": 3000, "fee": 20.0 },
+        { "max_weight_g": 4000, "fee": 21.0 },
+        { "max_weight_g": 5000, "fee": 22.0 },
+        { "max_weight_g": 6000, "fee": 23.0 },
+        { "max_weight_g": 7000, "fee": 24.0 },
+        { "max_weight_g": 8000, "fee": 25.0 },
+        { "max_weight_g": 9000, "fee": 26.0 },
+        { "max_weight_g": 10000, "fee": 27.0 },
+        { "max_weight_g": 15000, "fee": 32.0 },
+        { "max_weight_g": 20000, "fee": 37.0 },
+        { "max_weight_g": 25000, "fee": 42.0 },
+        { "max_weight_g": 30000, "fee": 47.0 },
+        { "max_weight_g": 35000, "fee": 52.0 },
+        { "max_weight_g": 40000, "fee": 57.0 }
+      ],
+      "asp_low_additional_per_kg": 1.0,
+      "asp_high": [
+        { "max_weight_g": 1000, "fee": 20.0 },
+        { "max_weight_g": 2000, "fee": 21.0 },
+        { "max_weight_g": 3000, "fee": 22.0 },
+        { "max_weight_g": 4000, "fee": 23.0 },
+        { "max_weight_g": 5000, "fee": 24.0 },
+        { "max_weight_g": 6000, "fee": 25.0 },
+        { "max_weight_g": 7000, "fee": 26.0 },
+        { "max_weight_g": 8000, "fee": 27.0 },
+        { "max_weight_g": 9000, "fee": 28.0 },
+        { "max_weight_g": 10000, "fee": 29.0 },
+        { "max_weight_g": 15000, "fee": 34.0 },
+        { "max_weight_g": 20000, "fee": 39.0 },
+        { "max_weight_g": 25000, "fee": 44.0 },
+        { "max_weight_g": 30000, "fee": 49.0 },
+        { "max_weight_g": 35000, "fee": 54.0 },
+        { "max_weight_g": 40000, "fee": 59.0 }
+      ],
+      "asp_high_additional_per_kg": 1.0
+    }
+  },
+
+  "directship_fees": {
+    "_note": "2 classifications only: standard_parcel and oversize. Dropoff = pickup - 2 AED.",
+    "fee_cap": {
+      "standard_parcel_pickup_max": 84,
+      "_note": "Oversize has no fixed cap, but adds 1 AED per kg above 30kg"
+    },
+    "pickup": {
+      "standard_parcel": {
+        "tiers": [
+          { "max_weight_g": 250, "fee": 14.0 },
+          { "max_weight_g": 500, "fee": 14.5 },
+          { "max_weight_g": 1000, "fee": 15.0 },
+          { "max_weight_g": 1500, "fee": 15.5 },
+          { "max_weight_g": 2000, "fee": 16.0 },
+          { "max_weight_g": 3000, "fee": 17.5 },
+          { "max_weight_g": 4000, "fee": 18.5 },
+          { "max_weight_g": 5000, "fee": 19.5 },
+          { "max_weight_g": 6000, "fee": 20.5 },
+          { "max_weight_g": 7000, "fee": 21.5 },
+          { "max_weight_g": 8000, "fee": 22.5 },
+          { "max_weight_g": 9000, "fee": 23.5 },
+          { "max_weight_g": 10000, "fee": 24.5 },
+          { "max_weight_g": 11000, "fee": 25.5 },
+          { "max_weight_g": 12000, "fee": 26.5 }
+        ],
+        "additional_per_kg": 1.0,
+        "max_fee": 84
+      },
+      "oversize": {
+        "tiers": [
+          { "max_weight_g": 1000, "fee": 18.5 },
+          { "max_weight_g": 2000, "fee": 19.5 },
+          { "max_weight_g": 3000, "fee": 20.5 },
+          { "max_weight_g": 4000, "fee": 21.5 },
+          { "max_weight_g": 5000, "fee": 22.5 },
+          { "max_weight_g": 6000, "fee": 23.5 },
+          { "max_weight_g": 7000, "fee": 24.5 },
+          { "max_weight_g": 8000, "fee": 25.5 },
+          { "max_weight_g": 9000, "fee": 26.5 },
+          { "max_weight_g": 10000, "fee": 27.5 },
+          { "max_weight_g": 15000, "fee": 32.0 },
+          { "max_weight_g": 20000, "fee": 36.0 },
+          { "max_weight_g": 25000, "fee": 40.0 },
+          { "max_weight_g": 30000, "fee": 44.0 }
+        ],
+        "additional_per_kg_above_30kg": 1.0
+      }
+    },
+    "dropoff": {
+      "standard_parcel": {
+        "tiers": [
+          { "max_weight_g": 250, "fee": 12.0 },
+          { "max_weight_g": 500, "fee": 12.5 },
+          { "max_weight_g": 1000, "fee": 13.0 },
+          { "max_weight_g": 1500, "fee": 13.5 },
+          { "max_weight_g": 2000, "fee": 14.0 },
+          { "max_weight_g": 3000, "fee": 15.5 },
+          { "max_weight_g": 4000, "fee": 16.5 },
+          { "max_weight_g": 5000, "fee": 17.5 },
+          { "max_weight_g": 6000, "fee": 18.5 },
+          { "max_weight_g": 7000, "fee": 19.5 },
+          { "max_weight_g": 8000, "fee": 20.5 },
+          { "max_weight_g": 9000, "fee": 21.5 },
+          { "max_weight_g": 10000, "fee": 22.5 },
+          { "max_weight_g": 11000, "fee": 23.5 },
+          { "max_weight_g": 12000, "fee": 24.5 }
+        ],
+        "additional_per_kg": 1.0,
+        "max_fee": 82
+      },
+      "oversize": {
+        "tiers": [
+          { "max_weight_g": 1000, "fee": 16.5 },
+          { "max_weight_g": 2000, "fee": 17.5 },
+          { "max_weight_g": 3000, "fee": 18.5 },
+          { "max_weight_g": 4000, "fee": 19.5 },
+          { "max_weight_g": 5000, "fee": 20.5 },
+          { "max_weight_g": 6000, "fee": 21.5 },
+          { "max_weight_g": 7000, "fee": 22.5 },
+          { "max_weight_g": 8000, "fee": 23.5 },
+          { "max_weight_g": 9000, "fee": 24.5 },
+          { "max_weight_g": 10000, "fee": 25.5 },
+          { "max_weight_g": 15000, "fee": 30.0 },
+          { "max_weight_g": 20000, "fee": 34.0 },
+          { "max_weight_g": 25000, "fee": 38.0 },
+          { "max_weight_g": 30000, "fee": 42.0 }
+        ],
+        "additional_per_kg_above_30kg": 1.0
+      }
+    }
+  },
+
+  "storage_fees": {
+    "monthly": {
+      "rate_per_cbf": 1.5,
+      "cbf_formula": "L*W*H/28317"
+    },
+    "long_term": {
+      "threshold_days": 365,
+      "rate_per_cbf": 25.0
+    },
+    "non_saleable": {
+      "threshold_days": 30,
+      "rate_per_cbf": 12.0
+    }
+  },
+
+  "return_admin_fee": {
+    "formula": "min(fixed, referral_pct * referral_fee)",
+    "fixed": 15,
+    "referral_pct": 0.20
+  },
+
+  "inventory_removal_fees": {
+    "delivery": {
+      "min_fee": 15,
+      "handling_per_unit": 0.3,
+      "same_city_per_kg": 1.0,
+      "cross_city_per_kg": 1.0
+    },
+    "collection": {
+      "min_fee": 15,
+      "handling_per_unit": 0.3,
+      "processing_per_cbf": 0.8
+    }
+  },
+
+  "value_added_services": {
+    "polybag_shrink_wrap": {
+      "envelope_standard": 0.8,
+      "oversize": 0.8,
+      "extra_oversize_bulky": 1.0
+    },
+    "bubble_wrap": {
+      "envelope_standard": 2.0,
+      "oversize": 2.0,
+      "extra_oversize_bulky": null
+    },
+    "box_with_filler": {
+      "envelope_standard": 2.0,
+      "oversize": 2.5,
+      "extra_oversize_bulky": null
+    }
+  },
+
+  "shipping_fee_reimbursement": {
+    "max_per_order": 10,
+    "tiers": [
+      { "max_order_value": 100, "charge": 10 },
+      { "max_order_value": 500, "charge": 5 },
+      { "max_order_value": null, "charge": 0 }
+    ]
+  },
+
+  "refurbished": {
+    "referral_fees": {
+      "mobiles_tablets": {
+        "category_name": "Mobiles & Tablets",
+        "unopened_cpo": 0.05,
+        "renewed_refurbished": 0.10
+      },
+      "laptops": {
+        "category_name": "Laptops",
+        "unopened_cpo": 0.08,
+        "renewed_refurbished": 0.11
+      },
+      "cameras": {
+        "category_name": "Cameras",
+        "unopened_cpo": 0.08,
+        "renewed_refurbished": 0.10
+      },
+      "audio_video": {
+        "category_name": "Audio & Video",
+        "unopened_cpo": 0.06,
+        "renewed_refurbished": 0.08
+      },
+      "wearables": {
+        "category_name": "Wearables",
+        "unopened_cpo": 0.07,
+        "renewed_refurbished": 0.10
+      },
+      "other_accessories": {
+        "category_name": "Other Accessories",
+        "unopened_cpo": 0.12,
+        "renewed_refurbished": 0.15
+      },
+      "software_accessories": {
+        "category_name": "Software & Accessories",
+        "unopened_cpo": 0.12,
+        "renewed_refurbished": 0.145
+      },
+      "consoles": {
+        "category_name": "Consoles",
+        "unopened_cpo": 0.07,
+        "renewed_refurbished": 0.095
+      }
+    },
+    "fbn_outbound_fees": {
+      "_note": "Single rate (no ASP split) for refurbished products.",
+      "small_envelope": 6.0,
+      "standard_envelope": [
+        { "max_weight_g": 100, "fee": 6.5 },
+        { "max_weight_g": 250, "fee": 7.0 },
+        { "max_weight_g": 500, "fee": 7.0 }
+      ],
+      "large_envelope": 7.5,
+      "standard_parcel": [
+        { "max_weight_g": 250, "fee": 7.75 },
+        { "max_weight_g": 500, "fee": 8.0 },
+        { "max_weight_g": 1000, "fee": 9.0 },
+        { "max_weight_g": 1500, "fee": 9.5 },
+        { "max_weight_g": 2000, "fee": 10.0 },
+        { "max_weight_g": 3000, "fee": 11.0 },
+        { "max_weight_g": 4000, "fee": 12.0 },
+        { "max_weight_g": 5000, "fee": 13.0 },
+        { "max_weight_g": 6000, "fee": 14.0 },
+        { "max_weight_g": 7000, "fee": 15.0 },
+        { "max_weight_g": 8000, "fee": 16.0 },
+        { "max_weight_g": 9000, "fee": 17.0 },
+        { "max_weight_g": 10000, "fee": 18.0 },
+        { "max_weight_g": 11000, "fee": 19.0 },
+        { "max_weight_g": 12000, "fee": 20.0 }
+      ],
+      "standard_parcel_additional_per_kg": 1.0,
+      "oversize": [
+        { "max_weight_g": 1000, "fee": 11.0 },
+        { "max_weight_g": 2000, "fee": 12.0 },
+        { "max_weight_g": 3000, "fee": 13.0 },
+        { "max_weight_g": 4000, "fee": 13.75 },
+        { "max_weight_g": 5000, "fee": 14.75 },
+        { "max_weight_g": 6000, "fee": 15.75 },
+        { "max_weight_g": 7000, "fee": 16.75 },
+        { "max_weight_g": 8000, "fee": 17.75 },
+        { "max_weight_g": 9000, "fee": 18.75 },
+        { "max_weight_g": 10000, "fee": 19.75 },
+        { "max_weight_g": 15000, "fee": 24.25 },
+        { "max_weight_g": 20000, "fee": 29.0 },
+        { "max_weight_g": 25000, "fee": 33.75 },
+        { "max_weight_g": 30000, "fee": 38.5 }
+      ],
+      "oversize_additional_per_kg": 1.0,
+      "extra_oversize": [
+        { "max_weight_g": 1000, "fee": 15.0 },
+        { "max_weight_g": 2000, "fee": 16.0 },
+        { "max_weight_g": 3000, "fee": 17.0 },
+        { "max_weight_g": 4000, "fee": 18.0 },
+        { "max_weight_g": 5000, "fee": 19.0 },
+        { "max_weight_g": 6000, "fee": 20.0 },
+        { "max_weight_g": 7000, "fee": 21.0 },
+        { "max_weight_g": 8000, "fee": 22.0 },
+        { "max_weight_g": 9000, "fee": 23.0 },
+        { "max_weight_g": 10000, "fee": 24.0 },
+        { "max_weight_g": 15000, "fee": 29.0 },
+        { "max_weight_g": 20000, "fee": 34.0 },
+        { "max_weight_g": 25000, "fee": 39.0 },
+        { "max_weight_g": 30000, "fee": 44.0 }
+      ],
+      "extra_oversize_additional_per_kg": 1.0,
+      "bulky": [
+        { "max_weight_g": 1000, "fee": 19.0 },
+        { "max_weight_g": 2000, "fee": 20.0 },
+        { "max_weight_g": 3000, "fee": 21.0 },
+        { "max_weight_g": 4000, "fee": 22.0 },
+        { "max_weight_g": 5000, "fee": 23.0 },
+        { "max_weight_g": 6000, "fee": 24.0 },
+        { "max_weight_g": 7000, "fee": 25.0 },
+        { "max_weight_g": 8000, "fee": 26.0 },
+        { "max_weight_g": 9000, "fee": 27.0 },
+        { "max_weight_g": 10000, "fee": 28.0 },
+        { "max_weight_g": 15000, "fee": 33.0 },
+        { "max_weight_g": 20000, "fee": 38.0 },
+        { "max_weight_g": 25000, "fee": 43.0 },
+        { "max_weight_g": 30000, "fee": 48.0 },
+        { "max_weight_g": 35000, "fee": 53.0 },
+        { "max_weight_g": 40000, "fee": 58.0 }
+      ],
+      "bulky_additional_per_kg": 1.0
+    },
+    "non_saleable_storage_rate_per_cbf": 2.0
+  }
+}
