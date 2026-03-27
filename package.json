@@ -1,15 +1,17 @@
 {
-  "name": "unilume-app-temp",
+  "name": "unilume-app",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "build-index": "tsx scripts/build-index.ts",
+    "postinstall": "tsx scripts/build-index.ts",
+    "update-docs": "git submodule update --remote src/data/noon-docs && tsx scripts/build-index.ts"
   },
   "dependencies": {
-    "@ai-sdk/anthropic": "^3.0.64",
     "@ai-sdk/google-vertex": "^4.0.95",
     "@ai-sdk/react": "^3.0.140",
     "@tailwindcss/typography": "^0.5.19",
