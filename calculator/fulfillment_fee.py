@@ -74,7 +74,10 @@ def lookup_fbn_outbound_fee(
         fee = float(tier_data)
 
     elif isinstance(tier_data, dict):
-        if "asp_low" in tier_data:
+        if "fee" in tier_data and "asp_low" not in tier_data:
+            # Single flat fee wrapped in dict: {"fee": 20.5}
+            fee = float(tier_data["fee"])
+        elif "asp_low" in tier_data:
             # Has ASP split
             use_low = (
                 average_selling_price is not None
@@ -93,10 +96,13 @@ def lookup_fbn_outbound_fee(
             if isinstance(selected, (int, float)):
                 # Single rate (e.g. small_envelope, large_envelope)
                 fee = float(selected)
+            elif isinstance(selected, dict) and "fee" in selected:
+                # Wrapped single rate: {"fee": 7.0}
+                fee = float(selected["fee"])
             elif isinstance(selected, list):
                 fee = _lookup_weight_tiers_g(weight_g, selected, additional)
             else:
-                raise ValueError(f"Unexpected data type for {size_key} ASP bucket")
+                raise ValueError(f"Unexpected data type for {size_key} ASP bucket: {type(selected)}")
         elif "tiers" in tier_data:
             # No ASP split, has tiers (refurbished)
             additional = tier_data.get("additional_per_kg", 1.0)

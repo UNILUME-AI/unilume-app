@@ -38,7 +38,13 @@ def classify_item_size(
         return SizeClassification.STANDARD_PARCEL
 
     fees_data = load_fee_data(market)
-    classifications = fees_data["size_classifications"]
+    classifications = fees_data.get("size_classifications") or fees_data.get("size_classification", {})
+
+    # Size classifications are identical across all markets.
+    # If a market's JSON is missing full data, fall back to UAE.
+    if len(classifications) < 7:
+        uae_data = load_fee_data(Market.UAE)
+        classifications = uae_data.get("size_classifications") or {}
 
     # Sort dimensions: longest, median, shortest
     sides = sorted(
@@ -138,7 +144,10 @@ def calc_billable_weight(
         Billable weight in kg, rounded up to nearest 0.05 kg.
     """
     fees_data = load_fee_data(market)
-    classifications = fees_data["size_classifications"]
+    classifications = fees_data.get("size_classifications") or fees_data.get("size_classification", {})
+    if len(classifications) < 7:
+        uae_data = load_fee_data(Market.UAE)
+        classifications = uae_data.get("size_classifications") or {}
 
     # Get packaging weight for this classification
     tier_key = size_class.value
