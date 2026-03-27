@@ -1,0 +1,2410 @@
+{
+  "total_count": 223,
+  "last_updated": "2026-03-26",
+  "categories": [
+    {
+      "category_id": "program_policies",
+      "category_name": "Program Policies",
+      "description": "Noon seller policies: referral fees, commission rates, return policies, fraud prevention, disputes, penalties, compliance, restricted items, seller code of conduct",
+      "keywords": [
+        "policy",
+        "policies",
+        "rule",
+        "rules",
+        "return",
+        "returns",
+        "refund",
+        "commission",
+        "referral fee",
+        "penalty",
+        "dispute",
+        "fraud",
+        "compliance",
+        "restricted",
+        "prohibited",
+        "violation",
+        "退货",
+        "退款",
+        "佣金",
+        "政策",
+        "规则",
+        "处罚",
+        "违规"
+      ],
+      "article_count": 41,
+      "total_chars": 295240,
+      "article_ids": [
+        "anti_fraud_and_seller_code_of_conduct_policy",
+        "automated_reimbursement_process_for_lost_damaged_items",
+        "cross_border_selling_7_4_2025",
+        "customer_reviews_anti_manipulation_policy",
+        "directship_seller_returns_dispute_and_reimbursement_policy",
+        "directship_volumetric_measurement_dispute_policy",
+        "disputes_claims_resolution_policy",
+        "e_invoicing_services_in_the_kingdom_of_saudi_arabia_ksa",
+        "fbn_packing_and_delivery_policy",
+        "fulfilled_by_noon_fbn_fees_in_egypt",
+        "fulfilled_by_noon_fbn_fees_in_ksa",
+        "fulfilled_by_noon_fbn_fees_in_ksa_refurbished_renewed",
+        "fulfilled_by_noon_fbn_fees_in_uae_11_3_2024",
+        "fulfilled_by_noon_fbn_fees_in_uae_refurbished_renewed",
+        "fulfilled_by_partner_fbp_fees_in_egypt",
+        "fulfilled_by_partner_fbp_fees_in_ksa",
+        "fulfilled_by_partner_fbp_fees_in_ksa_refurbished_renewed",
+        "fulfilled_by_partner_fbp_fees_in_uae",
+        "fulfilled_by_partner_fbp_fees_in_uae_refurbished_renewed",
+        "fulfilled_by_partner_fbp_policy_30_1_2024",
+        "handling_customer_returns_policy_for_fbp",
+        "inventory_confiscation_policy",
+        "inventory_removal_policy",
+        "issuing_tax_invoices_and_credit_notes_to_customers_in_egypt",
+        "negative_account_balance_recovery_policy",
+        "noon_conflict_of_interest_policy",
+        "noon_global_shipping_program",
+        "noon_ksa_uae_x_border_cb_ratecard",
+        "packing_guidelines_for_directshipping",
+        "payments_processing_policy",
+        "product_listing_policy",
+        "product_quality_control_policy",
+        "program_policies",
+        "returns_and_seller_protection_policy",
+        "seller_compliance_policy_imei_registration_import_regulation",
+        "seller_offboarding_policy_11_3_2024",
+        "seller_review_and_rating_dispute_policy",
+        "seller_warranty_policy_11_3_2024",
+        "supermall_model_policy",
+        "the_noon_sales_promise",
+        "what_is_renewed_what_is_refurbished"
+      ]
+    },
+    {
+      "category_id": "product_listing",
+      "category_name": "Product Listing",
+      "description": "Product listing and catalog management: SKU creation, product titles, images, barcodes, brand registration, content guidelines, bulk upload, catalog quality",
+      "keywords": [
+        "listing",
+        "list",
+        "product",
+        "sku",
+        "catalog",
+        "catalogue",
+        "title",
+        "image",
+        "photo",
+        "barcode",
+        "brand",
+        "content",
+        "upload",
+        "create product",
+        "上架",
+        "商品",
+        "产品",
+        "标题",
+        "图片",
+        "品牌"
+      ],
+      "article_count": 37,
+      "total_chars": 273837,
+      "article_ids": [
+        "accessing_catalog_using_the_new_offer_management_tool",
+        "barcode_requirements",
+        "brand_creation_guidelines_15_4_2024",
+        "brand_registration",
+        "catalog_content_pdp_article",
+        "content_guidelines_for_product_listing_for_home_category",
+        "create_a_new_product_of_a_noon_controlled_brand",
+        "creating_product_variations_adding_sizes_colors_and_other_at",
+        "feature_bullets_product_highlights_and_description_for_the_s",
+        "guidelines_for_prohibited_items_and_keywords",
+        "how_to_categorize_your_seller_sku",
+        "how_to_create_product_titles_of_grocery_items",
+        "how_to_list_products_belonging_to_multiple_categories_in_bul",
+        "how_to_make_your_fbn_products_live_reactivate",
+        "how_to_search_for_items_in_the_partner_catalog",
+        "how_to_use_and_make_changes_to_your_products_on_catalog_list",
+        "listing_apple_products_with_noon",
+        "listing_products_on_noon_faq",
+        "partner_sku_delete_import",
+        "partner_sku_rename_import",
+        "picture_requirements_and_rejection_reasons_for_the_seller_sk",
+        "product_listing",
+        "prohibited_products",
+        "relabeling_feature_for_non_saleable_inventory_15_4_2024",
+        "seller_sku_bulk_creation",
+        "seller_sku_content_export_12_3_2024",
+        "seller_sku_content_language_requirements",
+        "seller_sku_content_quality",
+        "seller_sku_quick_copy_of_the_content",
+        "single_sku_creation",
+        "the_seller_sku_brand",
+        "the_seller_sku_product_attributes",
+        "the_seller_sku_s_content_guidelines_for_laptop_monitors",
+        "title_requirements_and_rejection_reasons_for_the_seller_sku",
+        "video_guidelines_and_rejection_reasons_for_seller_skus",
+        "warranty_requirements_12_3_2024",
+        "what_is_the_noon_catalog"
+      ]
+    },
+    {
+      "category_id": "fulfilled_by_partner_fbp",
+      "category_name": "Fulfilled by Partner (FBP)",
+      "description": "Fulfilled by Partner / DirectShip program: order fulfillment, shipping, delivery, picklists, returns handling, DirectShip fees and policies",
+      "keywords": [
+        "fbp",
+        "fulfilled by partner",
+        "directship",
+        "direct ship",
+        "shipping",
+        "delivery",
+        "ship",
+        "fulfill",
+        "fulfillment",
+        "order",
+        "picklist",
+        "物流",
+        "配送",
+        "发货",
+        "履约"
+      ],
+      "article_count": 31,
+      "total_chars": 259458,
+      "article_ids": [
+        "choosing_the_best_delivery_estimate_for_fbp_orders_31_1_2024",
+        "creating_and_managing_a_warehouse",
+        "creating_and_managing_new_warehouse",
+        "direct_delivery_order_fulfillment_te",
+        "directship_customer_returns_process",
+        "directship_express_faqs",
+        "directship_features",
+        "directship_order_fulfillment_web_version_30_1_2024",
+        "directship_seller_performance_management",
+        "essential_guidelines_for_bulky_directship_selling_model",
+        "essential_guidelines_for_direct_delivery_selling_model",
+        "fbp_directship_picklists",
+        "fulfilled_by_partner_fbp_comprehensive_overview_30_1_2024",
+        "fulfillment_modes_in_directship",
+        "how_do_i_manage_my_stock_and_prices",
+        "how_to_accept_return_manifest_from_the_seller_lab",
+        "how_to_calculate_the_directship_fee_in_egy",
+        "how_to_calculate_the_directship_fee_in_ksa",
+        "how_to_calculate_the_directship_fee_in_uae",
+        "how_to_fulfill_directship_order_using_mobile_application",
+        "how_to_process_directship_order_using_the_mobile_application",
+        "how_to_process_directship_order_using_the_seller_lab_1_10_20",
+        "multiple_login_channels_supply_chain_app",
+        "ordering_your_packaging_materials",
+        "partner_sku_fbp_stock_update_import",
+        "quality_control_guidelines_for_directshipping",
+        "returnless_refund_for_directship_sellers",
+        "seller_buyer_messaging_service",
+        "setting_up_your_delivery_area_for_direct_delivery_warehouse",
+        "what_are_the_dimensions_of_items_that_i_can_sell_using_fbp_a",
+        "what_is_directship_30_1_2024"
+      ]
+    },
+    {
+      "category_id": "onboarding_and_registration",
+      "category_name": "Onboarding & Registration",
+      "description": "Seller onboarding: account registration, documents required, trade license, legal entity setup, seller profile, getting started on Noon",
+      "keywords": [
+        "onboarding",
+        "register",
+        "registration",
+        "sign up",
+        "signup",
+        "account",
+        "document",
+        "license",
+        "legal entity",
+        "start selling",
+        "get started",
+        "new seller",
+        "注册",
+        "开店",
+        "入驻",
+        "开户"
+      ],
+      "article_count": 23,
+      "total_chars": 320791,
+      "article_ids": [
+        "create_and_manage_your_seller_profile",
+        "cross_border_selling_faq",
+        "documents_required_to_sell_on_noon",
+        "edit_your_store_information",
+        "egypt_seller_terms_and_conditions_t_cs",
+        "how_can_i_sell_on_noon_as_a_non_vat_registered_seller_12_3_2",
+        "how_can_you_register_for_cross_border_business",
+        "how_to_add_the_bank_details_in_the_legal_entity_12_3_2024_1",
+        "how_to_add_user_on_the_seller_lab",
+        "how_to_apply_for_a_trade_license_in_dubai",
+        "how_to_upload_my_logo_and_banner_to_my_seller_profile",
+        "i_m_registered_as_a_noon_seller_what_s_next_12_3_2024",
+        "international_seller_terms_and_conditions_in_uae",
+        "ksa_seller_terms_and_conditions_t_cs",
+        "managing_your_invoices_credit_notes_on_noon_16_3_2025",
+        "onboarding_registration_comprehensive_overview",
+        "seller_registration_process_12_3_2024",
+        "setting_your_contact_preferences",
+        "uae_seller_terms_and_conditions_t_cs",
+        "update_your_legal_documents_12_3_2024",
+        "vat_frequently_asked_questions_12_3_2024_1",
+        "what_is_mahali",
+        "why_am_i_ineligible_to_sell_on_noon"
+      ]
+    },
+    {
+      "category_id": "fulfilled_by_noon_fbn",
+      "category_name": "Fulfilled by noon (FBN)",
+      "description": "Fulfilled by Noon program: FBN storage, inbound shipments, outbound fees, inventory management, warehouse operations, FBN reports",
+      "keywords": [
+        "fbn",
+        "fulfilled by noon",
+        "warehouse",
+        "storage",
+        "inbound",
+        "outbound",
+        "inventory",
+        "stock",
+        "仓储",
+        "入库",
+        "出库",
+        "库存"
+      ],
+      "article_count": 20,
+      "total_chars": 138242,
+      "article_ids": [
+        "accessing_fbn_reports_on_seller_lab",
+        "fbn",
+        "fbn_and_crossdock_b2b_received_reports",
+        "fbn_fees_and_product_dimension_measurement_visibility_11_3_2",
+        "fbn_inbound_quality_check_policy",
+        "fbn_inventory_detail_report",
+        "fbn_inventory_removal_process",
+        "fbn_storage_and_inventory_transfers",
+        "fbn_volumetric_measurement_vm_dispute_policy",
+        "how_to_calculate_the_fbn_outbound_fee_and_inventory_removal_",
+        "how_to_calculate_the_fbn_outbound_fee_and_the_inventory_remo",
+        "how_to_setup_your_automated_return_preference_11_3_2024",
+        "managing_your_returns_managing_fbn_returns",
+        "new_inventory_ledger_reports_summary_and_detailed_view",
+        "product_packing_guidelines_fbn",
+        "queue_management_system",
+        "understand_the_stock_replenishment_report",
+        "understanding_seller_tiers_and_inbound_performance",
+        "what_is_fbn_inventory_dashboard",
+        "what_is_fbn_or_noon_express"
+      ]
+    },
+    {
+      "category_id": "governance_and_performance_management",
+      "category_name": "Governance & Performance Management",
+      "description": "Seller performance metrics, account health, performance standards, seller score, governance policies, account suspension",
+      "keywords": [
+        "performance",
+        "score",
+        "rating",
+        "governance",
+        "health",
+        "suspension",
+        "account health",
+        "seller score",
+        "绩效",
+        "评分",
+        "考核"
+      ],
+      "article_count": 15,
+      "total_chars": 64602,
+      "article_ids": [
+        "analytics_dashboard_and_product_insights",
+        "governance_performance_management",
+        "how_to_receive_rtv_shipments_using_the_supply_chain_external",
+        "how_to_report_the_seller_reviews",
+        "inventory_health_dashboard",
+        "overview_of_sales_view",
+        "partial_rtv_handover_in_noon_hubs",
+        "product_review_ratings",
+        "receiving_methods_for_rtv_delivery",
+        "reputation_management_dashboard",
+        "saleable_recommended_rtv_report",
+        "seller_reviews_ratings",
+        "what_is_fbp_performance_dashboard",
+        "what_is_the_returns_reduction_dashboard",
+        "winning_the_buy_box"
+      ]
+    },
+    {
+      "category_id": "promotions",
+      "category_name": "Promotions",
+      "description": "Promotional campaigns: flash deals, mega deals, price drops, promo codes, virtual bundles, store creation, Noon promotions",
+      "keywords": [
+        "promotion",
+        "promo",
+        "deal",
+        "deals",
+        "flash",
+        "discount",
+        "coupon",
+        "bundle",
+        "campaign",
+        "offer",
+        "sale",
+        "促销",
+        "活动",
+        "折扣",
+        "优惠"
+      ],
+      "article_count": 12,
+      "total_chars": 88935,
+      "article_ids": [
+        "advertizing_marketing",
+        "designs_and_size_specifications_for_store_creation",
+        "how_can_i_fix_listing_errors_in_promotions",
+        "how_can_i_participate_in_noon_mega_deals",
+        "how_can_i_participate_in_noon_promotions",
+        "how_to_enroll_your_skus_for_virtual_bundles",
+        "how_to_participate_in_flash_deals",
+        "how_to_participate_in_price_drop_deals",
+        "how_to_participate_in_promo_codes",
+        "how_to_participate_with_commission_drop",
+        "noon_finds_faqs",
+        "understanding_the_external_ads_tracker"
+      ]
+    },
+    {
+      "category_id": "finance_and_payments",
+      "category_name": "Finance & Payments",
+      "description": "Payment processing, invoices, statements, fees, settlements, VAT, ZATCA integration, bank details, payment cycles",
+      "keywords": [
+        "payment",
+        "invoice",
+        "statement",
+        "fee",
+        "fees",
+        "settlement",
+        "vat",
+        "zatca",
+        "bank",
+        "finance",
+        "money",
+        "pay",
+        "billing",
+        "charge",
+        "cost",
+        "price",
+        "收款",
+        "付款",
+        "结算",
+        "发票",
+        "费用"
+      ],
+      "article_count": 10,
+      "total_chars": 49555,
+      "article_ids": [
+        "finance_payments",
+        "how_will_i_get_paid_for_my_sales",
+        "new_statement_detail_report",
+        "orders_level_fee",
+        "statement_of_account",
+        "understanding_the_new_statements_view",
+        "understanding_the_noon_fees_invoices",
+        "understanding_the_transaction_view",
+        "where_can_i_find_a_report_with_all_my_vat_invoices",
+        "zatca_integration_for_ksa_e_invoicing"
+      ]
+    },
+    {
+      "category_id": "unknown",
+      "category_name": "Unknown",
+      "description": "Unknown",
+      "keywords": [
+        "unknown"
+      ],
+      "article_count": 7,
+      "total_chars": 42129,
+      "article_ids": [
+        "where_can_i_download_my_tax_invoices_12_3_2024",
+        "cross_border_selling",
+        "faq_cross_border_selling_in_the_gcc",
+        "seller_reputation_dashboard",
+        "uae_to_ksa_automated_onboarding_guide_for_noon_sellers",
+        "comprehensive_guide_to_noon_seller_policies_your_path_to_suc",
+        "rocket_model_policy_document"
+      ]
+    },
+    {
+      "category_id": "price_and_inventory_management",
+      "category_name": "Price & Inventory Management",
+      "description": "Pricing strategies, stock management, price updates, inventory control, global min/max pricing",
+      "keywords": [
+        "price",
+        "pricing",
+        "inventory",
+        "stock",
+        "manage stock",
+        "update price",
+        "定价",
+        "价格",
+        "库存管理"
+      ],
+      "article_count": 7,
+      "total_chars": 39633,
+      "article_ids": [
+        "determining_your_prices_global_min_max",
+        "increase_your_sales_with_the_price_engine",
+        "partner_sku_price_range_import",
+        "partner_sku_price_update_import",
+        "price_inventory_management",
+        "secure_file_transfer_protocol_activation",
+        "secure_file_transfer_protocol_guidelines"
+      ]
+    },
+    {
+      "category_id": "global_selling",
+      "category_name": "Global Selling",
+      "description": "Cross-border selling: international selling guidelines, global warranty, GCC cross-border, export requirements",
+      "keywords": [
+        "global",
+        "cross border",
+        "cross-border",
+        "international",
+        "export",
+        "gcc",
+        "跨境",
+        "国际"
+      ],
+      "article_count": 6,
+      "total_chars": 45591,
+      "article_ids": [
+        "global_seller_warranty_policy",
+        "global_selling",
+        "how_to_setup_the_invoicing_profile_for_global_selling",
+        "noon_guide_to_setup_global_store_in_uae_ksa_for_indian_selle",
+        "seller_faqs_activating_and_managing_noon_global_store_for_ks",
+        "uae_to_ksa_onboarding_guide_for_noon_sellers"
+      ]
+    },
+    {
+      "category_id": "inventory_removal",
+      "category_name": "Inventory Removal",
+      "description": "FBN inventory removal: RTV (Return to Vendor) process, shipment tracking, inventory disposal",
+      "keywords": [
+        "removal",
+        "remove",
+        "rtv",
+        "return to vendor",
+        "dispose",
+        "disposal",
+        "移除",
+        "退仓"
+      ],
+      "article_count": 3,
+      "total_chars": 14754,
+      "article_ids": [
+        "how_can_i_track_my_rtv_shipments_and_notifications",
+        "inventory_removal",
+        "non_saleable_recommended_rtv_report"
+      ]
+    },
+    {
+      "category_id": "supermall",
+      "category_name": "Supermall",
+      "description": "Supermall program: deal management, offers, Supermall-specific policies and requirements",
+      "keywords": [
+        "supermall",
+        "super mall"
+      ],
+      "article_count": 3,
+      "total_chars": 9298,
+      "article_ids": [
+        "comprehensive_guide_to_managing_supermall_deals_and_offers",
+        "supermall_faqs",
+        "supermall_offer_management"
+      ]
+    },
+    {
+      "category_id": "fulfilled_by_partner_integration",
+      "category_name": "Fulfilled By Partner Integration",
+      "description": "FBP Integration (FBPI): API integration for third-party fulfillment systems, technical integration guides",
+      "keywords": [
+        "fbpi",
+        "integration",
+        "api",
+        "third party",
+        "3pl",
+        "接口",
+        "集成",
+        "对接"
+      ],
+      "article_count": 2,
+      "total_chars": 11692,
+      "article_ids": [
+        "fulfilled_by_partner_integration_a_comprehensive_guide",
+        "fulfilled_by_partner_integration_fbpi_faqs"
+      ]
+    },
+    {
+      "category_id": "reports_and_analytics",
+      "category_name": "Reports & Analytics",
+      "description": "Seller reporting tools: analytics dashboard, product insights, sales reports, performance analytics",
+      "keywords": [
+        "report",
+        "reports",
+        "analytics",
+        "dashboard",
+        "insight",
+        "data",
+        "报表",
+        "数据",
+        "分析"
+      ],
+      "article_count": 2,
+      "total_chars": 8456,
+      "article_ids": [
+        "reports_analytics",
+        "return_to_vendor_rtv_report"
+      ]
+    },
+    {
+      "category_id": "support_and_training",
+      "category_name": "Support & Training",
+      "description": "Seller support resources: training materials, help center, support contacts, seller lab guides",
+      "keywords": [
+        "support",
+        "training",
+        "help",
+        "guide",
+        "contact",
+        "learn",
+        "培训",
+        "帮助",
+        "支持"
+      ],
+      "article_count": 2,
+      "total_chars": 6597,
+      "article_ids": [
+        "article",
+        "how_to_reach_out_to_noon_for_support"
+      ]
+    },
+    {
+      "category_id": "jump",
+      "category_name": "JUMP",
+      "description": "JUMP program: Noon's seller acceleration program, growth tools",
+      "keywords": [
+        "jump",
+        "acceleration"
+      ],
+      "article_count": 1,
+      "total_chars": 10508,
+      "article_ids": [
+        "jump_integration"
+      ]
+    },
+    {
+      "category_id": "noon_ads",
+      "category_name": "noon ads",
+      "description": "Noon advertising platform: sponsored products, ad campaigns, marketing tools, advertising fees",
+      "keywords": [
+        "ads",
+        "ad",
+        "advertising",
+        "sponsor",
+        "sponsored",
+        "marketing",
+        "广告",
+        "推广"
+      ],
+      "article_count": 1,
+      "total_chars": 1856,
+      "article_ids": [
+        "noon_ads"
+      ]
+    }
+  ],
+  "documents": [
+    {
+      "id": "finance_payments",
+      "title": "Finance & Payments Comprehensive Overview",
+      "filename": "Finance_and_Payments/finance_payments.md",
+      "category_id": "finance_and_payments",
+      "category_name": "Finance & Payments",
+      "char_count": 3841
+    },
+    {
+      "id": "how_will_i_get_paid_for_my_sales",
+      "title": "How will I get paid for my sales?",
+      "filename": "Finance_and_Payments/how_will_i_get_paid_for_my_sales.md",
+      "category_id": "finance_and_payments",
+      "category_name": "Finance & Payments",
+      "char_count": 2242
+    },
+    {
+      "id": "new_statement_detail_report",
+      "title": "New Statement Detail Report",
+      "filename": "Finance_and_Payments/new_statement_detail_report.md",
+      "category_id": "finance_and_payments",
+      "category_name": "Finance & Payments",
+      "char_count": 8308
+    },
+    {
+      "id": "orders_level_fee",
+      "title": "Orders Level Fee",
+      "filename": "Finance_and_Payments/orders_level_fee.md",
+      "category_id": "finance_and_payments",
+      "category_name": "Finance & Payments",
+      "char_count": 4229
+    },
+    {
+      "id": "statement_of_account",
+      "title": "Statement of Account",
+      "filename": "Finance_and_Payments/statement_of_account.md",
+      "category_id": "finance_and_payments",
+      "category_name": "Finance & Payments",
+      "char_count": 4107
+    },
+    {
+      "id": "understanding_the_new_statements_view",
+      "title": "Understanding the new Statements View",
+      "filename": "Finance_and_Payments/understanding_the_new_statements_view.md",
+      "category_id": "finance_and_payments",
+      "category_name": "Finance & Payments",
+      "char_count": 6163
+    },
+    {
+      "id": "understanding_the_noon_fees_invoices",
+      "title": "Understanding the noon Fees Invoices",
+      "filename": "Finance_and_Payments/understanding_the_noon_fees_invoices.md",
+      "category_id": "finance_and_payments",
+      "category_name": "Finance & Payments",
+      "char_count": 4010
+    },
+    {
+      "id": "understanding_the_transaction_view",
+      "title": "Understanding the Transaction View",
+      "filename": "Finance_and_Payments/understanding_the_transaction_view.md",
+      "category_id": "finance_and_payments",
+      "category_name": "Finance & Payments",
+      "char_count": 8272
+    },
+    {
+      "id": "where_can_i_download_my_tax_invoices_12_3_2024",
+      "title": "Managing Your Invoices & Credit Notes on noon",
+      "filename": "Finance_and_Payments/where_can_i_download_my_tax_invoices_12_3_2024.md",
+      "category_id": "unknown",
+      "category_name": "Unknown",
+      "char_count": 7681
+    },
+    {
+      "id": "where_can_i_find_a_report_with_all_my_vat_invoices",
+      "title": "Where can I find a report with all my VAT invoices?",
+      "filename": "Finance_and_Payments/where_can_i_find_a_report_with_all_my_vat_invoices.md",
+      "category_id": "finance_and_payments",
+      "category_name": "Finance & Payments",
+      "char_count": 2512
+    },
+    {
+      "id": "zatca_integration_for_ksa_e_invoicing",
+      "title": "ZATCA Integration for KSA E-Invoicing",
+      "filename": "Finance_and_Payments/zatca_integration_for_ksa_e_invoicing.md",
+      "category_id": "finance_and_payments",
+      "category_name": "Finance & Payments",
+      "char_count": 5871
+    },
+    {
+      "id": "fulfilled_by_partner_integration_a_comprehensive_guide",
+      "title": "Fulfilled by Partner Integration- A Comprehensive Guide",
+      "filename": "Fulfilled_By_Partner_Integration/fulfilled_by_partner_integration_a_comprehensive_guide.md",
+      "category_id": "fulfilled_by_partner_integration",
+      "category_name": "Fulfilled By Partner Integration",
+      "char_count": 6267
+    },
+    {
+      "id": "fulfilled_by_partner_integration_fbpi_faqs",
+      "title": "Fulfilled by Partner Integration  FAQs",
+      "filename": "Fulfilled_By_Partner_Integration/fulfilled_by_partner_integration_fbpi_faqs.md",
+      "category_id": "fulfilled_by_partner_integration",
+      "category_name": "Fulfilled By Partner Integration",
+      "char_count": 5425
+    },
+    {
+      "id": "choosing_the_best_delivery_estimate_for_fbp_orders_31_1_2024",
+      "title": "Choosing the best delivery estimate for FBP orders",
+      "filename": "Fulfilled_by_Partner_FBP/choosing_the_best_delivery_estimate_for_fbp_orders_31_1_2024.md",
+      "category_id": "fulfilled_by_partner_fbp",
+      "category_name": "Fulfilled by Partner (FBP)",
+      "char_count": 6743
+    },
+    {
+      "id": "creating_and_managing_a_warehouse",
+      "title": "Creating and Managing a warehouse",
+      "filename": "Fulfilled_by_Partner_FBP/creating_and_managing_a_warehouse.md",
+      "category_id": "fulfilled_by_partner_fbp",
+      "category_name": "Fulfilled by Partner (FBP)",
+      "char_count": 11615
+    },
+    {
+      "id": "creating_and_managing_new_warehouse",
+      "title": "Creating and Managing a New Warehouse",
+      "filename": "Fulfilled_by_Partner_FBP/creating_and_managing_new_warehouse.md",
+      "category_id": "fulfilled_by_partner_fbp",
+      "category_name": "Fulfilled by Partner (FBP)",
+      "char_count": 12256
+    },
+    {
+      "id": "direct_delivery_order_fulfillment_te",
+      "title": "Direct Delivery Order Fulfillment",
+      "filename": "Fulfilled_by_Partner_FBP/direct_delivery_order_fulfillment_te.md",
+      "category_id": "fulfilled_by_partner_fbp",
+      "category_name": "Fulfilled by Partner (FBP)",
+      "char_count": 16146
+    },
+    {
+      "id": "directship_customer_returns_process",
+      "title": "Directship Customer Returns Process",
+      "filename": "Fulfilled_by_Partner_FBP/directship_customer_returns_process.md",
+      "category_id": "fulfilled_by_partner_fbp",
+      "category_name": "Fulfilled by Partner (FBP)",
+      "char_count": 9015
+    },
+    {
+      "id": "directship_express_faqs",
+      "title": "DirectShip Express - FAQs",
+      "filename": "Fulfilled_by_Partner_FBP/directship_express_faqs.md",
+      "category_id": "fulfilled_by_partner_fbp",
+      "category_name": "Fulfilled by Partner (FBP)",
+      "char_count": 11822
+    },
+    {
+      "id": "directship_features",
+      "title": "DirectShip Features",
+      "filename": "Fulfilled_by_Partner_FBP/directship_features.md",
+      "category_id": "fulfilled_by_partner_fbp",
+      "category_name": "Fulfilled by Partner (FBP)",
+      "char_count": 5443
+    },
+    {
+      "id": "directship_order_fulfillment_web_version_30_1_2024",
+      "title": "Directship Order fulfillment - Web Version",
+      "filename": "Fulfilled_by_Partner_FBP/directship_order_fulfillment_web_version_30_1_2024.md",
+      "category_id": "fulfilled_by_partner_fbp",
+      "category_name": "Fulfilled by Partner (FBP)",
+      "char_count": 16635
+    },
+    {
+      "id": "directship_seller_performance_management",
+      "title": "DirectShip Seller Performance Management",
+      "filename": "Fulfilled_by_Partner_FBP/directship_seller_performance_management.md",
+      "category_id": "fulfilled_by_partner_fbp",
+      "category_name": "Fulfilled by Partner (FBP)",
+      "char_count": 1987
+    },
+    {
+      "id": "essential_guidelines_for_bulky_directship_selling_model",
+      "title": "Essential Guidelines For Bulky DirectShip Selling Model",
+      "filename": "Fulfilled_by_Partner_FBP/essential_guidelines_for_bulky_directship_selling_model.md",
+      "category_id": "fulfilled_by_partner_fbp",
+      "category_name": "Fulfilled by Partner (FBP)",
+      "char_count": 3412
+    },
+    {
+      "id": "essential_guidelines_for_direct_delivery_selling_model",
+      "title": "Essential Guidelines For Direct Delivery Selling Model",
+      "filename": "Fulfilled_by_Partner_FBP/essential_guidelines_for_direct_delivery_selling_model.md",
+      "category_id": "fulfilled_by_partner_fbp",
+      "category_name": "Fulfilled by Partner (FBP)",
+      "char_count": 6100
+    },
+    {
+      "id": "fbp_directship_picklists",
+      "title": "FBP DirectShip Picklists",
+      "filename": "Fulfilled_by_Partner_FBP/fbp_directship_picklists.md",
+      "category_id": "fulfilled_by_partner_fbp",
+      "category_name": "Fulfilled by Partner (FBP)",
+      "char_count": 7631
+    },
+    {
+      "id": "fulfilled_by_partner_fbp_comprehensive_overview_30_1_2024",
+      "title": "Fulfilled By Partner (FBP) Comprehensive Overview",
+      "filename": "Fulfilled_by_Partner_FBP/fulfilled_by_partner_fbp_comprehensive_overview_30_1_2024.md",
+      "category_id": "fulfilled_by_partner_fbp",
+      "category_name": "Fulfilled by Partner (FBP)",
+      "char_count": 6448
+    },
+    {
+      "id": "fulfillment_modes_in_directship",
+      "title": "Fulfillment modes in Directship",
+      "filename": "Fulfilled_by_Partner_FBP/fulfillment_modes_in_directship.md",
+      "category_id": "fulfilled_by_partner_fbp",
+      "category_name": "Fulfilled by Partner (FBP)",
+      "char_count": 8467
+    },
+    {
+      "id": "how_do_i_manage_my_stock_and_prices",
+      "title": "How do I manage my stock and prices?",
+      "filename": "Fulfilled_by_Partner_FBP/how_do_i_manage_my_stock_and_prices.md",
+      "category_id": "fulfilled_by_partner_fbp",
+      "category_name": "Fulfilled by Partner (FBP)",
+      "char_count": 9653
+    },
+    {
+      "id": "how_to_accept_return_manifest_from_the_seller_lab",
+      "title": "How to Accept Return Manifest from the Seller Lab?",
+      "filename": "Fulfilled_by_Partner_FBP/how_to_accept_return_manifest_from_the_seller_lab.md",
+      "category_id": "fulfilled_by_partner_fbp",
+      "category_name": "Fulfilled by Partner (FBP)",
+      "char_count": 7167
+    },
+    {
+      "id": "how_to_calculate_the_directship_fee_in_egy",
+      "title": "How to calculate the DirectShip fee in EGY",
+      "filename": "Fulfilled_by_Partner_FBP/how_to_calculate_the_directship_fee_in_egy.md",
+      "category_id": "fulfilled_by_partner_fbp",
+      "category_name": "Fulfilled by Partner (FBP)",
+      "char_count": 4032
+    },
+    {
+      "id": "how_to_calculate_the_directship_fee_in_ksa",
+      "title": "How to calculate the DirectShip fee in KSA",
+      "filename": "Fulfilled_by_Partner_FBP/how_to_calculate_the_directship_fee_in_ksa.md",
+      "category_id": "fulfilled_by_partner_fbp",
+      "category_name": "Fulfilled by Partner (FBP)",
+      "char_count": 3652
+    },
+    {
+      "id": "how_to_calculate_the_directship_fee_in_uae",
+      "title": "How to calculate the DirectShip fee in UAE",
+      "filename": "Fulfilled_by_Partner_FBP/how_to_calculate_the_directship_fee_in_uae.md",
+      "category_id": "fulfilled_by_partner_fbp",
+      "category_name": "Fulfilled by Partner (FBP)",
+      "char_count": 3656
+    },
+    {
+      "id": "how_to_fulfill_directship_order_using_mobile_application",
+      "title": "How to fulfill Directship Order using Mobile Application?",
+      "filename": "Fulfilled_by_Partner_FBP/how_to_fulfill_directship_order_using_mobile_application.md",
+      "category_id": "fulfilled_by_partner_fbp",
+      "category_name": "Fulfilled by Partner (FBP)",
+      "char_count": 13703
+    },
+    {
+      "id": "how_to_process_directship_order_using_the_mobile_application",
+      "title": "How to process Directship Order using the Mobile Application?",
+      "filename": "Fulfilled_by_Partner_FBP/how_to_process_directship_order_using_the_mobile_application.md",
+      "category_id": "fulfilled_by_partner_fbp",
+      "category_name": "Fulfilled by Partner (FBP)",
+      "char_count": 10169
+    },
+    {
+      "id": "how_to_process_directship_order_using_the_seller_lab_1_10_20",
+      "title": "How to process Directship Order using the Seller Lab?",
+      "filename": "Fulfilled_by_Partner_FBP/how_to_process_directship_order_using_the_seller_lab_1_10_20.md",
+      "category_id": "fulfilled_by_partner_fbp",
+      "category_name": "Fulfilled by Partner (FBP)",
+      "char_count": 19516
+    },
+    {
+      "id": "multiple_login_channels_supply_chain_app",
+      "title": "Multiple Login Channels - Supply Chain App",
+      "filename": "Fulfilled_by_Partner_FBP/multiple_login_channels_supply_chain_app.md",
+      "category_id": "fulfilled_by_partner_fbp",
+      "category_name": "Fulfilled by Partner (FBP)",
+      "char_count": 9066
+    },
+    {
+      "id": "ordering_your_packaging_materials",
+      "title": "Ordering your Packaging Materials",
+      "filename": "Fulfilled_by_Partner_FBP/ordering_your_packaging_materials.md",
+      "category_id": "fulfilled_by_partner_fbp",
+      "category_name": "Fulfilled by Partner (FBP)",
+      "char_count": 3004
+    },
+    {
+      "id": "partner_sku_fbp_stock_update_import",
+      "title": "Partner SKU FBP stock update import",
+      "filename": "Fulfilled_by_Partner_FBP/partner_sku_fbp_stock_update_import.md",
+      "category_id": "fulfilled_by_partner_fbp",
+      "category_name": "Fulfilled by Partner (FBP)",
+      "char_count": 7586
+    },
+    {
+      "id": "quality_control_guidelines_for_directshipping",
+      "title": "Quality Control Guidelines for DirectShip",
+      "filename": "Fulfilled_by_Partner_FBP/quality_control_guidelines_for_directshipping.md",
+      "category_id": "fulfilled_by_partner_fbp",
+      "category_name": "Fulfilled by Partner (FBP)",
+      "char_count": 2816
+    },
+    {
+      "id": "returnless_refund_for_directship_sellers",
+      "title": "Returnless Refund for Directship sellers",
+      "filename": "Fulfilled_by_Partner_FBP/returnless_refund_for_directship_sellers.md",
+      "category_id": "fulfilled_by_partner_fbp",
+      "category_name": "Fulfilled by Partner (FBP)",
+      "char_count": 5441
+    },
+    {
+      "id": "seller_buyer_messaging_service",
+      "title": "Seller Buyer Messaging Service",
+      "filename": "Fulfilled_by_Partner_FBP/seller_buyer_messaging_service.md",
+      "category_id": "fulfilled_by_partner_fbp",
+      "category_name": "Fulfilled by Partner (FBP)",
+      "char_count": 8977
+    },
+    {
+      "id": "setting_up_your_delivery_area_for_direct_delivery_warehouse",
+      "title": "Setting up your Delivery Area for Direct Delivery Warehouse.",
+      "filename": "Fulfilled_by_Partner_FBP/setting_up_your_delivery_area_for_direct_delivery_warehouse.md",
+      "category_id": "fulfilled_by_partner_fbp",
+      "category_name": "Fulfilled by Partner (FBP)",
+      "char_count": 8297
+    },
+    {
+      "id": "what_are_the_dimensions_of_items_that_i_can_sell_using_fbp_a",
+      "title": "What are the dimensions of items that I can sell using FBP and FBN?",
+      "filename": "Fulfilled_by_Partner_FBP/what_are_the_dimensions_of_items_that_i_can_sell_using_fbp_a.md",
+      "category_id": "fulfilled_by_partner_fbp",
+      "category_name": "Fulfilled by Partner (FBP)",
+      "char_count": 9867
+    },
+    {
+      "id": "what_is_directship_30_1_2024",
+      "title": "What is DirectShip?",
+      "filename": "Fulfilled_by_Partner_FBP/what_is_directship_30_1_2024.md",
+      "category_id": "fulfilled_by_partner_fbp",
+      "category_name": "Fulfilled by Partner (FBP)",
+      "char_count": 9136
+    },
+    {
+      "id": "accessing_fbn_reports_on_seller_lab",
+      "title": "Accessing FBN Reports on Seller Lab",
+      "filename": "Fulfilled_by_noon_FBN/accessing_fbn_reports_on_seller_lab.md",
+      "category_id": "fulfilled_by_noon_fbn",
+      "category_name": "Fulfilled by noon (FBN)",
+      "char_count": 3360
+    },
+    {
+      "id": "fbn",
+      "title": "Fulfilled By noon (FBN) Comprehensive Overview",
+      "filename": "Fulfilled_by_noon_FBN/fbn.md",
+      "category_id": "fulfilled_by_noon_fbn",
+      "category_name": "Fulfilled by noon (FBN)",
+      "char_count": 4397
+    },
+    {
+      "id": "fbn_and_crossdock_b2b_received_reports",
+      "title": "FBN Received Report (GRN Report) & Crossdock B2B Received Report",
+      "filename": "Fulfilled_by_noon_FBN/fbn_and_crossdock_b2b_received_reports.md",
+      "category_id": "fulfilled_by_noon_fbn",
+      "category_name": "Fulfilled by noon (FBN)",
+      "char_count": 4749
+    },
+    {
+      "id": "fbn_fees_and_product_dimension_measurement_visibility_11_3_2",
+      "title": "FBN Fees and Product Dimension Measurement Visibility",
+      "filename": "Fulfilled_by_noon_FBN/fbn_fees_and_product_dimension_measurement_visibility_11_3_2.md",
+      "category_id": "fulfilled_by_noon_fbn",
+      "category_name": "Fulfilled by noon (FBN)",
+      "char_count": 8611
+    },
+    {
+      "id": "fbn_inbound_quality_check_policy",
+      "title": "FBN Inbound Quality Check Policy",
+      "filename": "Fulfilled_by_noon_FBN/fbn_inbound_quality_check_policy.md",
+      "category_id": "fulfilled_by_noon_fbn",
+      "category_name": "Fulfilled by noon (FBN)",
+      "char_count": 1071
+    },
+    {
+      "id": "fbn_inventory_detail_report",
+      "title": "FBN Inventory Detail Report",
+      "filename": "Fulfilled_by_noon_FBN/fbn_inventory_detail_report.md",
+      "category_id": "fulfilled_by_noon_fbn",
+      "category_name": "Fulfilled by noon (FBN)",
+      "char_count": 5453
+    },
+    {
+      "id": "fbn_inventory_removal_process",
+      "title": "FBN Inventory Removal Process",
+      "filename": "Fulfilled_by_noon_FBN/fbn_inventory_removal_process.md",
+      "category_id": "fulfilled_by_noon_fbn",
+      "category_name": "Fulfilled by noon (FBN)",
+      "char_count": 13335
+    },
+    {
+      "id": "fbn_storage_and_inventory_transfers",
+      "title": "Managing ASN and Storage",
+      "filename": "Fulfilled_by_noon_FBN/fbn_storage_and_inventory_transfers.md",
+      "category_id": "fulfilled_by_noon_fbn",
+      "category_name": "Fulfilled by noon (FBN)",
+      "char_count": 13471
+    },
+    {
+      "id": "fbn_volumetric_measurement_vm_dispute_policy",
+      "title": "FBN Volumetric Measurement (VM) Dispute Policy",
+      "filename": "Fulfilled_by_noon_FBN/fbn_volumetric_measurement_vm_dispute_policy.md",
+      "category_id": "fulfilled_by_noon_fbn",
+      "category_name": "Fulfilled by noon (FBN)",
+      "char_count": 9949
+    },
+    {
+      "id": "how_to_calculate_the_fbn_outbound_fee_and_inventory_removal_",
+      "title": "How to calculate the FBN Outbound Fee and Inventory Removal Fees in EGY",
+      "filename": "Fulfilled_by_noon_FBN/how_to_calculate_the_fbn_outbound_fee_and_inventory_removal_.md",
+      "category_id": "fulfilled_by_noon_fbn",
+      "category_name": "Fulfilled by noon (FBN)",
+      "char_count": 7738
+    },
+    {
+      "id": "how_to_calculate_the_fbn_outbound_fee_and_the_inventory_remo",
+      "title": "How to calculate the FBN Outbound Fee and the Inventory Removal Fee in UAE",
+      "filename": "Fulfilled_by_noon_FBN/how_to_calculate_the_fbn_outbound_fee_and_the_inventory_remo.md",
+      "category_id": "fulfilled_by_noon_fbn",
+      "category_name": "Fulfilled by noon (FBN)",
+      "char_count": 8011
+    },
+    {
+      "id": "how_to_setup_your_automated_return_preference_11_3_2024",
+      "title": "How to setup your Automated Return Preference?",
+      "filename": "Fulfilled_by_noon_FBN/how_to_setup_your_automated_return_preference_11_3_2024.md",
+      "category_id": "fulfilled_by_noon_fbn",
+      "category_name": "Fulfilled by noon (FBN)",
+      "char_count": 10425
+    },
+    {
+      "id": "managing_your_returns_managing_fbn_returns",
+      "title": "Managing your returns/ Managing FBN returns",
+      "filename": "Fulfilled_by_noon_FBN/managing_your_returns_managing_fbn_returns.md",
+      "category_id": "fulfilled_by_noon_fbn",
+      "category_name": "Fulfilled by noon (FBN)",
+      "char_count": 4608
+    },
+    {
+      "id": "new_inventory_ledger_reports_summary_and_detailed_view",
+      "title": "New Inventory Ledger Reports (Summary and Detailed View)",
+      "filename": "Fulfilled_by_noon_FBN/new_inventory_ledger_reports_summary_and_detailed_view.md",
+      "category_id": "fulfilled_by_noon_fbn",
+      "category_name": "Fulfilled by noon (FBN)",
+      "char_count": 6022
+    },
+    {
+      "id": "product_packing_guidelines_fbn",
+      "title": "Product packing guidelines - FBN",
+      "filename": "Fulfilled_by_noon_FBN/product_packing_guidelines_fbn.md",
+      "category_id": "fulfilled_by_noon_fbn",
+      "category_name": "Fulfilled by noon (FBN)",
+      "char_count": 6496
+    },
+    {
+      "id": "queue_management_system",
+      "title": "Queue Management System",
+      "filename": "Fulfilled_by_noon_FBN/queue_management_system.md",
+      "category_id": "fulfilled_by_noon_fbn",
+      "category_name": "Fulfilled by noon (FBN)",
+      "char_count": 4888
+    },
+    {
+      "id": "understand_the_stock_replenishment_report",
+      "title": "Understand the FBN Eligible Items Report (replenishment report)",
+      "filename": "Fulfilled_by_noon_FBN/understand_the_stock_replenishment_report.md",
+      "category_id": "fulfilled_by_noon_fbn",
+      "category_name": "Fulfilled by noon (FBN)",
+      "char_count": 2240
+    },
+    {
+      "id": "understanding_seller_tiers_and_inbound_performance",
+      "title": "Understanding Seller Tiers and Inbound Performance",
+      "filename": "Fulfilled_by_noon_FBN/understanding_seller_tiers_and_inbound_performance.md",
+      "category_id": "fulfilled_by_noon_fbn",
+      "category_name": "Fulfilled by noon (FBN)",
+      "char_count": 14030
+    },
+    {
+      "id": "what_is_fbn_inventory_dashboard",
+      "title": "What is FBN Inventory Dashboard?",
+      "filename": "Fulfilled_by_noon_FBN/what_is_fbn_inventory_dashboard.md",
+      "category_id": "fulfilled_by_noon_fbn",
+      "category_name": "Fulfilled by noon (FBN)",
+      "char_count": 6754
+    },
+    {
+      "id": "what_is_fbn_or_noon_express",
+      "title": "What is FBN or noon Express?",
+      "filename": "Fulfilled_by_noon_FBN/what_is_fbn_or_noon_express.md",
+      "category_id": "fulfilled_by_noon_fbn",
+      "category_name": "Fulfilled by noon (FBN)",
+      "char_count": 2634
+    },
+    {
+      "id": "cross_border_selling",
+      "title": "Cross-Border Selling FAQ",
+      "filename": "Global_Selling/cross_border_selling.md",
+      "category_id": "unknown",
+      "category_name": "Unknown",
+      "char_count": 7510
+    },
+    {
+      "id": "faq_cross_border_selling_in_the_gcc",
+      "title": "Cross-Border Selling",
+      "filename": "Global_Selling/faq_cross_border_selling_in_the_gcc.md",
+      "category_id": "unknown",
+      "category_name": "Unknown",
+      "char_count": 1607
+    },
+    {
+      "id": "global_seller_warranty_policy",
+      "title": "Global Seller Warranty Policy",
+      "filename": "Global_Selling/global_seller_warranty_policy.md",
+      "category_id": "global_selling",
+      "category_name": "Global Selling",
+      "char_count": 7256
+    },
+    {
+      "id": "global_selling",
+      "title": "Global Selling Overview",
+      "filename": "Global_Selling/global_selling.md",
+      "category_id": "global_selling",
+      "category_name": "Global Selling",
+      "char_count": 2310
+    },
+    {
+      "id": "how_to_setup_the_invoicing_profile_for_global_selling",
+      "title": "How to setup the Invoicing Profile for Global Selling?",
+      "filename": "Global_Selling/how_to_setup_the_invoicing_profile_for_global_selling.md",
+      "category_id": "global_selling",
+      "category_name": "Global Selling",
+      "char_count": 7941
+    },
+    {
+      "id": "noon_guide_to_setup_global_store_in_uae_ksa_for_indian_selle",
+      "title": "Noon Guide to Setup Global Store in UAE & KSA for Indian Sellers",
+      "filename": "Global_Selling/noon_guide_to_setup_global_store_in_uae_ksa_for_indian_selle.md",
+      "category_id": "global_selling",
+      "category_name": "Global Selling",
+      "char_count": 11934
+    },
+    {
+      "id": "seller_faqs_activating_and_managing_noon_global_store_for_ks",
+      "title": "Seller FAQs for noon Global store from UAE to KSA",
+      "filename": "Global_Selling/seller_faqs_activating_and_managing_noon_global_store_for_ks.md",
+      "category_id": "global_selling",
+      "category_name": "Global Selling",
+      "char_count": 7560
+    },
+    {
+      "id": "uae_to_ksa_onboarding_guide_for_noon_sellers",
+      "title": "UAE to KSA: Onboarding Guide for noon Sellers",
+      "filename": "Global_Selling/uae_to_ksa_onboarding_guide_for_noon_sellers.md",
+      "category_id": "global_selling",
+      "category_name": "Global Selling",
+      "char_count": 8590
+    },
+    {
+      "id": "analytics_dashboard_and_product_insights",
+      "title": "Product Insights",
+      "filename": "Governance_and_Performance_Management/analytics_dashboard_and_product_insights.md",
+      "category_id": "governance_and_performance_management",
+      "category_name": "Governance & Performance Management",
+      "char_count": 4030
+    },
+    {
+      "id": "governance_performance_management",
+      "title": "Governance & Performance Management Comprehensive Overview",
+      "filename": "Governance_and_Performance_Management/governance_performance_management.md",
+      "category_id": "governance_and_performance_management",
+      "category_name": "Governance & Performance Management",
+      "char_count": 2338
+    },
+    {
+      "id": "how_to_receive_rtv_shipments_using_the_supply_chain_external",
+      "title": "How to receive RTV shipments using the Supply Chain External app",
+      "filename": "Governance_and_Performance_Management/how_to_receive_rtv_shipments_using_the_supply_chain_external.md",
+      "category_id": "governance_and_performance_management",
+      "category_name": "Governance & Performance Management",
+      "char_count": 3992
+    },
+    {
+      "id": "how_to_report_the_seller_reviews",
+      "title": "How to report the seller reviews?",
+      "filename": "Governance_and_Performance_Management/how_to_report_the_seller_reviews.md",
+      "category_id": "governance_and_performance_management",
+      "category_name": "Governance & Performance Management",
+      "char_count": 4106
+    },
+    {
+      "id": "inventory_health_dashboard",
+      "title": "Inventory Health Dashboard",
+      "filename": "Governance_and_Performance_Management/inventory_health_dashboard.md",
+      "category_id": "governance_and_performance_management",
+      "category_name": "Governance & Performance Management",
+      "char_count": 10845
+    },
+    {
+      "id": "overview_of_sales_view",
+      "title": "Overview of Sales View",
+      "filename": "Governance_and_Performance_Management/overview_of_sales_view.md",
+      "category_id": "governance_and_performance_management",
+      "category_name": "Governance & Performance Management",
+      "char_count": 3909
+    },
+    {
+      "id": "partial_rtv_handover_in_noon_hubs",
+      "title": "Partial RTV Handover in noon Hubs",
+      "filename": "Governance_and_Performance_Management/partial_rtv_handover_in_noon_hubs.md",
+      "category_id": "governance_and_performance_management",
+      "category_name": "Governance & Performance Management",
+      "char_count": 2290
+    },
+    {
+      "id": "product_review_ratings",
+      "title": "Product Review & Ratings",
+      "filename": "Governance_and_Performance_Management/product_review_ratings.md",
+      "category_id": "governance_and_performance_management",
+      "category_name": "Governance & Performance Management",
+      "char_count": 2490
+    },
+    {
+      "id": "receiving_methods_for_rtv_delivery",
+      "title": "Receiving Methods for RTV delivery",
+      "filename": "Governance_and_Performance_Management/receiving_methods_for_rtv_delivery.md",
+      "category_id": "governance_and_performance_management",
+      "category_name": "Governance & Performance Management",
+      "char_count": 1643
+    },
+    {
+      "id": "reputation_management_dashboard",
+      "title": "Reputation Management Dashboard",
+      "filename": "Governance_and_Performance_Management/reputation_management_dashboard.md",
+      "category_id": "governance_and_performance_management",
+      "category_name": "Governance & Performance Management",
+      "char_count": 7814
+    },
+    {
+      "id": "saleable_recommended_rtv_report",
+      "title": "Saleable Recommended RTV Report",
+      "filename": "Governance_and_Performance_Management/saleable_recommended_rtv_report.md",
+      "category_id": "governance_and_performance_management",
+      "category_name": "Governance & Performance Management",
+      "char_count": 3750
+    },
+    {
+      "id": "seller_reputation_dashboard",
+      "title": "Reputation Management Dashboard",
+      "filename": "Governance_and_Performance_Management/seller_reputation_dashboard.md",
+      "category_id": "unknown",
+      "category_name": "Unknown",
+      "char_count": 7790
+    },
+    {
+      "id": "seller_reviews_ratings",
+      "title": "Seller reviews & ratings",
+      "filename": "Governance_and_Performance_Management/seller_reviews_ratings.md",
+      "category_id": "governance_and_performance_management",
+      "category_name": "Governance & Performance Management",
+      "char_count": 4420
+    },
+    {
+      "id": "what_is_fbp_performance_dashboard",
+      "title": "What is FBP Performance Dashboard?",
+      "filename": "Governance_and_Performance_Management/what_is_fbp_performance_dashboard.md",
+      "category_id": "governance_and_performance_management",
+      "category_name": "Governance & Performance Management",
+      "char_count": 5734
+    },
+    {
+      "id": "what_is_the_returns_reduction_dashboard",
+      "title": "What Is The Returns Reduction Dashboard",
+      "filename": "Governance_and_Performance_Management/what_is_the_returns_reduction_dashboard.md",
+      "category_id": "governance_and_performance_management",
+      "category_name": "Governance & Performance Management",
+      "char_count": 3094
+    },
+    {
+      "id": "winning_the_buy_box",
+      "title": "Winning the Buy Box",
+      "filename": "Governance_and_Performance_Management/winning_the_buy_box.md",
+      "category_id": "governance_and_performance_management",
+      "category_name": "Governance & Performance Management",
+      "char_count": 4147
+    },
+    {
+      "id": "how_can_i_track_my_rtv_shipments_and_notifications",
+      "title": "How can I track my RTV shipments and notifications?",
+      "filename": "Inventory_Removal/how_can_i_track_my_rtv_shipments_and_notifications.md",
+      "category_id": "inventory_removal",
+      "category_name": "Inventory Removal",
+      "char_count": 5672
+    },
+    {
+      "id": "inventory_removal",
+      "title": "Inventory Removal Comprehensive Overview",
+      "filename": "Inventory_Removal/inventory_removal.md",
+      "category_id": "inventory_removal",
+      "category_name": "Inventory Removal",
+      "char_count": 5315
+    },
+    {
+      "id": "non_saleable_recommended_rtv_report",
+      "title": "Non- Saleable Recommended RTV Report",
+      "filename": "Inventory_Removal/non_saleable_recommended_rtv_report.md",
+      "category_id": "inventory_removal",
+      "category_name": "Inventory Removal",
+      "char_count": 3767
+    },
+    {
+      "id": "jump_integration",
+      "title": "Jump Integration",
+      "filename": "JUMP/jump_integration.md",
+      "category_id": "jump",
+      "category_name": "JUMP",
+      "char_count": 10508
+    },
+    {
+      "id": "create_and_manage_your_seller_profile",
+      "title": "Create and Manage Your Seller Profile",
+      "filename": "Onboarding_and_Registration/create_and_manage_your_seller_profile.md",
+      "category_id": "onboarding_and_registration",
+      "category_name": "Onboarding & Registration",
+      "char_count": 3651
+    },
+    {
+      "id": "cross_border_selling_faq",
+      "title": "Cross-Border Selling FAQ",
+      "filename": "Onboarding_and_Registration/cross_border_selling_faq.md",
+      "category_id": "onboarding_and_registration",
+      "category_name": "Onboarding & Registration",
+      "char_count": 7524
+    },
+    {
+      "id": "documents_required_to_sell_on_noon",
+      "title": "Documents Required to Sell on noon",
+      "filename": "Onboarding_and_Registration/documents_required_to_sell_on_noon.md",
+      "category_id": "onboarding_and_registration",
+      "category_name": "Onboarding & Registration",
+      "char_count": 6690
+    },
+    {
+      "id": "edit_your_store_information",
+      "title": "Edit Your Store Information",
+      "filename": "Onboarding_and_Registration/edit_your_store_information.md",
+      "category_id": "onboarding_and_registration",
+      "category_name": "Onboarding & Registration",
+      "char_count": 2637
+    },
+    {
+      "id": "egypt_seller_terms_and_conditions_t_cs",
+      "title": "Egypt seller terms and conditions (T&Cs)",
+      "filename": "Onboarding_and_Registration/egypt_seller_terms_and_conditions_t_cs.md",
+      "category_id": "onboarding_and_registration",
+      "category_name": "Onboarding & Registration",
+      "char_count": 58481
+    },
+    {
+      "id": "how_can_i_sell_on_noon_as_a_non_vat_registered_seller_12_3_2",
+      "title": "How Can I Sell on noon as a Non-VAT Registered Seller?",
+      "filename": "Onboarding_and_Registration/how_can_i_sell_on_noon_as_a_non_vat_registered_seller_12_3_2.md",
+      "category_id": "onboarding_and_registration",
+      "category_name": "Onboarding & Registration",
+      "char_count": 1097
+    },
+    {
+      "id": "how_can_you_register_for_cross_border_business",
+      "title": "How can you register for cross-border business?",
+      "filename": "Onboarding_and_Registration/how_can_you_register_for_cross_border_business.md",
+      "category_id": "onboarding_and_registration",
+      "category_name": "Onboarding & Registration",
+      "char_count": 5261
+    },
+    {
+      "id": "how_to_add_the_bank_details_in_the_legal_entity_12_3_2024_1",
+      "title": "How To Add The Bank Details In The Legal Entity.",
+      "filename": "Onboarding_and_Registration/how_to_add_the_bank_details_in_the_legal_entity_12_3_2024_1.md",
+      "category_id": "onboarding_and_registration",
+      "category_name": "Onboarding & Registration",
+      "char_count": 2134
+    },
+    {
+      "id": "how_to_add_user_on_the_seller_lab",
+      "title": "How to add user on the Seller Lab?",
+      "filename": "Onboarding_and_Registration/how_to_add_user_on_the_seller_lab.md",
+      "category_id": "onboarding_and_registration",
+      "category_name": "Onboarding & Registration",
+      "char_count": 6302
+    },
+    {
+      "id": "how_to_apply_for_a_trade_license_in_dubai",
+      "title": "How to apply for a Trade License in Dubai",
+      "filename": "Onboarding_and_Registration/how_to_apply_for_a_trade_license_in_dubai.md",
+      "category_id": "onboarding_and_registration",
+      "category_name": "Onboarding & Registration",
+      "char_count": 3202
+    },
+    {
+      "id": "how_to_upload_my_logo_and_banner_to_my_seller_profile",
+      "title": "How to upload my logo and banner to my seller profile",
+      "filename": "Onboarding_and_Registration/how_to_upload_my_logo_and_banner_to_my_seller_profile.md",
+      "category_id": "onboarding_and_registration",
+      "category_name": "Onboarding & Registration",
+      "char_count": 4109
+    },
+    {
+      "id": "i_m_registered_as_a_noon_seller_what_s_next_12_3_2024",
+      "title": "I’m Registered as a noon Seller - What’s Next?",
+      "filename": "Onboarding_and_Registration/i_m_registered_as_a_noon_seller_what_s_next_12_3_2024.md",
+      "category_id": "onboarding_and_registration",
+      "category_name": "Onboarding & Registration",
+      "char_count": 2220
+    },
+    {
+      "id": "international_seller_terms_and_conditions_in_uae",
+      "title": "International Seller Terms and Conditions in UAE",
+      "filename": "Onboarding_and_Registration/international_seller_terms_and_conditions_in_uae.md",
+      "category_id": "onboarding_and_registration",
+      "category_name": "Onboarding & Registration",
+      "char_count": 37168
+    },
+    {
+      "id": "ksa_seller_terms_and_conditions_t_cs",
+      "title": "KSA seller terms and conditions (T&Cs)",
+      "filename": "Onboarding_and_Registration/ksa_seller_terms_and_conditions_t_cs.md",
+      "category_id": "onboarding_and_registration",
+      "category_name": "Onboarding & Registration",
+      "char_count": 61124
+    },
+    {
+      "id": "managing_your_invoices_credit_notes_on_noon_16_3_2025",
+      "title": "Managing Your Invoices & Credit Notes on noon",
+      "filename": "Onboarding_and_Registration/managing_your_invoices_credit_notes_on_noon_16_3_2025.md",
+      "category_id": "onboarding_and_registration",
+      "category_name": "Onboarding & Registration",
+      "char_count": 7698
+    },
+    {
+      "id": "onboarding_registration_comprehensive_overview",
+      "title": "Onboarding & Registration Comprehensive Overview",
+      "filename": "Onboarding_and_Registration/onboarding_registration_comprehensive_overview.md",
+      "category_id": "onboarding_and_registration",
+      "category_name": "Onboarding & Registration",
+      "char_count": 3872
+    },
+    {
+      "id": "seller_registration_process_12_3_2024",
+      "title": "Seller Registration Process",
+      "filename": "Onboarding_and_Registration/seller_registration_process_12_3_2024.md",
+      "category_id": "onboarding_and_registration",
+      "category_name": "Onboarding & Registration",
+      "char_count": 15265
+    },
+    {
+      "id": "setting_your_contact_preferences",
+      "title": "Setting your Contact Preferences",
+      "filename": "Onboarding_and_Registration/setting_your_contact_preferences.md",
+      "category_id": "onboarding_and_registration",
+      "category_name": "Onboarding & Registration",
+      "char_count": 5947
+    },
+    {
+      "id": "uae_seller_terms_and_conditions_t_cs",
+      "title": "UAE seller terms and conditions (T&Cs)",
+      "filename": "Onboarding_and_Registration/uae_seller_terms_and_conditions_t_cs.md",
+      "category_id": "onboarding_and_registration",
+      "category_name": "Onboarding & Registration",
+      "char_count": 63358
+    },
+    {
+      "id": "uae_to_ksa_automated_onboarding_guide_for_noon_sellers",
+      "title": "UAE to KSA: Onboarding Guide for noon Sellers",
+      "filename": "Onboarding_and_Registration/uae_to_ksa_automated_onboarding_guide_for_noon_sellers.md",
+      "category_id": "unknown",
+      "category_name": "Unknown",
+      "char_count": 8601
+    },
+    {
+      "id": "update_your_legal_documents_12_3_2024",
+      "title": "Update Your Legal Documents",
+      "filename": "Onboarding_and_Registration/update_your_legal_documents_12_3_2024.md",
+      "category_id": "onboarding_and_registration",
+      "category_name": "Onboarding & Registration",
+      "char_count": 11798
+    },
+    {
+      "id": "vat_frequently_asked_questions_12_3_2024_1",
+      "title": "VAT Frequently asked questions",
+      "filename": "Onboarding_and_Registration/vat_frequently_asked_questions_12_3_2024_1.md",
+      "category_id": "onboarding_and_registration",
+      "category_name": "Onboarding & Registration",
+      "char_count": 4300
+    },
+    {
+      "id": "what_is_mahali",
+      "title": "What is Mahali?",
+      "filename": "Onboarding_and_Registration/what_is_mahali.md",
+      "category_id": "onboarding_and_registration",
+      "category_name": "Onboarding & Registration",
+      "char_count": 4349
+    },
+    {
+      "id": "why_am_i_ineligible_to_sell_on_noon",
+      "title": "Why Am I ineligible to sell on noon?",
+      "filename": "Onboarding_and_Registration/why_am_i_ineligible_to_sell_on_noon.md",
+      "category_id": "onboarding_and_registration",
+      "category_name": "Onboarding & Registration",
+      "char_count": 2604
+    },
+    {
+      "id": "determining_your_prices_global_min_max",
+      "title": "Determining Your Prices - Global Min & Max",
+      "filename": "Price_and_Inventory_Management/determining_your_prices_global_min_max.md",
+      "category_id": "price_and_inventory_management",
+      "category_name": "Price & Inventory Management",
+      "char_count": 3237
+    },
+    {
+      "id": "increase_your_sales_with_the_price_engine",
+      "title": "Increase Your Sales with the Price Engine",
+      "filename": "Price_and_Inventory_Management/increase_your_sales_with_the_price_engine.md",
+      "category_id": "price_and_inventory_management",
+      "category_name": "Price & Inventory Management",
+      "char_count": 10006
+    },
+    {
+      "id": "partner_sku_price_range_import",
+      "title": "Partner SKU price range import",
+      "filename": "Price_and_Inventory_Management/partner_sku_price_range_import.md",
+      "category_id": "price_and_inventory_management",
+      "category_name": "Price & Inventory Management",
+      "char_count": 6909
+    },
+    {
+      "id": "partner_sku_price_update_import",
+      "title": "Partner SKU price update import",
+      "filename": "Price_and_Inventory_Management/partner_sku_price_update_import.md",
+      "category_id": "price_and_inventory_management",
+      "category_name": "Price & Inventory Management",
+      "char_count": 10076
+    },
+    {
+      "id": "price_inventory_management",
+      "title": "Price & Inventory Management Comprehensive Overview",
+      "filename": "Price_and_Inventory_Management/price_inventory_management.md",
+      "category_id": "price_and_inventory_management",
+      "category_name": "Price & Inventory Management",
+      "char_count": 1434
+    },
+    {
+      "id": "secure_file_transfer_protocol_activation",
+      "title": "Secure File Transfer Protocol Activation",
+      "filename": "Price_and_Inventory_Management/secure_file_transfer_protocol_activation.md",
+      "category_id": "price_and_inventory_management",
+      "category_name": "Price & Inventory Management",
+      "char_count": 3063
+    },
+    {
+      "id": "secure_file_transfer_protocol_guidelines",
+      "title": "Secure File Transfer Protocol Guidelines",
+      "filename": "Price_and_Inventory_Management/secure_file_transfer_protocol_guidelines.md",
+      "category_id": "price_and_inventory_management",
+      "category_name": "Price & Inventory Management",
+      "char_count": 4908
+    },
+    {
+      "id": "accessing_catalog_using_the_new_offer_management_tool",
+      "title": "Accessing Catalog Using the New Catalog Tool",
+      "filename": "Product_Listing/accessing_catalog_using_the_new_offer_management_tool.md",
+      "category_id": "product_listing",
+      "category_name": "Product Listing",
+      "char_count": 7870
+    },
+    {
+      "id": "barcode_requirements",
+      "title": "Barcode Requirements",
+      "filename": "Product_Listing/barcode_requirements.md",
+      "category_id": "product_listing",
+      "category_name": "Product Listing",
+      "char_count": 6690
+    },
+    {
+      "id": "brand_creation_guidelines_15_4_2024",
+      "title": "Brand Creation Guidelines",
+      "filename": "Product_Listing/brand_creation_guidelines_15_4_2024.md",
+      "category_id": "product_listing",
+      "category_name": "Product Listing",
+      "char_count": 6069
+    },
+    {
+      "id": "brand_registration",
+      "title": "Brand Registration",
+      "filename": "Product_Listing/brand_registration.md",
+      "category_id": "product_listing",
+      "category_name": "Product Listing",
+      "char_count": 6052
+    },
+    {
+      "id": "catalog_content_pdp_article",
+      "title": "Understanding the Catalog Creation page",
+      "filename": "Product_Listing/catalog_content_pdp_article.md",
+      "category_id": "product_listing",
+      "category_name": "Product Listing",
+      "char_count": 21821
+    },
+    {
+      "id": "content_guidelines_for_product_listing_for_home_category",
+      "title": "Content Guidelines for Product Listing for Home Category",
+      "filename": "Product_Listing/content_guidelines_for_product_listing_for_home_category.md",
+      "category_id": "product_listing",
+      "category_name": "Product Listing",
+      "char_count": 10749
+    },
+    {
+      "id": "create_a_new_product_of_a_noon_controlled_brand",
+      "title": "Create a New Product of a Noon Controlled Brand",
+      "filename": "Product_Listing/create_a_new_product_of_a_noon_controlled_brand.md",
+      "category_id": "product_listing",
+      "category_name": "Product Listing",
+      "char_count": 9034
+    },
+    {
+      "id": "creating_product_variations_adding_sizes_colors_and_other_at",
+      "title": "Creating product variations: adding sizes, colors, and other attributes",
+      "filename": "Product_Listing/creating_product_variations_adding_sizes_colors_and_other_at.md",
+      "category_id": "product_listing",
+      "category_name": "Product Listing",
+      "char_count": 5236
+    },
+    {
+      "id": "feature_bullets_product_highlights_and_description_for_the_s",
+      "title": "Feature Bullets (Product Highlights) and Description for the Seller SKU",
+      "filename": "Product_Listing/feature_bullets_product_highlights_and_description_for_the_s.md",
+      "category_id": "product_listing",
+      "category_name": "Product Listing",
+      "char_count": 19962
+    },
+    {
+      "id": "guidelines_for_prohibited_items_and_keywords",
+      "title": "Guidelines For Prohibited Items And Keywords",
+      "filename": "Product_Listing/guidelines_for_prohibited_items_and_keywords.md",
+      "category_id": "product_listing",
+      "category_name": "Product Listing",
+      "char_count": 4901
+    },
+    {
+      "id": "how_to_categorize_your_seller_sku",
+      "title": "How to Categorize your Seller SKU",
+      "filename": "Product_Listing/how_to_categorize_your_seller_sku.md",
+      "category_id": "product_listing",
+      "category_name": "Product Listing",
+      "char_count": 6966
+    },
+    {
+      "id": "how_to_create_product_titles_of_grocery_items",
+      "title": "How to create product titles of grocery items",
+      "filename": "Product_Listing/how_to_create_product_titles_of_grocery_items.md",
+      "category_id": "product_listing",
+      "category_name": "Product Listing",
+      "char_count": 3034
+    },
+    {
+      "id": "how_to_list_products_belonging_to_multiple_categories_in_bul",
+      "title": "How to list products belonging to multiple categories in bulk",
+      "filename": "Product_Listing/how_to_list_products_belonging_to_multiple_categories_in_bul.md",
+      "category_id": "product_listing",
+      "category_name": "Product Listing",
+      "char_count": 8173
+    },
+    {
+      "id": "how_to_make_your_fbn_products_live_reactivate",
+      "title": "How to make your FBN products live? (reactivate)",
+      "filename": "Product_Listing/how_to_make_your_fbn_products_live_reactivate.md",
+      "category_id": "product_listing",
+      "category_name": "Product Listing",
+      "char_count": 6516
+    },
+    {
+      "id": "how_to_search_for_items_in_the_partner_catalog",
+      "title": "How to search for items in the Partner Catalog",
+      "filename": "Product_Listing/how_to_search_for_items_in_the_partner_catalog.md",
+      "category_id": "product_listing",
+      "category_name": "Product Listing",
+      "char_count": 3684
+    },
+    {
+      "id": "how_to_use_and_make_changes_to_your_products_on_catalog_list",
+      "title": "How to use and make changes to your products on catalog listing page?",
+      "filename": "Product_Listing/how_to_use_and_make_changes_to_your_products_on_catalog_list.md",
+      "category_id": "product_listing",
+      "category_name": "Product Listing",
+      "char_count": 5631
+    },
+    {
+      "id": "listing_apple_products_with_noon",
+      "title": "Guidelines for listing Apple products",
+      "filename": "Product_Listing/listing_apple_products_with_noon.md",
+      "category_id": "product_listing",
+      "category_name": "Product Listing",
+      "char_count": 2562
+    },
+    {
+      "id": "listing_products_on_noon_faq",
+      "title": "Listing Products on noon - FAQ",
+      "filename": "Product_Listing/listing_products_on_noon_faq.md",
+      "category_id": "product_listing",
+      "category_name": "Product Listing",
+      "char_count": 16341
+    },
+    {
+      "id": "partner_sku_delete_import",
+      "title": "Partner SKU delete import",
+      "filename": "Product_Listing/partner_sku_delete_import.md",
+      "category_id": "product_listing",
+      "category_name": "Product Listing",
+      "char_count": 5052
+    },
+    {
+      "id": "partner_sku_rename_import",
+      "title": "Partner SKU rename import",
+      "filename": "Product_Listing/partner_sku_rename_import.md",
+      "category_id": "product_listing",
+      "category_name": "Product Listing",
+      "char_count": 3594
+    },
+    {
+      "id": "picture_requirements_and_rejection_reasons_for_the_seller_sk",
+      "title": "Picture Requirements and Rejection Reasons for the Seller SKU",
+      "filename": "Product_Listing/picture_requirements_and_rejection_reasons_for_the_seller_sk.md",
+      "category_id": "product_listing",
+      "category_name": "Product Listing",
+      "char_count": 10295
+    },
+    {
+      "id": "product_listing",
+      "title": "Product Listing Comprehensive Overview",
+      "filename": "Product_Listing/product_listing.md",
+      "category_id": "product_listing",
+      "category_name": "Product Listing",
+      "char_count": 8502
+    },
+    {
+      "id": "prohibited_products",
+      "title": "Prohibited Products",
+      "filename": "Product_Listing/prohibited_products.md",
+      "category_id": "product_listing",
+      "category_name": "Product Listing",
+      "char_count": 2713
+    },
+    {
+      "id": "relabeling_feature_for_non_saleable_inventory_15_4_2024",
+      "title": "Relabeling Feature for non saleable inventory",
+      "filename": "Product_Listing/relabeling_feature_for_non_saleable_inventory_15_4_2024.md",
+      "category_id": "product_listing",
+      "category_name": "Product Listing",
+      "char_count": 6389
+    },
+    {
+      "id": "seller_sku_bulk_creation",
+      "title": "Seller SKU Bulk Creation",
+      "filename": "Product_Listing/seller_sku_bulk_creation.md",
+      "category_id": "product_listing",
+      "category_name": "Product Listing",
+      "char_count": 10077
+    },
+    {
+      "id": "seller_sku_content_export_12_3_2024",
+      "title": "Seller SKU Content Export and Translation",
+      "filename": "Product_Listing/seller_sku_content_export_12_3_2024.md",
+      "category_id": "product_listing",
+      "category_name": "Product Listing",
+      "char_count": 6818
+    },
+    {
+      "id": "seller_sku_content_language_requirements",
+      "title": "Seller SKU Content Language Requirements",
+      "filename": "Product_Listing/seller_sku_content_language_requirements.md",
+      "category_id": "product_listing",
+      "category_name": "Product Listing",
+      "char_count": 1918
+    },
+    {
+      "id": "seller_sku_content_quality",
+      "title": "Seller SKU Content Quality",
+      "filename": "Product_Listing/seller_sku_content_quality.md",
+      "category_id": "product_listing",
+      "category_name": "Product Listing",
+      "char_count": 10367
+    },
+    {
+      "id": "seller_sku_quick_copy_of_the_content",
+      "title": "Seller SKU Quick Copy of the Content",
+      "filename": "Product_Listing/seller_sku_quick_copy_of_the_content.md",
+      "category_id": "product_listing",
+      "category_name": "Product Listing",
+      "char_count": 1722
+    },
+    {
+      "id": "single_sku_creation",
+      "title": "Single SKU creation",
+      "filename": "Product_Listing/single_sku_creation.md",
+      "category_id": "product_listing",
+      "category_name": "Product Listing",
+      "char_count": 8036
+    },
+    {
+      "id": "the_seller_sku_brand",
+      "title": "The Seller SKU Brand",
+      "filename": "Product_Listing/the_seller_sku_brand.md",
+      "category_id": "product_listing",
+      "category_name": "Product Listing",
+      "char_count": 4232
+    },
+    {
+      "id": "the_seller_sku_product_attributes",
+      "title": "The Seller SKU Product Attributes",
+      "filename": "Product_Listing/the_seller_sku_product_attributes.md",
+      "category_id": "product_listing",
+      "category_name": "Product Listing",
+      "char_count": 4876
+    },
+    {
+      "id": "the_seller_sku_s_content_guidelines_for_laptop_monitors",
+      "title": "The Seller SKU's Content Guidelines for Laptop & Monitors",
+      "filename": "Product_Listing/the_seller_sku_s_content_guidelines_for_laptop_monitors.md",
+      "category_id": "product_listing",
+      "category_name": "Product Listing",
+      "char_count": 11231
+    },
+    {
+      "id": "title_requirements_and_rejection_reasons_for_the_seller_sku",
+      "title": "Title Requirements and Rejection Reasons for the Seller SKU",
+      "filename": "Product_Listing/title_requirements_and_rejection_reasons_for_the_seller_sku.md",
+      "category_id": "product_listing",
+      "category_name": "Product Listing",
+      "char_count": 7747
+    },
+    {
+      "id": "video_guidelines_and_rejection_reasons_for_seller_skus",
+      "title": "Video Guidelines and Rejection Reasons for Seller SKUs",
+      "filename": "Product_Listing/video_guidelines_and_rejection_reasons_for_seller_skus.md",
+      "category_id": "product_listing",
+      "category_name": "Product Listing",
+      "char_count": 8817
+    },
+    {
+      "id": "warranty_requirements_12_3_2024",
+      "title": "Warranty Requirements",
+      "filename": "Product_Listing/warranty_requirements_12_3_2024.md",
+      "category_id": "product_listing",
+      "category_name": "Product Listing",
+      "char_count": 2343
+    },
+    {
+      "id": "what_is_the_noon_catalog",
+      "title": "What is Catalog?",
+      "filename": "Product_Listing/what_is_the_noon_catalog.md",
+      "category_id": "product_listing",
+      "category_name": "Product Listing",
+      "char_count": 7817
+    },
+    {
+      "id": "anti_fraud_and_seller_code_of_conduct_policy",
+      "title": "Anti-Fraud, Anti-Counterfeit and Seller Code of Conduct Policy",
+      "filename": "Program_Policies/anti_fraud_and_seller_code_of_conduct_policy.md",
+      "category_id": "program_policies",
+      "category_name": "Program Policies",
+      "char_count": 4467
+    },
+    {
+      "id": "automated_reimbursement_process_for_lost_damaged_items",
+      "title": "Automated Reimbursement Process for Lost & Damaged Items",
+      "filename": "Program_Policies/automated_reimbursement_process_for_lost_damaged_items.md",
+      "category_id": "program_policies",
+      "category_name": "Program Policies",
+      "char_count": 8548
+    },
+    {
+      "id": "comprehensive_guide_to_noon_seller_policies_your_path_to_suc",
+      "title": "Program Policies",
+      "filename": "Program_Policies/comprehensive_guide_to_noon_seller_policies_your_path_to_suc.md",
+      "category_id": "unknown",
+      "category_name": "Unknown",
+      "char_count": 6438
+    },
+    {
+      "id": "cross_border_selling_7_4_2025",
+      "title": "Cross-Border Selling",
+      "filename": "Program_Policies/cross_border_selling_7_4_2025.md",
+      "category_id": "program_policies",
+      "category_name": "Program Policies",
+      "char_count": 1602
+    },
+    {
+      "id": "customer_reviews_anti_manipulation_policy",
+      "title": "Customer Reviews Anti-Manipulation Policy",
+      "filename": "Program_Policies/customer_reviews_anti_manipulation_policy.md",
+      "category_id": "program_policies",
+      "category_name": "Program Policies",
+      "char_count": 3987
+    },
+    {
+      "id": "directship_seller_returns_dispute_and_reimbursement_policy",
+      "title": "DirectShip Seller Returns: Dispute and Reimbursement Policy",
+      "filename": "Program_Policies/directship_seller_returns_dispute_and_reimbursement_policy.md",
+      "category_id": "program_policies",
+      "category_name": "Program Policies",
+      "char_count": 7578
+    },
+    {
+      "id": "directship_volumetric_measurement_dispute_policy",
+      "title": "DirectShip Volumetric Measurement Dispute Policy",
+      "filename": "Program_Policies/directship_volumetric_measurement_dispute_policy.md",
+      "category_id": "program_policies",
+      "category_name": "Program Policies",
+      "char_count": 3880
+    },
+    {
+      "id": "disputes_claims_resolution_policy",
+      "title": "Disputes & Claims Resolution Policy",
+      "filename": "Program_Policies/disputes_claims_resolution_policy.md",
+      "category_id": "program_policies",
+      "category_name": "Program Policies",
+      "char_count": 18140
+    },
+    {
+      "id": "e_invoicing_services_in_the_kingdom_of_saudi_arabia_ksa",
+      "title": "E-invoicing policy for KSA",
+      "filename": "Program_Policies/e_invoicing_services_in_the_kingdom_of_saudi_arabia_ksa.md",
+      "category_id": "program_policies",
+      "category_name": "Program Policies",
+      "char_count": 2875
+    },
+    {
+      "id": "fbn_packing_and_delivery_policy",
+      "title": "FBN - Packing and Delivery Policy",
+      "filename": "Program_Policies/fbn_packing_and_delivery_policy.md",
+      "category_id": "program_policies",
+      "category_name": "Program Policies",
+      "char_count": 5680
+    },
+    {
+      "id": "fulfilled_by_noon_fbn_fees_in_egypt",
+      "title": "Fulfilled by Noon (FBN) Fees in Egypt",
+      "filename": "Program_Policies/fulfilled_by_noon_fbn_fees_in_egypt.md",
+      "category_id": "program_policies",
+      "category_name": "Program Policies",
+      "char_count": 11386
+    },
+    {
+      "id": "fulfilled_by_noon_fbn_fees_in_ksa",
+      "title": "Fulfilled by Noon (FBN) Fees in KSA",
+      "filename": "Program_Policies/fulfilled_by_noon_fbn_fees_in_ksa.md",
+      "category_id": "program_policies",
+      "category_name": "Program Policies",
+      "char_count": 15149
+    },
+    {
+      "id": "fulfilled_by_noon_fbn_fees_in_ksa_refurbished_renewed",
+      "title": "Fulfilled by Noon (FBN) Fees in KSA - Refurbished & Renewed",
+      "filename": "Program_Policies/fulfilled_by_noon_fbn_fees_in_ksa_refurbished_renewed.md",
+      "category_id": "program_policies",
+      "category_name": "Program Policies",
+      "char_count": 8207
+    },
+    {
+      "id": "fulfilled_by_noon_fbn_fees_in_uae_11_3_2024",
+      "title": "Fulfilled by Noon (FBN) Fees in UAE",
+      "filename": "Program_Policies/fulfilled_by_noon_fbn_fees_in_uae_11_3_2024.md",
+      "category_id": "program_policies",
+      "category_name": "Program Policies",
+      "char_count": 15038
+    },
+    {
+      "id": "fulfilled_by_noon_fbn_fees_in_uae_refurbished_renewed",
+      "title": "Fulfilled by Noon (FBN) Fees in UAE - Refurbished & Renewed",
+      "filename": "Program_Policies/fulfilled_by_noon_fbn_fees_in_uae_refurbished_renewed.md",
+      "category_id": "program_policies",
+      "category_name": "Program Policies",
+      "char_count": 8327
+    },
+    {
+      "id": "fulfilled_by_partner_fbp_fees_in_egypt",
+      "title": "Fulfilled by Partner (FBP) Fees in Egypt",
+      "filename": "Program_Policies/fulfilled_by_partner_fbp_fees_in_egypt.md",
+      "category_id": "program_policies",
+      "category_name": "Program Policies",
+      "char_count": 11060
+    },
+    {
+      "id": "fulfilled_by_partner_fbp_fees_in_ksa",
+      "title": "Fulfilled by Partner (FBP) Fees in KSA",
+      "filename": "Program_Policies/fulfilled_by_partner_fbp_fees_in_ksa.md",
+      "category_id": "program_policies",
+      "category_name": "Program Policies",
+      "char_count": 12943
+    },
+    {
+      "id": "fulfilled_by_partner_fbp_fees_in_ksa_refurbished_renewed",
+      "title": "Fulfilled by Partner (FBP) Fees in KSA - Refurbished & Renewed",
+      "filename": "Program_Policies/fulfilled_by_partner_fbp_fees_in_ksa_refurbished_renewed.md",
+      "category_id": "program_policies",
+      "category_name": "Program Policies",
+      "char_count": 7678
+    },
+    {
+      "id": "fulfilled_by_partner_fbp_fees_in_uae",
+      "title": "Fulfilled by Partner (FBP) Fees in UAE",
+      "filename": "Program_Policies/fulfilled_by_partner_fbp_fees_in_uae.md",
+      "category_id": "program_policies",
+      "category_name": "Program Policies",
+      "char_count": 12890
+    },
+    {
+      "id": "fulfilled_by_partner_fbp_fees_in_uae_refurbished_renewed",
+      "title": "Fulfilled by Partner (FBP) Fees in UAE - Refurbished & Renewed",
+      "filename": "Program_Policies/fulfilled_by_partner_fbp_fees_in_uae_refurbished_renewed.md",
+      "category_id": "program_policies",
+      "category_name": "Program Policies",
+      "char_count": 7850
+    },
+    {
+      "id": "fulfilled_by_partner_fbp_policy_30_1_2024",
+      "title": "FBP Order Cancellation & Rejection Policy",
+      "filename": "Program_Policies/fulfilled_by_partner_fbp_policy_30_1_2024.md",
+      "category_id": "program_policies",
+      "category_name": "Program Policies",
+      "char_count": 7275
+    },
+    {
+      "id": "handling_customer_returns_policy_for_fbp",
+      "title": "Handling Customer Returns Policy (for FBP)",
+      "filename": "Program_Policies/handling_customer_returns_policy_for_fbp.md",
+      "category_id": "program_policies",
+      "category_name": "Program Policies",
+      "char_count": 4421
+    },
+    {
+      "id": "inventory_confiscation_policy",
+      "title": "Inventory Confiscation Policy",
+      "filename": "Program_Policies/inventory_confiscation_policy.md",
+      "category_id": "program_policies",
+      "category_name": "Program Policies",
+      "char_count": 1269
+    },
+    {
+      "id": "inventory_removal_policy",
+      "title": "Inventory Removal Policy",
+      "filename": "Program_Policies/inventory_removal_policy.md",
+      "category_id": "program_policies",
+      "category_name": "Program Policies",
+      "char_count": 9659
+    },
+    {
+      "id": "issuing_tax_invoices_and_credit_notes_to_customers_in_egypt",
+      "title": "E-invoicing Policy for Egypt",
+      "filename": "Program_Policies/issuing_tax_invoices_and_credit_notes_to_customers_in_egypt.md",
+      "category_id": "program_policies",
+      "category_name": "Program Policies",
+      "char_count": 5620
+    },
+    {
+      "id": "negative_account_balance_recovery_policy",
+      "title": "Negative account balance recovery policy",
+      "filename": "Program_Policies/negative_account_balance_recovery_policy.md",
+      "category_id": "program_policies",
+      "category_name": "Program Policies",
+      "char_count": 3549
+    },
+    {
+      "id": "noon_conflict_of_interest_policy",
+      "title": "Noon Conflict of Interest Policy",
+      "filename": "Program_Policies/noon_conflict_of_interest_policy.md",
+      "category_id": "program_policies",
+      "category_name": "Program Policies",
+      "char_count": 2102
+    },
+    {
+      "id": "noon_global_shipping_program",
+      "title": "noon Global Shipping program",
+      "filename": "Program_Policies/noon_global_shipping_program.md",
+      "category_id": "program_policies",
+      "category_name": "Program Policies",
+      "char_count": 17597
+    },
+    {
+      "id": "noon_ksa_uae_x_border_cb_ratecard",
+      "title": "Global - India Lane Ratecard : UAE & KSA",
+      "filename": "Program_Policies/noon_ksa_uae_x_border_cb_ratecard.md",
+      "category_id": "program_policies",
+      "category_name": "Program Policies",
+      "char_count": 5558
+    },
+    {
+      "id": "packing_guidelines_for_directshipping",
+      "title": "Packing Guidelines for DirectShip",
+      "filename": "Program_Policies/packing_guidelines_for_directshipping.md",
+      "category_id": "program_policies",
+      "category_name": "Program Policies",
+      "char_count": 9480
+    },
+    {
+      "id": "payments_processing_policy",
+      "title": "Payments Processing Policy",
+      "filename": "Program_Policies/payments_processing_policy.md",
+      "category_id": "program_policies",
+      "category_name": "Program Policies",
+      "char_count": 3436
+    },
+    {
+      "id": "product_listing_policy",
+      "title": "Product Listing Policy",
+      "filename": "Program_Policies/product_listing_policy.md",
+      "category_id": "program_policies",
+      "category_name": "Program Policies",
+      "char_count": 14187
+    },
+    {
+      "id": "product_quality_control_policy",
+      "title": "Product Quality Control Policy",
+      "filename": "Program_Policies/product_quality_control_policy.md",
+      "category_id": "program_policies",
+      "category_name": "Program Policies",
+      "char_count": 5329
+    },
+    {
+      "id": "program_policies",
+      "title": "Program Policies",
+      "filename": "Program_Policies/program_policies.md",
+      "category_id": "program_policies",
+      "category_name": "Program Policies",
+      "char_count": 6391
+    },
+    {
+      "id": "returns_and_seller_protection_policy",
+      "title": "Returns and Seller Protection Policy",
+      "filename": "Program_Policies/returns_and_seller_protection_policy.md",
+      "category_id": "program_policies",
+      "category_name": "Program Policies",
+      "char_count": 8207
+    },
+    {
+      "id": "rocket_model_policy_document",
+      "title": "Supermall Model Policy Document",
+      "filename": "Program_Policies/rocket_model_policy_document.md",
+      "category_id": "unknown",
+      "category_name": "Unknown",
+      "char_count": 2502
+    },
+    {
+      "id": "seller_compliance_policy_imei_registration_import_regulation",
+      "title": "Seller Compliance Policy: IMEI Registration & Import Regulations (Egypt)",
+      "filename": "Program_Policies/seller_compliance_policy_imei_registration_import_regulation.md",
+      "category_id": "program_policies",
+      "category_name": "Program Policies",
+      "char_count": 1597
+    },
+    {
+      "id": "seller_offboarding_policy_11_3_2024",
+      "title": "Seller Offboarding Policy",
+      "filename": "Program_Policies/seller_offboarding_policy_11_3_2024.md",
+      "category_id": "program_policies",
+      "category_name": "Program Policies",
+      "char_count": 2533
+    },
+    {
+      "id": "seller_review_and_rating_dispute_policy",
+      "title": "Seller Review and Rating Dispute Policy",
+      "filename": "Program_Policies/seller_review_and_rating_dispute_policy.md",
+      "category_id": "program_policies",
+      "category_name": "Program Policies",
+      "char_count": 6909
+    },
+    {
+      "id": "seller_warranty_policy_11_3_2024",
+      "title": "Seller Warranty Policy",
+      "filename": "Program_Policies/seller_warranty_policy_11_3_2024.md",
+      "category_id": "program_policies",
+      "category_name": "Program Policies",
+      "char_count": 1004
+    },
+    {
+      "id": "supermall_model_policy",
+      "title": "Supermall Model Policy Document",
+      "filename": "Program_Policies/supermall_model_policy.md",
+      "category_id": "program_policies",
+      "category_name": "Program Policies",
+      "char_count": 2497
+    },
+    {
+      "id": "the_noon_sales_promise",
+      "title": "The Noon Sales Promise",
+      "filename": "Program_Policies/the_noon_sales_promise.md",
+      "category_id": "program_policies",
+      "category_name": "Program Policies",
+      "char_count": 2962
+    },
+    {
+      "id": "what_is_renewed_what_is_refurbished",
+      "title": "What Is Renewed & What Is Refurbished?",
+      "filename": "Program_Policies/what_is_renewed_what_is_refurbished.md",
+      "category_id": "program_policies",
+      "category_name": "Program Policies",
+      "char_count": 6373
+    },
+    {
+      "id": "advertizing_marketing",
+      "title": "Promotions, Deals and Coupons",
+      "filename": "Promotions/advertizing_marketing.md",
+      "category_id": "promotions",
+      "category_name": "Promotions",
+      "char_count": 1719
+    },
+    {
+      "id": "designs_and_size_specifications_for_store_creation",
+      "title": "Designs and Size Specifications for Store Creation",
+      "filename": "Promotions/designs_and_size_specifications_for_store_creation.md",
+      "category_id": "promotions",
+      "category_name": "Promotions",
+      "char_count": 6173
+    },
+    {
+      "id": "how_can_i_fix_listing_errors_in_promotions",
+      "title": "How can I fix listing errors in promotions?",
+      "filename": "Promotions/how_can_i_fix_listing_errors_in_promotions.md",
+      "category_id": "promotions",
+      "category_name": "Promotions",
+      "char_count": 2426
+    },
+    {
+      "id": "how_can_i_participate_in_noon_mega_deals",
+      "title": "How can I participate in noon Mega Deals?",
+      "filename": "Promotions/how_can_i_participate_in_noon_mega_deals.md",
+      "category_id": "promotions",
+      "category_name": "Promotions",
+      "char_count": 10882
+    },
+    {
+      "id": "how_can_i_participate_in_noon_promotions",
+      "title": "How can I participate in Category Deals?",
+      "filename": "Promotions/how_can_i_participate_in_noon_promotions.md",
+      "category_id": "promotions",
+      "category_name": "Promotions",
+      "char_count": 12854
+    },
+    {
+      "id": "how_to_enroll_your_skus_for_virtual_bundles",
+      "title": "How to enroll  your SKUs for Virtual Bundles?",
+      "filename": "Promotions/how_to_enroll_your_skus_for_virtual_bundles.md",
+      "category_id": "promotions",
+      "category_name": "Promotions",
+      "char_count": 11341
+    },
+    {
+      "id": "how_to_participate_in_flash_deals",
+      "title": "How to Participate in Flash Deals?",
+      "filename": "Promotions/how_to_participate_in_flash_deals.md",
+      "category_id": "promotions",
+      "category_name": "Promotions",
+      "char_count": 8121
+    },
+    {
+      "id": "how_to_participate_in_price_drop_deals",
+      "title": "How to participate in Price drop deals?",
+      "filename": "Promotions/how_to_participate_in_price_drop_deals.md",
+      "category_id": "promotions",
+      "category_name": "Promotions",
+      "char_count": 10051
+    },
+    {
+      "id": "how_to_participate_in_promo_codes",
+      "title": "How to Participate in Coupons or  Promo Codes?",
+      "filename": "Promotions/how_to_participate_in_promo_codes.md",
+      "category_id": "promotions",
+      "category_name": "Promotions",
+      "char_count": 10685
+    },
+    {
+      "id": "how_to_participate_with_commission_drop",
+      "title": "How to participate in Commission drop deals?",
+      "filename": "Promotions/how_to_participate_with_commission_drop.md",
+      "category_id": "promotions",
+      "category_name": "Promotions",
+      "char_count": 5009
+    },
+    {
+      "id": "noon_finds_faqs",
+      "title": "noon Finds- FAQs",
+      "filename": "Promotions/noon_finds_faqs.md",
+      "category_id": "promotions",
+      "category_name": "Promotions",
+      "char_count": 2639
+    },
+    {
+      "id": "understanding_the_external_ads_tracker",
+      "title": "Understanding the External Ads Tracker",
+      "filename": "Promotions/understanding_the_external_ads_tracker.md",
+      "category_id": "promotions",
+      "category_name": "Promotions",
+      "char_count": 7035
+    },
+    {
+      "id": "reports_analytics",
+      "title": "Reports & Analytics Comprehensive Overview",
+      "filename": "Reports_and_Analytics/reports_analytics.md",
+      "category_id": "reports_and_analytics",
+      "category_name": "Reports & Analytics",
+      "char_count": 3545
+    },
+    {
+      "id": "return_to_vendor_rtv_report",
+      "title": "Return to Vendor (RTV) Report",
+      "filename": "Reports_and_Analytics/return_to_vendor_rtv_report.md",
+      "category_id": "reports_and_analytics",
+      "category_name": "Reports & Analytics",
+      "char_count": 4911
+    },
+    {
+      "id": "comprehensive_guide_to_managing_supermall_deals_and_offers",
+      "title": "Comprehensive Guide to Supermall",
+      "filename": "Supermall/comprehensive_guide_to_managing_supermall_deals_and_offers.md",
+      "category_id": "supermall",
+      "category_name": "Supermall",
+      "char_count": 1053
+    },
+    {
+      "id": "supermall_faqs",
+      "title": "Supermall FAQs",
+      "filename": "Supermall/supermall_faqs.md",
+      "category_id": "supermall",
+      "category_name": "Supermall",
+      "char_count": 5026
+    },
+    {
+      "id": "supermall_offer_management",
+      "title": "Supermall Offer Management",
+      "filename": "Supermall/supermall_offer_management.md",
+      "category_id": "supermall",
+      "category_name": "Supermall",
+      "char_count": 3219
+    },
+    {
+      "id": "article",
+      "title": "Virtual Inbox on Seller Lab",
+      "filename": "Support_and_Training/article.md",
+      "category_id": "support_and_training",
+      "category_name": "Support & Training",
+      "char_count": 1896
+    },
+    {
+      "id": "how_to_reach_out_to_noon_for_support",
+      "title": "Getting Help and Support",
+      "filename": "Support_and_Training/how_to_reach_out_to_noon_for_support.md",
+      "category_id": "support_and_training",
+      "category_name": "Support & Training",
+      "char_count": 4701
+    },
+    {
+      "id": "noon_ads",
+      "title": "noon ads",
+      "filename": "noon_ads/noon_ads.md",
+      "category_id": "noon_ads",
+      "category_name": "noon ads",
+      "char_count": 1856
+    }
+  ]
+}
