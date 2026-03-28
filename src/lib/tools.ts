@@ -25,7 +25,7 @@ export const policyTools = {
     }),
     execute: async ({ query, market, categories }) => {
       const categoryIds = routeToCategories(query, categories);
-      const { formatted, articleCount, categoryNames } = loadArticles(
+      const { formatted, articleCount, categoryNames, failedCount } = loadArticles(
         categoryIds,
         market
       );
@@ -33,6 +33,7 @@ export const policyTools = {
       return {
         categories_searched: categoryNames.join(", "),
         article_count: articleCount,
+        failed_count: failedCount,
         market_filter: market || "ALL",
         articles: formatted,
         instruction:

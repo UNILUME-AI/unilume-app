@@ -10,7 +10,9 @@
     "fetch-docs": "tsx scripts/fetch-docs.ts",
     "build-index": "tsx scripts/build-index.ts",
     "prebuild": "tsx scripts/fetch-docs.ts && tsx scripts/build-index.ts",
-    "update-docs": "tsx scripts/fetch-docs.ts && tsx scripts/build-index.ts"
+    "update-docs": "tsx scripts/fetch-docs.ts && tsx scripts/build-index.ts",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@ai-sdk/google-vertex": "^4.0.95",
@@ -33,6 +35,7 @@
     "eslint-config-next": "16.2.1",
     "tailwindcss": "^4",
     "tsx": "^4.21.0",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^4.1.2"
   }
 }
