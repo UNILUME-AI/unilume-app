@@ -6,14 +6,7 @@ import { useRef, useEffect, useState, useMemo } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
-const QUICK_ACTIONS = [
-  { icon: "📋", text: "Noon 退货政策是什么？" },
-  { icon: "💰", text: "FBN 物流费怎么算？" },
-  { icon: "🏪", text: "如何在 Noon 开店？" },
-  { icon: "📦", text: "DirectShip 和 FBN 有什么区别？" },
-  { icon: "⚠️", text: "卖家违规会有什么处罚？" },
-  { icon: "🌍", text: "如何做跨境电商？" },
-];
+import { QUICK_ACTIONS } from "@/config/quick-actions";
 
 function getMessageText(message: { parts?: Array<{ type: string; text?: string }> }): string {
   if (!message.parts) return "";
