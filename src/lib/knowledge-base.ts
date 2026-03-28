@@ -49,9 +49,17 @@ const MAX_CATEGORIES = 3;
 
 export function loadAll(): PolicyIndex {
   if (index) return index;
-  const raw = fs.readFileSync(INDEX_PATH, "utf-8");
-  index = JSON.parse(raw) as PolicyIndex;
-  return index;
+  try {
+    const raw = fs.readFileSync(INDEX_PATH, "utf-8");
+    index = JSON.parse(raw) as PolicyIndex;
+    console.log(
+      `[knowledge-base] Loaded index: ${index.total_count} articles, ${index.categories.length} categories`
+    );
+    return index;
+  } catch (error) {
+    console.error("[knowledge-base] Failed to load index:", error);
+    throw new Error("Knowledge base index unavailable");
+  }
 }
 
 export function getCategoryList(): CategoryMeta[] {
@@ -114,11 +122,12 @@ export function routeToCategories(
 export function loadArticles(
   categoryIds: string[],
   market?: string
-): { formatted: string; articleCount: number; categoryNames: string[] } {
+): { formatted: string; articleCount: number; categoryNames: string[]; failedCount: number } {
   const idx = loadAll();
   const parts: string[] = [];
   let totalChars = 0;
   let articleCount = 0;
+  let failedCount = 0;
   const categoryNames: string[] = [];
 
   for (const catId of categoryIds.slice(0, MAX_CATEGORIES)) {
@@ -157,7 +166,10 @@ export function loadArticles(
 
     for (const doc of docsToLoad) {
       const content = loadArticleContent(doc.filename);
-      if (!content) continue;
+      if (!content) {
+        failedCount++;
+        continue;
+      }
 
       // Check budget
       if (totalChars + content.length > MAX_INJECTION_CHARS) {
@@ -180,17 +192,23 @@ export function loadArticles(
     parts.push(catParts.join("\n"));
   }
 
+  if (failedCount > 0) {
+    console.warn(
+      `[knowledge-base] ${failedCount} article(s) failed to load`
+    );
+  }
+
   return {
     formatted: parts.join("\n\n"),
     articleCount,
     categoryNames,
+    failedCount,
   };
 }
 
 // ── Internal helpers ───────────────────────────────────
 
 function loadArticleContent(filename: string): string | null {
-  // Check cache
   if (articleCache.has(filename)) {
     return articleCache.get(filename)!;
   }
@@ -200,7 +218,8 @@ function loadArticleContent(filename: string): string | null {
     const content = fs.readFileSync(filePath, "utf-8");
     articleCache.set(filename, content);
     return content;
-  } catch {
+  } catch (error) {
+    console.warn(`[knowledge-base] Failed to load article: ${filename}`, error);
     return null;
   }
 }
