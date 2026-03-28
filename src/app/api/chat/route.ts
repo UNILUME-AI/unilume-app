@@ -2,6 +2,7 @@ import { streamText, stepCountIs, convertToModelMessages } from "ai";
 import { createVertex } from "@ai-sdk/google-vertex";
 import { buildSystemPrompt } from "@/lib/prompts";
 import { policyTools } from "@/lib/tools";
+import { trimMessages } from "@/lib/context";
 export const maxDuration = 60;
 
 const vertex = createVertex({
@@ -39,7 +40,7 @@ export async function POST(req: Request) {
     const result = streamText({
       model: vertex("gemini-2.5-flash"),
       system: buildSystemPrompt(),
-      messages: await convertToModelMessages(messages),
+      messages: await convertToModelMessages(trimMessages(messages)),
       tools: policyTools,
       stopWhen: stepCountIs(3),
     });
