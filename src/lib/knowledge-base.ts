@@ -40,6 +40,7 @@ const ARTICLES_DIR = path.join(DATA_DIR, "noon-docs/articles");
 
 let index: PolicyIndex | null = null;
 const articleCache: Map<string, string> = new Map();
+const MAX_CACHE_SIZE = 200;
 
 // ── Token budget ───────────────────────────────────────
 // 200K context, reserve ~120K for system prompt + conversation + reply
@@ -218,6 +219,10 @@ function loadArticleContent(filename: string): string | null {
   const filePath = path.join(ARTICLES_DIR, filename);
   try {
     const content = fs.readFileSync(filePath, "utf-8");
+    if (articleCache.size >= MAX_CACHE_SIZE) {
+      const oldest = articleCache.keys().next().value;
+      if (oldest) articleCache.delete(oldest);
+    }
     articleCache.set(filename, content);
     return content;
   } catch (error) {
