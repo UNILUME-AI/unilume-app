@@ -1,9 +1,19 @@
 import { streamText, stepCountIs } from "ai";
-import { vertex } from "@ai-sdk/google-vertex";
+import { createVertex } from "@ai-sdk/google-vertex";
 import { buildSystemPrompt } from "@/lib/prompts";
 import { policyTools } from "@/lib/tools";
 
 export const maxDuration = 60;
+
+const vertex = createVertex({
+  project: process.env.GOOGLE_VERTEX_PROJECT,
+  location: process.env.GOOGLE_VERTEX_LOCATION,
+  googleAuthOptions: {
+    credentials: JSON.parse(
+      process.env.GOOGLE_SERVICE_ACCOUNT_KEY || "{}"
+    ),
+  },
+});
 
 export async function POST(req: Request) {
   const { messages } = await req.json();
