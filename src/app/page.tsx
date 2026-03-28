@@ -27,20 +27,48 @@ function hasToolCall(message: { parts?: Array<{ type: string }> }): boolean {
   return message.parts?.some((p) => p.type.startsWith("tool-")) ?? false;
 }
 
+const STORAGE_KEY = "unilume-chat-history";
+
+function loadHistory() {
+  if (typeof window === "undefined") return [];
+  try {
+    const data = localStorage.getItem(STORAGE_KEY);
+    return data ? JSON.parse(data) : [];
+  } catch {
+    return [];
+  }
+}
+
 export default function ChatPage() {
   const transport = useMemo(
     () => new DefaultChatTransport({ api: "/api/chat" }),
     []
   );
-  const { messages, sendMessage, status, error } = useChat({ transport });
+
+  const { messages, sendMessage, status, error, setMessages } = useChat({
+    transport,
+  });
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [input, setInput] = useState("");
-  const [showQuickActions, setShowQuickActions] = useState(true);
+  const [showQuickActions, setShowQuickActions] = useState(
+    () => loadHistory().length === 0
+  );
   const [lastFailedText, setLastFailedText] = useState<string | null>(null);
 
   const isLoading = status === "submitted" || status === "streaming";
+
+  // Save messages to localStorage when a response completes
+  useEffect(() => {
+    if (status === "ready" && messages.length > 0) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+      } catch {
+        // localStorage full or unavailable
+      }
+    }
+  }, [status, messages]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -49,6 +77,15 @@ export default function ChatPage() {
   useEffect(() => {
     if (messages.length > 0) setShowQuickActions(false);
   }, [messages]);
+
+  // Restore chat history from localStorage on mount
+  useEffect(() => {
+    const saved = loadHistory();
+    if (saved.length > 0) {
+      setMessages(saved);
+      setShowQuickActions(false);
+    }
+  }, [setMessages]);
 
   useEffect(() => {
     inputRef.current?.focus();
@@ -100,7 +137,12 @@ export default function ChatPage() {
             </span>
           </div>
           <button
-            onClick={() => window.location.reload()}
+            onClick={() => {
+              localStorage.removeItem(STORAGE_KEY);
+              setMessages([]);
+              setShowQuickActions(true);
+              setLastFailedText(null);
+            }}
             className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
           >
             New Chat
