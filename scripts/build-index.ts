@@ -331,6 +331,7 @@ interface DocumentMeta {
   category_id: string;
   category_name: string;
   char_count: number;
+  source_url?: string;
 }
 
 interface CategoryEntry {
@@ -363,9 +364,13 @@ function slugify(name: string): string {
 function extractTitle(content: string): string {
   const match = content.match(/^#\s+(.+)$/m);
   if (match) return match[1].trim();
-  // Fallback: first non-empty line
   const lines = content.split("\n").filter((l) => l.trim());
   return lines[0]?.replace(/^#+\s*/, "").trim() || "Untitled";
+}
+
+function extractSourceUrl(content: string): string | null {
+  const match = content.match(/>\s*Source:\s*(https?:\/\/[^\s]+)/m);
+  return match ? match[1] : null;
 }
 
 function main() {
@@ -409,6 +414,7 @@ function main() {
         dirName.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
       const categoryId = slugify(categoryName);
 
+      const sourceUrl = extractSourceUrl(content);
       const doc: DocumentMeta = {
         id: file.replace(/\.md$/, ""),
         title,
@@ -416,6 +422,7 @@ function main() {
         category_id: categoryId,
         category_name: categoryName,
         char_count: content.length,
+        ...(sourceUrl && { source_url: sourceUrl }),
       };
       documents.push(doc);
 

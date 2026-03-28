@@ -38,7 +38,7 @@ export const policyTools = {
         articles: formatted,
         instruction:
           "Answer the user's question based ONLY on the documents above. " +
-          "Cite source document titles when referencing specific information. " +
+          "Cite sources as markdown links using the URL from each document header, e.g. [Document Title](URL). " +
           "If the documents do not contain the answer, clearly state that the information is not available in the current knowledge base. " +
           "Always mention which market(s) (KSA/UAE/Egypt) a policy applies to when relevant.",
       };
