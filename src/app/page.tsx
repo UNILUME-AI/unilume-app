@@ -117,7 +117,7 @@ export default function ChatPage() {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-gray-50">
+    <div className="flex flex-col h-dvh bg-gray-50">
       {/* Header */}
       <header className="flex-none border-b border-gray-200 bg-white px-4 py-3">
         <div className="mx-auto flex max-w-3xl items-center justify-between">
@@ -148,7 +148,7 @@ export default function ChatPage() {
         <div className="mx-auto max-w-3xl px-4 py-6">
           {/* Welcome State */}
           {showQuickActions && messages.length === 0 && (
-            <div className="flex flex-col items-center justify-center min-h-[60vh]">
+            <div className="flex flex-col items-center justify-center min-h-[40vh] sm:min-h-[60vh]">
               <h1 className="text-2xl font-semibold text-gray-900 mb-2">
                 UNILUME
               </h1>
@@ -183,7 +183,7 @@ export default function ChatPage() {
             return (
               <div
                 key={message.id}
-                className={`mb-6 ${message.role === "user" ? "flex justify-end" : ""}`}
+                className={`mb-4 sm:mb-6 ${message.role === "user" ? "flex justify-end" : ""}`}
               >
                 {message.role === "user" ? (
                   <div className="max-w-[85%] rounded-2xl bg-blue-600 px-4 py-3 text-white text-sm whitespace-pre-wrap">
@@ -244,7 +244,7 @@ export default function ChatPage() {
       </main>
 
       {/* Input Area */}
-      <div className="flex-none border-t border-gray-200 bg-white px-4 py-3">
+      <div className="flex-none border-t border-gray-200 bg-white px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
         <div className="mx-auto flex max-w-3xl items-end gap-3">
           <textarea
             ref={inputRef}
