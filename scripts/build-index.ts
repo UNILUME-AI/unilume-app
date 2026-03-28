@@ -1,8 +1,10 @@
 /**
  * build-index.ts
  *
- * Scans the noon-docs submodule and generates src/data/policies/index.json
+ * Scans the fetched noon-docs and generates src/data/policies/index.json
  * with category metadata, keywords for routing, and document listings.
+ *
+ * Run fetch-docs.ts first to download articles from GitHub.
  *
  * Usage: npx tsx scripts/build-index.ts
  */
@@ -367,6 +369,15 @@ function extractTitle(content: string): string {
 }
 
 function main() {
+  // Check if docs have been fetched
+  if (!fs.existsSync(ARTICLES_DIR)) {
+    console.error(
+      "Error: src/data/noon-docs/articles/ not found.\n" +
+        "Run 'npm run fetch-docs' first to download articles from GitHub."
+    );
+    process.exit(1);
+  }
+
   // Load file-to-category mapping
   const fileCategoriesRaw = fs.readFileSync(CATEGORIES_JSON, "utf-8");
   const fileCategories: Record<string, string> = JSON.parse(fileCategoriesRaw);

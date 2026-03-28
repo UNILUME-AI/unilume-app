@@ -7,9 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "fetch-docs": "tsx scripts/fetch-docs.ts",
     "build-index": "tsx scripts/build-index.ts",
-    "postinstall": "tsx scripts/build-index.ts",
-    "update-docs": "git submodule update --remote src/data/noon-docs && tsx scripts/build-index.ts"
+    "prebuild": "tsx scripts/fetch-docs.ts && tsx scripts/build-index.ts",
+    "update-docs": "tsx scripts/fetch-docs.ts && tsx scripts/build-index.ts"
   },
   "dependencies": {
     "@ai-sdk/google-vertex": "^4.0.95",
