@@ -10,6 +10,7 @@ interface DocumentMeta {
   category_id: string;
   category_name: string;
   char_count: number;
+  source_url?: string;
 }
 
 interface CategoryMeta {
@@ -179,8 +180,9 @@ export function loadArticles(
         break;
       }
 
+      const urlLine = doc.source_url ? ` | URL: ${doc.source_url}` : "";
       catParts.push(
-        `\n=== "${doc.title}" (Category: ${doc.category_name}) ===`
+        `\n=== "${doc.title}" (Category: ${doc.category_name}${urlLine}) ===`
       );
       catParts.push(content);
       catParts.push("=== END ===");

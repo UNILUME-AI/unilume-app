@@ -199,7 +199,21 @@ export default function ChatPage() {
                     )}
                     {text && (
                       <div className="rounded-2xl bg-white border border-gray-200 px-5 py-4 text-sm text-gray-800 shadow-sm prose prose-sm max-w-none prose-headings:text-gray-900 prose-a:text-blue-600 prose-strong:text-gray-900">
-                        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                        <ReactMarkdown
+                          remarkPlugins={[remarkGfm]}
+                          components={{
+                            a: ({ href, children }) => (
+                              <a
+                                href={href}
+                                target={href?.startsWith("mailto:") ? undefined : "_blank"}
+                                rel="noopener noreferrer"
+                                className="text-blue-600 underline hover:text-blue-800"
+                              >
+                                {children}
+                              </a>
+                            ),
+                          }}
+                        >
                           {text}
                         </ReactMarkdown>
                       </div>

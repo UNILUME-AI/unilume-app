@@ -32,7 +32,7 @@
         "违规"
       ],
       "article_count": 41,
-      "total_chars": 472273,
+      "total_chars": 309519,
       "article_ids": [
         "anti_fraud_and_seller_code_of_conduct_policy",
         "automated_reimbursement_process_for_lost_damaged_items",
@@ -104,7 +104,7 @@
         "品牌"
       ],
       "article_count": 37,
-      "total_chars": 1945472,
+      "total_chars": 335340,
       "article_ids": [
         "accessing_catalog_using_the_new_offer_management_tool",
         "barcode_requirements",
@@ -167,7 +167,7 @@
         "履约"
       ],
       "article_count": 31,
-      "total_chars": 292823,
+      "total_chars": 259463,
       "article_ids": [
         "choosing_the_best_delivery_estimate_for_fbp_orders_31_1_2024",
         "creating_and_managing_a_warehouse",
@@ -225,7 +225,7 @@
         "开户"
       ],
       "article_count": 23,
-      "total_chars": 369981,
+      "total_chars": 338054,
       "article_ids": [
         "create_and_manage_your_seller_profile",
         "cross_border_selling_faq",
@@ -271,7 +271,7 @@
         "库存"
       ],
       "article_count": 20,
-      "total_chars": 192060,
+      "total_chars": 144843,
       "article_ids": [
         "accessing_fbn_reports_on_seller_lab",
         "fbn",
@@ -420,7 +420,7 @@
         "unknown"
       ],
       "article_count": 7,
-      "total_chars": 91322,
+      "total_chars": 59395,
       "article_ids": [
         "where_can_i_download_my_tax_invoices_12_3_2024",
         "cross_border_selling",
@@ -628,7 +628,8 @@
       "filename": "Finance_and_Payments/finance_payments.md",
       "category_id": "finance_and_payments",
       "category_name": "Finance & Payments",
-      "char_count": 3837
+      "char_count": 3837,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/finance-payments"
     },
     {
       "id": "how_will_i_get_paid_for_my_sales",
@@ -636,7 +637,8 @@
       "filename": "Finance_and_Payments/how_will_i_get_paid_for_my_sales.md",
       "category_id": "finance_and_payments",
       "category_name": "Finance & Payments",
-      "char_count": 2242
+      "char_count": 2242,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/how-will-i-get-paid-for-my-sales"
     },
     {
       "id": "new_statement_detail_report",
@@ -644,7 +646,8 @@
       "filename": "Finance_and_Payments/new_statement_detail_report.md",
       "category_id": "finance_and_payments",
       "category_name": "Finance & Payments",
-      "char_count": 8308
+      "char_count": 8308,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/new-statement-detail-report"
     },
     {
       "id": "orders_level_fee",
@@ -652,7 +655,8 @@
       "filename": "Finance_and_Payments/orders_level_fee.md",
       "category_id": "finance_and_payments",
       "category_name": "Finance & Payments",
-      "char_count": 4229
+      "char_count": 4229,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/orders-level-fee"
     },
     {
       "id": "statement_of_account",
@@ -660,7 +664,8 @@
       "filename": "Finance_and_Payments/statement_of_account.md",
       "category_id": "finance_and_payments",
       "category_name": "Finance & Payments",
-      "char_count": 4107
+      "char_count": 4107,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/statement-of-account"
     },
     {
       "id": "understanding_the_new_statements_view",
@@ -668,7 +673,8 @@
       "filename": "Finance_and_Payments/understanding_the_new_statements_view.md",
       "category_id": "finance_and_payments",
       "category_name": "Finance & Payments",
-      "char_count": 6165
+      "char_count": 6165,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/understanding-the-new-statements-view"
     },
     {
       "id": "understanding_the_noon_fees_invoices",
@@ -676,7 +682,8 @@
       "filename": "Finance_and_Payments/understanding_the_noon_fees_invoices.md",
       "category_id": "finance_and_payments",
       "category_name": "Finance & Payments",
-      "char_count": 4010
+      "char_count": 4010,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/understanding-the-noon-fees-invoices"
     },
     {
       "id": "understanding_the_transaction_view",
@@ -684,7 +691,8 @@
       "filename": "Finance_and_Payments/understanding_the_transaction_view.md",
       "category_id": "finance_and_payments",
       "category_name": "Finance & Payments",
-      "char_count": 8272
+      "char_count": 8272,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/understanding-the-transaction-view"
     },
     {
       "id": "where_can_i_download_my_tax_invoices_12_3_2024",
@@ -692,7 +700,8 @@
       "filename": "Finance_and_Payments/where_can_i_download_my_tax_invoices_12_3_2024.md",
       "category_id": "unknown",
       "category_name": "Unknown",
-      "char_count": 7681
+      "char_count": 7681,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/where-can-i-download-my-tax-invoices-12-3-2024"
     },
     {
       "id": "where_can_i_find_a_report_with_all_my_vat_invoices",
@@ -700,7 +709,8 @@
       "filename": "Finance_and_Payments/where_can_i_find_a_report_with_all_my_vat_invoices.md",
       "category_id": "finance_and_payments",
       "category_name": "Finance & Payments",
-      "char_count": 2512
+      "char_count": 2512,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/where-can-i-find-a-report-with-all-my-vat-invoices"
     },
     {
       "id": "zatca_integration_for_ksa_e_invoicing",
@@ -708,7 +718,8 @@
       "filename": "Finance_and_Payments/zatca_integration_for_ksa_e_invoicing.md",
       "category_id": "finance_and_payments",
       "category_name": "Finance & Payments",
-      "char_count": 5871
+      "char_count": 5871,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/zatca-integration-for-ksa-e-invoicing"
     },
     {
       "id": "fulfilled_by_partner_integration_a_comprehensive_guide",
@@ -716,7 +727,8 @@
       "filename": "Fulfilled_By_Partner_Integration/fulfilled_by_partner_integration_a_comprehensive_guide.md",
       "category_id": "fulfilled_by_partner_integration",
       "category_name": "Fulfilled By Partner Integration",
-      "char_count": 6267
+      "char_count": 6267,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/fulfilled-by-partner-integration-a-comprehensive-guide"
     },
     {
       "id": "fulfilled_by_partner_integration_fbpi_faqs",
@@ -724,7 +736,8 @@
       "filename": "Fulfilled_By_Partner_Integration/fulfilled_by_partner_integration_fbpi_faqs.md",
       "category_id": "fulfilled_by_partner_integration",
       "category_name": "Fulfilled By Partner Integration",
-      "char_count": 5425
+      "char_count": 5425,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/fulfilled-by-partner-integration-fbpi-faqs"
     },
     {
       "id": "choosing_the_best_delivery_estimate_for_fbp_orders_31_1_2024",
@@ -732,7 +745,8 @@
       "filename": "Fulfilled_by_Partner_FBP/choosing_the_best_delivery_estimate_for_fbp_orders_31_1_2024.md",
       "category_id": "fulfilled_by_partner_fbp",
       "category_name": "Fulfilled by Partner (FBP)",
-      "char_count": 6743
+      "char_count": 6743,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/choosing-the-best-delivery-estimate-for-fbp-orders-31-1-2024"
     },
     {
       "id": "creating_and_managing_a_warehouse",
@@ -740,7 +754,8 @@
       "filename": "Fulfilled_by_Partner_FBP/creating_and_managing_a_warehouse.md",
       "category_id": "fulfilled_by_partner_fbp",
       "category_name": "Fulfilled by Partner (FBP)",
-      "char_count": 11616
+      "char_count": 11616,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/creating-and-managing-a-warehouse"
     },
     {
       "id": "creating_and_managing_new_warehouse",
@@ -748,7 +763,8 @@
       "filename": "Fulfilled_by_Partner_FBP/creating_and_managing_new_warehouse.md",
       "category_id": "fulfilled_by_partner_fbp",
       "category_name": "Fulfilled by Partner (FBP)",
-      "char_count": 12256
+      "char_count": 12256,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/creating-and-managing-new-warehouse"
     },
     {
       "id": "direct_delivery_order_fulfillment_te",
@@ -756,7 +772,8 @@
       "filename": "Fulfilled_by_Partner_FBP/direct_delivery_order_fulfillment_te.md",
       "category_id": "fulfilled_by_partner_fbp",
       "category_name": "Fulfilled by Partner (FBP)",
-      "char_count": 16146
+      "char_count": 16146,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/direct-delivery-order-fulfillment-te"
     },
     {
       "id": "directship_customer_returns_process",
@@ -764,7 +781,8 @@
       "filename": "Fulfilled_by_Partner_FBP/directship_customer_returns_process.md",
       "category_id": "fulfilled_by_partner_fbp",
       "category_name": "Fulfilled by Partner (FBP)",
-      "char_count": 9015
+      "char_count": 9015,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/directship-customer-returns-process"
     },
     {
       "id": "directship_express_faqs",
@@ -772,7 +790,8 @@
       "filename": "Fulfilled_by_Partner_FBP/directship_express_faqs.md",
       "category_id": "fulfilled_by_partner_fbp",
       "category_name": "Fulfilled by Partner (FBP)",
-      "char_count": 11822
+      "char_count": 11822,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/directship-express-faqs"
     },
     {
       "id": "directship_features",
@@ -780,7 +799,8 @@
       "filename": "Fulfilled_by_Partner_FBP/directship_features.md",
       "category_id": "fulfilled_by_partner_fbp",
       "category_name": "Fulfilled by Partner (FBP)",
-      "char_count": 5444
+      "char_count": 5444,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/directship-features"
     },
     {
       "id": "directship_order_fulfillment_web_version_30_1_2024",
@@ -788,7 +808,8 @@
       "filename": "Fulfilled_by_Partner_FBP/directship_order_fulfillment_web_version_30_1_2024.md",
       "category_id": "fulfilled_by_partner_fbp",
       "category_name": "Fulfilled by Partner (FBP)",
-      "char_count": 16635
+      "char_count": 16635,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/directship-order-fulfillment-web-version-30-1-2024"
     },
     {
       "id": "directship_seller_performance_management",
@@ -796,7 +817,8 @@
       "filename": "Fulfilled_by_Partner_FBP/directship_seller_performance_management.md",
       "category_id": "fulfilled_by_partner_fbp",
       "category_name": "Fulfilled by Partner (FBP)",
-      "char_count": 1987
+      "char_count": 1987,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/directship-seller-performance-management"
     },
     {
       "id": "essential_guidelines_for_bulky_directship_selling_model",
@@ -804,7 +826,8 @@
       "filename": "Fulfilled_by_Partner_FBP/essential_guidelines_for_bulky_directship_selling_model.md",
       "category_id": "fulfilled_by_partner_fbp",
       "category_name": "Fulfilled by Partner (FBP)",
-      "char_count": 3412
+      "char_count": 3412,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/essential-guidelines-for-bulky-directship-selling-model"
     },
     {
       "id": "essential_guidelines_for_direct_delivery_selling_model",
@@ -812,7 +835,8 @@
       "filename": "Fulfilled_by_Partner_FBP/essential_guidelines_for_direct_delivery_selling_model.md",
       "category_id": "fulfilled_by_partner_fbp",
       "category_name": "Fulfilled by Partner (FBP)",
-      "char_count": 6100
+      "char_count": 6100,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/essential-guidelines-for-direct-delivery-selling-model"
     },
     {
       "id": "fbp_directship_picklists",
@@ -820,7 +844,8 @@
       "filename": "Fulfilled_by_Partner_FBP/fbp_directship_picklists.md",
       "category_id": "fulfilled_by_partner_fbp",
       "category_name": "Fulfilled by Partner (FBP)",
-      "char_count": 7631
+      "char_count": 7631,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/fbp-directship-picklists"
     },
     {
       "id": "fulfilled_by_partner_fbp_comprehensive_overview_30_1_2024",
@@ -828,7 +853,8 @@
       "filename": "Fulfilled_by_Partner_FBP/fulfilled_by_partner_fbp_comprehensive_overview_30_1_2024.md",
       "category_id": "fulfilled_by_partner_fbp",
       "category_name": "Fulfilled by Partner (FBP)",
-      "char_count": 6448
+      "char_count": 6448,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/fulfilled-by-partner-fbp-comprehensive-overview-30-1-2024"
     },
     {
       "id": "fulfillment_modes_in_directship",
@@ -836,7 +862,8 @@
       "filename": "Fulfilled_by_Partner_FBP/fulfillment_modes_in_directship.md",
       "category_id": "fulfilled_by_partner_fbp",
       "category_name": "Fulfilled by Partner (FBP)",
-      "char_count": 8467
+      "char_count": 8467,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/fulfillment-modes-in-directship"
     },
     {
       "id": "how_do_i_manage_my_stock_and_prices",
@@ -844,7 +871,8 @@
       "filename": "Fulfilled_by_Partner_FBP/how_do_i_manage_my_stock_and_prices.md",
       "category_id": "fulfilled_by_partner_fbp",
       "category_name": "Fulfilled by Partner (FBP)",
-      "char_count": 9654
+      "char_count": 9654,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/how-do-i-manage-my-stock-and-prices"
     },
     {
       "id": "how_to_accept_return_manifest_from_the_seller_lab",
@@ -852,7 +880,8 @@
       "filename": "Fulfilled_by_Partner_FBP/how_to_accept_return_manifest_from_the_seller_lab.md",
       "category_id": "fulfilled_by_partner_fbp",
       "category_name": "Fulfilled by Partner (FBP)",
-      "char_count": 7168
+      "char_count": 7168,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/how-to-accept-return-manifest-from-the-seller-lab"
     },
     {
       "id": "how_to_calculate_the_directship_fee_in_egy",
@@ -860,7 +889,8 @@
       "filename": "Fulfilled_by_Partner_FBP/how_to_calculate_the_directship_fee_in_egy.md",
       "category_id": "fulfilled_by_partner_fbp",
       "category_name": "Fulfilled by Partner (FBP)",
-      "char_count": 15152
+      "char_count": 4032,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/how-to-calculate-the-directship-fee-in-egy"
     },
     {
       "id": "how_to_calculate_the_directship_fee_in_ksa",
@@ -868,7 +898,8 @@
       "filename": "Fulfilled_by_Partner_FBP/how_to_calculate_the_directship_fee_in_ksa.md",
       "category_id": "fulfilled_by_partner_fbp",
       "category_name": "Fulfilled by Partner (FBP)",
-      "char_count": 14772
+      "char_count": 3652,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/how-to-calculate-the-directship-fee-in-ksa"
     },
     {
       "id": "how_to_calculate_the_directship_fee_in_uae",
@@ -876,7 +907,8 @@
       "filename": "Fulfilled_by_Partner_FBP/how_to_calculate_the_directship_fee_in_uae.md",
       "category_id": "fulfilled_by_partner_fbp",
       "category_name": "Fulfilled by Partner (FBP)",
-      "char_count": 14776
+      "char_count": 3656,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/how-to-calculate-the-directship-fee-in-uae"
     },
     {
       "id": "how_to_fulfill_directship_order_using_mobile_application",
@@ -884,7 +916,8 @@
       "filename": "Fulfilled_by_Partner_FBP/how_to_fulfill_directship_order_using_mobile_application.md",
       "category_id": "fulfilled_by_partner_fbp",
       "category_name": "Fulfilled by Partner (FBP)",
-      "char_count": 13703
+      "char_count": 13703,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/how-to-fulfill-directship-order-using-mobile-application"
     },
     {
       "id": "how_to_process_directship_order_using_the_mobile_application",
@@ -892,7 +925,8 @@
       "filename": "Fulfilled_by_Partner_FBP/how_to_process_directship_order_using_the_mobile_application.md",
       "category_id": "fulfilled_by_partner_fbp",
       "category_name": "Fulfilled by Partner (FBP)",
-      "char_count": 10169
+      "char_count": 10169,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/how-to-process-directship-order-using-the-mobile-application"
     },
     {
       "id": "how_to_process_directship_order_using_the_seller_lab_1_10_20",
@@ -900,7 +934,8 @@
       "filename": "Fulfilled_by_Partner_FBP/how_to_process_directship_order_using_the_seller_lab_1_10_20.md",
       "category_id": "fulfilled_by_partner_fbp",
       "category_name": "Fulfilled by Partner (FBP)",
-      "char_count": 19516
+      "char_count": 19516,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/how-to-process-directship-order-using-the-seller-lab-1-10-2025"
     },
     {
       "id": "multiple_login_channels_supply_chain_app",
@@ -908,7 +943,8 @@
       "filename": "Fulfilled_by_Partner_FBP/multiple_login_channels_supply_chain_app.md",
       "category_id": "fulfilled_by_partner_fbp",
       "category_name": "Fulfilled by Partner (FBP)",
-      "char_count": 9066
+      "char_count": 9066,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/multiple-login-channels-supply-chain-app"
     },
     {
       "id": "ordering_your_packaging_materials",
@@ -916,7 +952,8 @@
       "filename": "Fulfilled_by_Partner_FBP/ordering_your_packaging_materials.md",
       "category_id": "fulfilled_by_partner_fbp",
       "category_name": "Fulfilled by Partner (FBP)",
-      "char_count": 3004
+      "char_count": 3004,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/ordering-your-packaging-materials"
     },
     {
       "id": "partner_sku_fbp_stock_update_import",
@@ -924,7 +961,8 @@
       "filename": "Fulfilled_by_Partner_FBP/partner_sku_fbp_stock_update_import.md",
       "category_id": "fulfilled_by_partner_fbp",
       "category_name": "Fulfilled by Partner (FBP)",
-      "char_count": 7586
+      "char_count": 7586,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/partner-sku-fbp-stock-update-import"
     },
     {
       "id": "quality_control_guidelines_for_directshipping",
@@ -932,7 +970,8 @@
       "filename": "Fulfilled_by_Partner_FBP/quality_control_guidelines_for_directshipping.md",
       "category_id": "fulfilled_by_partner_fbp",
       "category_name": "Fulfilled by Partner (FBP)",
-      "char_count": 2816
+      "char_count": 2816,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/quality-control-guidelines-for-directshipping"
     },
     {
       "id": "returnless_refund_for_directship_sellers",
@@ -940,7 +979,8 @@
       "filename": "Fulfilled_by_Partner_FBP/returnless_refund_for_directship_sellers.md",
       "category_id": "fulfilled_by_partner_fbp",
       "category_name": "Fulfilled by Partner (FBP)",
-      "char_count": 5441
+      "char_count": 5441,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/returnless-refund-for-directship-sellers"
     },
     {
       "id": "seller_buyer_messaging_service",
@@ -948,7 +988,8 @@
       "filename": "Fulfilled_by_Partner_FBP/seller_buyer_messaging_service.md",
       "category_id": "fulfilled_by_partner_fbp",
       "category_name": "Fulfilled by Partner (FBP)",
-      "char_count": 8977
+      "char_count": 8977,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/seller-buyer-messaging-service"
     },
     {
       "id": "setting_up_your_delivery_area_for_direct_delivery_warehouse",
@@ -956,7 +997,8 @@
       "filename": "Fulfilled_by_Partner_FBP/setting_up_your_delivery_area_for_direct_delivery_warehouse.md",
       "category_id": "fulfilled_by_partner_fbp",
       "category_name": "Fulfilled by Partner (FBP)",
-      "char_count": 8297
+      "char_count": 8297,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/setting-up-your-delivery-area-for-direct-delivery-warehouse"
     },
     {
       "id": "what_are_the_dimensions_of_items_that_i_can_sell_using_fbp_a",
@@ -964,7 +1006,8 @@
       "filename": "Fulfilled_by_Partner_FBP/what_are_the_dimensions_of_items_that_i_can_sell_using_fbp_a.md",
       "category_id": "fulfilled_by_partner_fbp",
       "category_name": "Fulfilled by Partner (FBP)",
-      "char_count": 9868
+      "char_count": 9868,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/what-are-the-dimensions-of-items-that-i-can-sell-using-fbp-and-fbn"
     },
     {
       "id": "what_is_directship_30_1_2024",
@@ -972,7 +1015,8 @@
       "filename": "Fulfilled_by_Partner_FBP/what_is_directship_30_1_2024.md",
       "category_id": "fulfilled_by_partner_fbp",
       "category_name": "Fulfilled by Partner (FBP)",
-      "char_count": 9136
+      "char_count": 9136,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/what-is-directship-30-1-2024"
     },
     {
       "id": "accessing_fbn_reports_on_seller_lab",
@@ -980,7 +1024,8 @@
       "filename": "Fulfilled_by_noon_FBN/accessing_fbn_reports_on_seller_lab.md",
       "category_id": "fulfilled_by_noon_fbn",
       "category_name": "Fulfilled by noon (FBN)",
-      "char_count": 3360
+      "char_count": 3360,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/accessing-fbn-reports-on-seller-lab"
     },
     {
       "id": "fbn",
@@ -988,7 +1033,8 @@
       "filename": "Fulfilled_by_noon_FBN/fbn.md",
       "category_id": "fulfilled_by_noon_fbn",
       "category_name": "Fulfilled by noon (FBN)",
-      "char_count": 4397
+      "char_count": 4397,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/fbn"
     },
     {
       "id": "fbn_and_crossdock_b2b_received_reports",
@@ -996,7 +1042,8 @@
       "filename": "Fulfilled_by_noon_FBN/fbn_and_crossdock_b2b_received_reports.md",
       "category_id": "fulfilled_by_noon_fbn",
       "category_name": "Fulfilled by noon (FBN)",
-      "char_count": 4713
+      "char_count": 4713,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/fbn-and-crossdock-b2b-received-reports"
     },
     {
       "id": "fbn_fees_and_product_dimension_measurement_visibility_11_3_2",
@@ -1004,7 +1051,8 @@
       "filename": "Fulfilled_by_noon_FBN/fbn_fees_and_product_dimension_measurement_visibility_11_3_2.md",
       "category_id": "fulfilled_by_noon_fbn",
       "category_name": "Fulfilled by noon (FBN)",
-      "char_count": 8613
+      "char_count": 8613,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/fbn-fees-and-product-dimension-measurement-visibility-11-3-2024"
     },
     {
       "id": "fbn_inbound_quality_check_policy",
@@ -1012,7 +1060,8 @@
       "filename": "Fulfilled_by_noon_FBN/fbn_inbound_quality_check_policy.md",
       "category_id": "fulfilled_by_noon_fbn",
       "category_name": "Fulfilled by noon (FBN)",
-      "char_count": 1071
+      "char_count": 1071,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/fbn-inbound-quality-check-policy"
     },
     {
       "id": "fbn_inventory_detail_report",
@@ -1020,7 +1069,8 @@
       "filename": "Fulfilled_by_noon_FBN/fbn_inventory_detail_report.md",
       "category_id": "fulfilled_by_noon_fbn",
       "category_name": "Fulfilled by noon (FBN)",
-      "char_count": 5453
+      "char_count": 5453,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/fbn-inventory-detail-report"
     },
     {
       "id": "fbn_inventory_removal_process",
@@ -1028,7 +1078,8 @@
       "filename": "Fulfilled_by_noon_FBN/fbn_inventory_removal_process.md",
       "category_id": "fulfilled_by_noon_fbn",
       "category_name": "Fulfilled by noon (FBN)",
-      "char_count": 13285
+      "char_count": 13285,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/fbn-inventory-removal-process"
     },
     {
       "id": "fbn_storage_and_inventory_transfers",
@@ -1036,7 +1087,8 @@
       "filename": "Fulfilled_by_noon_FBN/fbn_storage_and_inventory_transfers.md",
       "category_id": "fulfilled_by_noon_fbn",
       "category_name": "Fulfilled by noon (FBN)",
-      "char_count": 24858
+      "char_count": 20166,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/fbn-storage-and-inventory-transfers"
     },
     {
       "id": "fbn_volumetric_measurement_vm_dispute_policy",
@@ -1044,7 +1096,8 @@
       "filename": "Fulfilled_by_noon_FBN/fbn_volumetric_measurement_vm_dispute_policy.md",
       "category_id": "fulfilled_by_noon_fbn",
       "category_name": "Fulfilled by noon (FBN)",
-      "char_count": 9949
+      "char_count": 9949,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/fbn-volumetric-measurement-vm-dispute-policy"
     },
     {
       "id": "how_to_calculate_the_fbn_outbound_fee_and_inventory_removal_",
@@ -1052,7 +1105,8 @@
       "filename": "Fulfilled_by_noon_FBN/how_to_calculate_the_fbn_outbound_fee_and_inventory_removal_.md",
       "category_id": "fulfilled_by_noon_fbn",
       "category_name": "Fulfilled by noon (FBN)",
-      "char_count": 28408
+      "char_count": 7732,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/how-to-calculate-the-fbn-outbound-fee-and-inventory-removal-fees-in-egy"
     },
     {
       "id": "how_to_calculate_the_fbn_outbound_fee_and_the_inventory_remo",
@@ -1060,7 +1114,8 @@
       "filename": "Fulfilled_by_noon_FBN/how_to_calculate_the_fbn_outbound_fee_and_the_inventory_remo.md",
       "category_id": "fulfilled_by_noon_fbn",
       "category_name": "Fulfilled by noon (FBN)",
-      "char_count": 29854
+      "char_count": 8005,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/how-to-calculate-the-fbn-outbound-fee-and-the-inventory-removal-fee-in-uae"
     },
     {
       "id": "how_to_setup_your_automated_return_preference_11_3_2024",
@@ -1068,7 +1123,8 @@
       "filename": "Fulfilled_by_noon_FBN/how_to_setup_your_automated_return_preference_11_3_2024.md",
       "category_id": "fulfilled_by_noon_fbn",
       "category_name": "Fulfilled by noon (FBN)",
-      "char_count": 10425
+      "char_count": 10425,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/how-to-setup-your-automated-return-preference-11-3-2024"
     },
     {
       "id": "managing_your_returns_managing_fbn_returns",
@@ -1076,7 +1132,8 @@
       "filename": "Fulfilled_by_noon_FBN/managing_your_returns_managing_fbn_returns.md",
       "category_id": "fulfilled_by_noon_fbn",
       "category_name": "Fulfilled by noon (FBN)",
-      "char_count": 4608
+      "char_count": 4608,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/managing-your-returns-managing-fbn-returns"
     },
     {
       "id": "new_inventory_ledger_reports_summary_and_detailed_view",
@@ -1084,7 +1141,8 @@
       "filename": "Fulfilled_by_noon_FBN/new_inventory_ledger_reports_summary_and_detailed_view.md",
       "category_id": "fulfilled_by_noon_fbn",
       "category_name": "Fulfilled by noon (FBN)",
-      "char_count": 6022
+      "char_count": 6022,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/new-inventory-ledger-reports-summary-and-detailed-view"
     },
     {
       "id": "product_packing_guidelines_fbn",
@@ -1092,7 +1150,8 @@
       "filename": "Fulfilled_by_noon_FBN/product_packing_guidelines_fbn.md",
       "category_id": "fulfilled_by_noon_fbn",
       "category_name": "Fulfilled by noon (FBN)",
-      "char_count": 6496
+      "char_count": 6496,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/product-packing-guidelines-fbn"
     },
     {
       "id": "queue_management_system",
@@ -1100,7 +1159,8 @@
       "filename": "Fulfilled_by_noon_FBN/queue_management_system.md",
       "category_id": "fulfilled_by_noon_fbn",
       "category_name": "Fulfilled by noon (FBN)",
-      "char_count": 4888
+      "char_count": 4888,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/queue-management-system"
     },
     {
       "id": "understand_the_stock_replenishment_report",
@@ -1108,7 +1168,8 @@
       "filename": "Fulfilled_by_noon_FBN/understand_the_stock_replenishment_report.md",
       "category_id": "fulfilled_by_noon_fbn",
       "category_name": "Fulfilled by noon (FBN)",
-      "char_count": 2240
+      "char_count": 2240,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/understand-the-stock-replenishment-report"
     },
     {
       "id": "understanding_seller_tiers_and_inbound_performance",
@@ -1116,7 +1177,8 @@
       "filename": "Fulfilled_by_noon_FBN/understanding_seller_tiers_and_inbound_performance.md",
       "category_id": "fulfilled_by_noon_fbn",
       "category_name": "Fulfilled by noon (FBN)",
-      "char_count": 14032
+      "char_count": 14032,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/understanding-seller-tiers-and-inbound-performance"
     },
     {
       "id": "what_is_fbn_inventory_dashboard",
@@ -1124,7 +1186,8 @@
       "filename": "Fulfilled_by_noon_FBN/what_is_fbn_inventory_dashboard.md",
       "category_id": "fulfilled_by_noon_fbn",
       "category_name": "Fulfilled by noon (FBN)",
-      "char_count": 6754
+      "char_count": 6754,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/what-is-fbn-inventory-dashboard"
     },
     {
       "id": "what_is_fbn_or_noon_express",
@@ -1132,7 +1195,8 @@
       "filename": "Fulfilled_by_noon_FBN/what_is_fbn_or_noon_express.md",
       "category_id": "fulfilled_by_noon_fbn",
       "category_name": "Fulfilled by noon (FBN)",
-      "char_count": 2634
+      "char_count": 2634,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/what-is-fbn-or-noon-express"
     },
     {
       "id": "cross_border_selling",
@@ -1140,7 +1204,8 @@
       "filename": "Global_Selling/cross_border_selling.md",
       "category_id": "unknown",
       "category_name": "Unknown",
-      "char_count": 56707
+      "char_count": 24780,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/cross-border-selling"
     },
     {
       "id": "faq_cross_border_selling_in_the_gcc",
@@ -1148,7 +1213,8 @@
       "filename": "Global_Selling/faq_cross_border_selling_in_the_gcc.md",
       "category_id": "unknown",
       "category_name": "Unknown",
-      "char_count": 1603
+      "char_count": 1603,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/faq-cross-border-selling-in-the-gcc"
     },
     {
       "id": "global_seller_warranty_policy",
@@ -1156,7 +1222,8 @@
       "filename": "Global_Selling/global_seller_warranty_policy.md",
       "category_id": "global_selling",
       "category_name": "Global Selling",
-      "char_count": 7256
+      "char_count": 7256,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/global-seller-warranty-policy"
     },
     {
       "id": "global_selling",
@@ -1164,7 +1231,8 @@
       "filename": "Global_Selling/global_selling.md",
       "category_id": "global_selling",
       "category_name": "Global Selling",
-      "char_count": 2310
+      "char_count": 2310,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/global-selling"
     },
     {
       "id": "how_to_setup_the_invoicing_profile_for_global_selling",
@@ -1172,7 +1240,8 @@
       "filename": "Global_Selling/how_to_setup_the_invoicing_profile_for_global_selling.md",
       "category_id": "global_selling",
       "category_name": "Global Selling",
-      "char_count": 7941
+      "char_count": 7941,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/how-to-setup-the-invoicing-profile-for-global-selling"
     },
     {
       "id": "noon_guide_to_setup_global_store_in_uae_ksa_for_indian_selle",
@@ -1180,7 +1249,8 @@
       "filename": "Global_Selling/noon_guide_to_setup_global_store_in_uae_ksa_for_indian_selle.md",
       "category_id": "global_selling",
       "category_name": "Global Selling",
-      "char_count": 11934
+      "char_count": 11934,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/noon-guide-to-setup-global-store-in-uae-ksa-for-indian-sellers"
     },
     {
       "id": "seller_faqs_activating_and_managing_noon_global_store_for_ks",
@@ -1188,7 +1258,8 @@
       "filename": "Global_Selling/seller_faqs_activating_and_managing_noon_global_store_for_ks.md",
       "category_id": "global_selling",
       "category_name": "Global Selling",
-      "char_count": 7560
+      "char_count": 7560,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/seller-faqs-activating-and-managing-noon-global-store-for-ksa"
     },
     {
       "id": "uae_to_ksa_onboarding_guide_for_noon_sellers",
@@ -1196,7 +1267,8 @@
       "filename": "Global_Selling/uae_to_ksa_onboarding_guide_for_noon_sellers.md",
       "category_id": "global_selling",
       "category_name": "Global Selling",
-      "char_count": 8590
+      "char_count": 8590,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/uae-to-ksa-onboarding-guide-for-noon-sellers"
     },
     {
       "id": "analytics_dashboard_and_product_insights",
@@ -1204,7 +1276,8 @@
       "filename": "Governance_and_Performance_Management/analytics_dashboard_and_product_insights.md",
       "category_id": "governance_and_performance_management",
       "category_name": "Governance & Performance Management",
-      "char_count": 4030
+      "char_count": 4030,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/analytics-dashboard-and-product-insights"
     },
     {
       "id": "governance_performance_management",
@@ -1212,7 +1285,8 @@
       "filename": "Governance_and_Performance_Management/governance_performance_management.md",
       "category_id": "governance_and_performance_management",
       "category_name": "Governance & Performance Management",
-      "char_count": 2338
+      "char_count": 2338,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/governance-performance-management"
     },
     {
       "id": "how_to_receive_rtv_shipments_using_the_supply_chain_external",
@@ -1220,7 +1294,8 @@
       "filename": "Governance_and_Performance_Management/how_to_receive_rtv_shipments_using_the_supply_chain_external.md",
       "category_id": "governance_and_performance_management",
       "category_name": "Governance & Performance Management",
-      "char_count": 3992
+      "char_count": 3992,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/how-to-receive-rtv-shipments-using-the-supply-chain-external-app"
     },
     {
       "id": "how_to_report_the_seller_reviews",
@@ -1228,7 +1303,8 @@
       "filename": "Governance_and_Performance_Management/how_to_report_the_seller_reviews.md",
       "category_id": "governance_and_performance_management",
       "category_name": "Governance & Performance Management",
-      "char_count": 4107
+      "char_count": 4107,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/how-to-report-the-seller-reviews"
     },
     {
       "id": "inventory_health_dashboard",
@@ -1236,7 +1312,8 @@
       "filename": "Governance_and_Performance_Management/inventory_health_dashboard.md",
       "category_id": "governance_and_performance_management",
       "category_name": "Governance & Performance Management",
-      "char_count": 10845
+      "char_count": 10845,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/inventory-health-dashboard"
     },
     {
       "id": "overview_of_sales_view",
@@ -1244,7 +1321,8 @@
       "filename": "Governance_and_Performance_Management/overview_of_sales_view.md",
       "category_id": "governance_and_performance_management",
       "category_name": "Governance & Performance Management",
-      "char_count": 3909
+      "char_count": 3909,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/overview-of-sales-view"
     },
     {
       "id": "partial_rtv_handover_in_noon_hubs",
@@ -1252,7 +1330,8 @@
       "filename": "Governance_and_Performance_Management/partial_rtv_handover_in_noon_hubs.md",
       "category_id": "governance_and_performance_management",
       "category_name": "Governance & Performance Management",
-      "char_count": 2285
+      "char_count": 2285,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/partial-rtv-handover-in-noon-hubs"
     },
     {
       "id": "product_review_ratings",
@@ -1260,7 +1339,8 @@
       "filename": "Governance_and_Performance_Management/product_review_ratings.md",
       "category_id": "governance_and_performance_management",
       "category_name": "Governance & Performance Management",
-      "char_count": 2490
+      "char_count": 2490,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/product-review-ratings"
     },
     {
       "id": "receiving_methods_for_rtv_delivery",
@@ -1268,7 +1348,8 @@
       "filename": "Governance_and_Performance_Management/receiving_methods_for_rtv_delivery.md",
       "category_id": "governance_and_performance_management",
       "category_name": "Governance & Performance Management",
-      "char_count": 1643
+      "char_count": 1643,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/receiving-methods-for-rtv-delivery"
     },
     {
       "id": "reputation_management_dashboard",
@@ -1276,7 +1357,8 @@
       "filename": "Governance_and_Performance_Management/reputation_management_dashboard.md",
       "category_id": "governance_and_performance_management",
       "category_name": "Governance & Performance Management",
-      "char_count": 7814
+      "char_count": 7814,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/reputation-management-dashboard"
     },
     {
       "id": "saleable_recommended_rtv_report",
@@ -1284,7 +1366,8 @@
       "filename": "Governance_and_Performance_Management/saleable_recommended_rtv_report.md",
       "category_id": "governance_and_performance_management",
       "category_name": "Governance & Performance Management",
-      "char_count": 3750
+      "char_count": 3750,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/saleable-recommended-rtv-report"
     },
     {
       "id": "seller_reputation_dashboard",
@@ -1292,7 +1375,8 @@
       "filename": "Governance_and_Performance_Management/seller_reputation_dashboard.md",
       "category_id": "unknown",
       "category_name": "Unknown",
-      "char_count": 7790
+      "char_count": 7790,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/seller-reputation-dashboard"
     },
     {
       "id": "seller_reviews_ratings",
@@ -1300,7 +1384,8 @@
       "filename": "Governance_and_Performance_Management/seller_reviews_ratings.md",
       "category_id": "governance_and_performance_management",
       "category_name": "Governance & Performance Management",
-      "char_count": 4420
+      "char_count": 4420,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/seller-reviews-ratings"
     },
     {
       "id": "what_is_fbp_performance_dashboard",
@@ -1308,7 +1393,8 @@
       "filename": "Governance_and_Performance_Management/what_is_fbp_performance_dashboard.md",
       "category_id": "governance_and_performance_management",
       "category_name": "Governance & Performance Management",
-      "char_count": 5735
+      "char_count": 5735,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/what-is-fbp-performance-dashboard"
     },
     {
       "id": "what_is_the_returns_reduction_dashboard",
@@ -1316,7 +1402,8 @@
       "filename": "Governance_and_Performance_Management/what_is_the_returns_reduction_dashboard.md",
       "category_id": "governance_and_performance_management",
       "category_name": "Governance & Performance Management",
-      "char_count": 3094
+      "char_count": 3094,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/what-is-the-returns-reduction-dashboard"
     },
     {
       "id": "winning_the_buy_box",
@@ -1324,7 +1411,8 @@
       "filename": "Governance_and_Performance_Management/winning_the_buy_box.md",
       "category_id": "governance_and_performance_management",
       "category_name": "Governance & Performance Management",
-      "char_count": 4147
+      "char_count": 4147,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/winning-the-buy-box"
     },
     {
       "id": "how_can_i_track_my_rtv_shipments_and_notifications",
@@ -1332,7 +1420,8 @@
       "filename": "Inventory_Removal/how_can_i_track_my_rtv_shipments_and_notifications.md",
       "category_id": "inventory_removal",
       "category_name": "Inventory Removal",
-      "char_count": 5672
+      "char_count": 5672,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/how-can-i-track-my-rtv-shipments-and-notifications"
     },
     {
       "id": "inventory_removal",
@@ -1340,7 +1429,8 @@
       "filename": "Inventory_Removal/inventory_removal.md",
       "category_id": "inventory_removal",
       "category_name": "Inventory Removal",
-      "char_count": 5310
+      "char_count": 5310,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/inventory-removal"
     },
     {
       "id": "non_saleable_recommended_rtv_report",
@@ -1348,7 +1438,8 @@
       "filename": "Inventory_Removal/non_saleable_recommended_rtv_report.md",
       "category_id": "inventory_removal",
       "category_name": "Inventory Removal",
-      "char_count": 3767
+      "char_count": 3767,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/non-saleable-recommended-rtv-report"
     },
     {
       "id": "jump_integration",
@@ -1356,7 +1447,8 @@
       "filename": "JUMP/jump_integration.md",
       "category_id": "jump",
       "category_name": "JUMP",
-      "char_count": 10508
+      "char_count": 10508,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/jump-integration"
     },
     {
       "id": "create_and_manage_your_seller_profile",
@@ -1364,7 +1456,8 @@
       "filename": "Onboarding_and_Registration/create_and_manage_your_seller_profile.md",
       "category_id": "onboarding_and_registration",
       "category_name": "Onboarding & Registration",
-      "char_count": 3651
+      "char_count": 3651,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/create-and-manage-your-seller-profile"
     },
     {
       "id": "cross_border_selling_faq",
@@ -1372,7 +1465,8 @@
       "filename": "Onboarding_and_Registration/cross_border_selling_faq.md",
       "category_id": "onboarding_and_registration",
       "category_name": "Onboarding & Registration",
-      "char_count": 56721
+      "char_count": 24794,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/cross-border-selling-faq"
     },
     {
       "id": "documents_required_to_sell_on_noon",
@@ -1380,7 +1474,8 @@
       "filename": "Onboarding_and_Registration/documents_required_to_sell_on_noon.md",
       "category_id": "onboarding_and_registration",
       "category_name": "Onboarding & Registration",
-      "char_count": 6690
+      "char_count": 6690,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/documents-required-to-sell-on-noon"
     },
     {
       "id": "edit_your_store_information",
@@ -1388,7 +1483,8 @@
       "filename": "Onboarding_and_Registration/edit_your_store_information.md",
       "category_id": "onboarding_and_registration",
       "category_name": "Onboarding & Registration",
-      "char_count": 2637
+      "char_count": 2637,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/edit-your-store-information"
     },
     {
       "id": "egypt_seller_terms_and_conditions_t_cs",
@@ -1396,7 +1492,8 @@
       "filename": "Onboarding_and_Registration/egypt_seller_terms_and_conditions_t_cs.md",
       "category_id": "onboarding_and_registration",
       "category_name": "Onboarding & Registration",
-      "char_count": 58481
+      "char_count": 58481,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/egypt-seller-terms-and-conditions-t-cs"
     },
     {
       "id": "how_can_i_sell_on_noon_as_a_non_vat_registered_seller_12_3_2",
@@ -1404,7 +1501,8 @@
       "filename": "Onboarding_and_Registration/how_can_i_sell_on_noon_as_a_non_vat_registered_seller_12_3_2.md",
       "category_id": "onboarding_and_registration",
       "category_name": "Onboarding & Registration",
-      "char_count": 1097
+      "char_count": 1097,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/how-can-i-sell-on-noon-as-a-non-vat-registered-seller-12-3-2024-1"
     },
     {
       "id": "how_can_you_register_for_cross_border_business",
@@ -1412,7 +1510,8 @@
       "filename": "Onboarding_and_Registration/how_can_you_register_for_cross_border_business.md",
       "category_id": "onboarding_and_registration",
       "category_name": "Onboarding & Registration",
-      "char_count": 5261
+      "char_count": 5261,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/how-can-you-register-for-cross-border-business"
     },
     {
       "id": "how_to_add_the_bank_details_in_the_legal_entity_12_3_2024_1",
@@ -1420,7 +1519,8 @@
       "filename": "Onboarding_and_Registration/how_to_add_the_bank_details_in_the_legal_entity_12_3_2024_1.md",
       "category_id": "onboarding_and_registration",
       "category_name": "Onboarding & Registration",
-      "char_count": 2134
+      "char_count": 2134,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/how-to-add-the-bank-details-in-the-legal-entity-12-3-2024-1"
     },
     {
       "id": "how_to_add_user_on_the_seller_lab",
@@ -1428,7 +1528,8 @@
       "filename": "Onboarding_and_Registration/how_to_add_user_on_the_seller_lab.md",
       "category_id": "onboarding_and_registration",
       "category_name": "Onboarding & Registration",
-      "char_count": 6302
+      "char_count": 6302,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/how-to-add-user-on-the-seller-lab"
     },
     {
       "id": "how_to_apply_for_a_trade_license_in_dubai",
@@ -1436,7 +1537,8 @@
       "filename": "Onboarding_and_Registration/how_to_apply_for_a_trade_license_in_dubai.md",
       "category_id": "onboarding_and_registration",
       "category_name": "Onboarding & Registration",
-      "char_count": 3204
+      "char_count": 3204,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/how-to-apply-for-a-trade-license-in-dubai"
     },
     {
       "id": "how_to_upload_my_logo_and_banner_to_my_seller_profile",
@@ -1444,7 +1546,8 @@
       "filename": "Onboarding_and_Registration/how_to_upload_my_logo_and_banner_to_my_seller_profile.md",
       "category_id": "onboarding_and_registration",
       "category_name": "Onboarding & Registration",
-      "char_count": 4104
+      "char_count": 4104,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/how-to-upload-my-logo-and-banner-to-my-seller-profile"
     },
     {
       "id": "i_m_registered_as_a_noon_seller_what_s_next_12_3_2024",
@@ -1452,7 +1555,8 @@
       "filename": "Onboarding_and_Registration/i_m_registered_as_a_noon_seller_what_s_next_12_3_2024.md",
       "category_id": "onboarding_and_registration",
       "category_name": "Onboarding & Registration",
-      "char_count": 2220
+      "char_count": 2220,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/i-m-registered-as-a-noon-seller-what-s-next-12-3-2024"
     },
     {
       "id": "international_seller_terms_and_conditions_in_uae",
@@ -1460,7 +1564,8 @@
       "filename": "Onboarding_and_Registration/international_seller_terms_and_conditions_in_uae.md",
       "category_id": "onboarding_and_registration",
       "category_name": "Onboarding & Registration",
-      "char_count": 37168
+      "char_count": 37168,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/international-seller-terms-and-conditions-in-uae"
     },
     {
       "id": "ksa_seller_terms_and_conditions_t_cs",
@@ -1468,7 +1573,8 @@
       "filename": "Onboarding_and_Registration/ksa_seller_terms_and_conditions_t_cs.md",
       "category_id": "onboarding_and_registration",
       "category_name": "Onboarding & Registration",
-      "char_count": 61124
+      "char_count": 61124,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/ksa-seller-terms-and-conditions-t-cs"
     },
     {
       "id": "managing_your_invoices_credit_notes_on_noon_16_3_2025",
@@ -1476,7 +1582,8 @@
       "filename": "Onboarding_and_Registration/managing_your_invoices_credit_notes_on_noon_16_3_2025.md",
       "category_id": "onboarding_and_registration",
       "category_name": "Onboarding & Registration",
-      "char_count": 7698
+      "char_count": 7698,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/managing-your-invoices-credit-notes-on-noon-16-3-2025"
     },
     {
       "id": "onboarding_registration_comprehensive_overview",
@@ -1484,7 +1591,8 @@
       "filename": "Onboarding_and_Registration/onboarding_registration_comprehensive_overview.md",
       "category_id": "onboarding_and_registration",
       "category_name": "Onboarding & Registration",
-      "char_count": 3872
+      "char_count": 3872,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/onboarding-registration-comprehensive-overview"
     },
     {
       "id": "seller_registration_process_12_3_2024",
@@ -1492,7 +1600,8 @@
       "filename": "Onboarding_and_Registration/seller_registration_process_12_3_2024.md",
       "category_id": "onboarding_and_registration",
       "category_name": "Onboarding & Registration",
-      "char_count": 15265
+      "char_count": 15265,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/seller-registration-process-12-3-2024"
     },
     {
       "id": "setting_your_contact_preferences",
@@ -1500,7 +1609,8 @@
       "filename": "Onboarding_and_Registration/setting_your_contact_preferences.md",
       "category_id": "onboarding_and_registration",
       "category_name": "Onboarding & Registration",
-      "char_count": 5947
+      "char_count": 5947,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/setting-your-contact-preferences"
     },
     {
       "id": "uae_seller_terms_and_conditions_t_cs",
@@ -1508,7 +1618,8 @@
       "filename": "Onboarding_and_Registration/uae_seller_terms_and_conditions_t_cs.md",
       "category_id": "onboarding_and_registration",
       "category_name": "Onboarding & Registration",
-      "char_count": 63358
+      "char_count": 63358,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/uae-seller-terms-and-conditions-t-cs"
     },
     {
       "id": "uae_to_ksa_automated_onboarding_guide_for_noon_sellers",
@@ -1516,7 +1627,8 @@
       "filename": "Onboarding_and_Registration/uae_to_ksa_automated_onboarding_guide_for_noon_sellers.md",
       "category_id": "unknown",
       "category_name": "Unknown",
-      "char_count": 8601
+      "char_count": 8601,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/uae-to-ksa-automated-onboarding-guide-for-noon-sellers"
     },
     {
       "id": "update_your_legal_documents_12_3_2024",
@@ -1524,7 +1636,8 @@
       "filename": "Onboarding_and_Registration/update_your_legal_documents_12_3_2024.md",
       "category_id": "onboarding_and_registration",
       "category_name": "Onboarding & Registration",
-      "char_count": 11794
+      "char_count": 11794,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/update-your-legal-documents-12-3-2024"
     },
     {
       "id": "vat_frequently_asked_questions_12_3_2024_1",
@@ -1532,7 +1645,8 @@
       "filename": "Onboarding_and_Registration/vat_frequently_asked_questions_12_3_2024_1.md",
       "category_id": "onboarding_and_registration",
       "category_name": "Onboarding & Registration",
-      "char_count": 4300
+      "char_count": 4300,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/vat-frequently-asked-questions-12-3-2024-1"
     },
     {
       "id": "what_is_mahali",
@@ -1540,7 +1654,8 @@
       "filename": "Onboarding_and_Registration/what_is_mahali.md",
       "category_id": "onboarding_and_registration",
       "category_name": "Onboarding & Registration",
-      "char_count": 4349
+      "char_count": 4349,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/what-is-mahali"
     },
     {
       "id": "why_am_i_ineligible_to_sell_on_noon",
@@ -1548,7 +1663,8 @@
       "filename": "Onboarding_and_Registration/why_am_i_ineligible_to_sell_on_noon.md",
       "category_id": "onboarding_and_registration",
       "category_name": "Onboarding & Registration",
-      "char_count": 2604
+      "char_count": 2604,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/why-am-i-ineligible-to-sell-on-noon"
     },
     {
       "id": "determining_your_prices_global_min_max",
@@ -1556,7 +1672,8 @@
       "filename": "Price_and_Inventory_Management/determining_your_prices_global_min_max.md",
       "category_id": "price_and_inventory_management",
       "category_name": "Price & Inventory Management",
-      "char_count": 3237
+      "char_count": 3237,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/determining-your-prices-global-min-max"
     },
     {
       "id": "increase_your_sales_with_the_price_engine",
@@ -1564,7 +1681,8 @@
       "filename": "Price_and_Inventory_Management/increase_your_sales_with_the_price_engine.md",
       "category_id": "price_and_inventory_management",
       "category_name": "Price & Inventory Management",
-      "char_count": 10006
+      "char_count": 10006,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/increase-your-sales-with-the-price-engine"
     },
     {
       "id": "partner_sku_price_range_import",
@@ -1572,7 +1690,8 @@
       "filename": "Price_and_Inventory_Management/partner_sku_price_range_import.md",
       "category_id": "price_and_inventory_management",
       "category_name": "Price & Inventory Management",
-      "char_count": 6909
+      "char_count": 6909,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/partner-sku-price-range-import"
     },
     {
       "id": "partner_sku_price_update_import",
@@ -1580,7 +1699,8 @@
       "filename": "Price_and_Inventory_Management/partner_sku_price_update_import.md",
       "category_id": "price_and_inventory_management",
       "category_name": "Price & Inventory Management",
-      "char_count": 10076
+      "char_count": 10076,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/partner-sku-price-update-import"
     },
     {
       "id": "price_inventory_management",
@@ -1588,7 +1708,8 @@
       "filename": "Price_and_Inventory_Management/price_inventory_management.md",
       "category_id": "price_and_inventory_management",
       "category_name": "Price & Inventory Management",
-      "char_count": 1434
+      "char_count": 1434,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/price-inventory-management"
     },
     {
       "id": "secure_file_transfer_protocol_activation",
@@ -1596,7 +1717,8 @@
       "filename": "Price_and_Inventory_Management/secure_file_transfer_protocol_activation.md",
       "category_id": "price_and_inventory_management",
       "category_name": "Price & Inventory Management",
-      "char_count": 3063
+      "char_count": 3063,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/secure-file-transfer-protocol-activation"
     },
     {
       "id": "secure_file_transfer_protocol_guidelines",
@@ -1604,7 +1726,8 @@
       "filename": "Price_and_Inventory_Management/secure_file_transfer_protocol_guidelines.md",
       "category_id": "price_and_inventory_management",
       "category_name": "Price & Inventory Management",
-      "char_count": 4908
+      "char_count": 4908,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/secure-file-transfer-protocol-guidelines"
     },
     {
       "id": "accessing_catalog_using_the_new_offer_management_tool",
@@ -1612,7 +1735,8 @@
       "filename": "Product_Listing/accessing_catalog_using_the_new_offer_management_tool.md",
       "category_id": "product_listing",
       "category_name": "Product Listing",
-      "char_count": 7870
+      "char_count": 7870,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/accessing-catalog-using-the-new-offer-management-tool"
     },
     {
       "id": "barcode_requirements",
@@ -1620,7 +1744,8 @@
       "filename": "Product_Listing/barcode_requirements.md",
       "category_id": "product_listing",
       "category_name": "Product Listing",
-      "char_count": 6658
+      "char_count": 6658,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/barcode-requirements"
     },
     {
       "id": "brand_creation_guidelines_15_4_2024",
@@ -1628,7 +1753,8 @@
       "filename": "Product_Listing/brand_creation_guidelines_15_4_2024.md",
       "category_id": "product_listing",
       "category_name": "Product Listing",
-      "char_count": 6076
+      "char_count": 6076,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/brand-creation-guidelines-15-4-2024"
     },
     {
       "id": "brand_registration",
@@ -1636,7 +1762,8 @@
       "filename": "Product_Listing/brand_registration.md",
       "category_id": "product_listing",
       "category_name": "Product Listing",
-      "char_count": 6022
+      "char_count": 6022,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/brand-registration"
     },
     {
       "id": "catalog_content_pdp_article",
@@ -1644,7 +1771,8 @@
       "filename": "Product_Listing/catalog_content_pdp_article.md",
       "category_id": "product_listing",
       "category_name": "Product Listing",
-      "char_count": 21821
+      "char_count": 21821,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/catalog-content-pdp-article"
     },
     {
       "id": "content_guidelines_for_product_listing_for_home_category",
@@ -1652,7 +1780,8 @@
       "filename": "Product_Listing/content_guidelines_for_product_listing_for_home_category.md",
       "category_id": "product_listing",
       "category_name": "Product Listing",
-      "char_count": 10749
+      "char_count": 10749,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/content-guidelines-for-product-listing-for-home-category"
     },
     {
       "id": "create_a_new_product_of_a_noon_controlled_brand",
@@ -1660,7 +1789,8 @@
       "filename": "Product_Listing/create_a_new_product_of_a_noon_controlled_brand.md",
       "category_id": "product_listing",
       "category_name": "Product Listing",
-      "char_count": 9019
+      "char_count": 9019,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/create-a-new-product-of-a-noon-controlled-brand"
     },
     {
       "id": "creating_product_variations_adding_sizes_colors_and_other_at",
@@ -1668,7 +1798,8 @@
       "filename": "Product_Listing/creating_product_variations_adding_sizes_colors_and_other_at.md",
       "category_id": "product_listing",
       "category_name": "Product Listing",
-      "char_count": 5236
+      "char_count": 5236,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/creating-product-variations-adding-sizes-colors-and-other-attributes"
     },
     {
       "id": "feature_bullets_product_highlights_and_description_for_the_s",
@@ -1676,7 +1807,8 @@
       "filename": "Product_Listing/feature_bullets_product_highlights_and_description_for_the_s.md",
       "category_id": "product_listing",
       "category_name": "Product Listing",
-      "char_count": 19962
+      "char_count": 19962,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/feature-bullets-product-highlights-and-description-for-the-seller-sku"
     },
     {
       "id": "guidelines_for_prohibited_items_and_keywords",
@@ -1684,7 +1816,8 @@
       "filename": "Product_Listing/guidelines_for_prohibited_items_and_keywords.md",
       "category_id": "product_listing",
       "category_name": "Product Listing",
-      "char_count": 156145
+      "char_count": 54442,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/guidelines-for-prohibited-items-and-keywords"
     },
     {
       "id": "how_to_categorize_your_seller_sku",
@@ -1692,7 +1825,8 @@
       "filename": "Product_Listing/how_to_categorize_your_seller_sku.md",
       "category_id": "product_listing",
       "category_name": "Product Listing",
-      "char_count": 759612
+      "char_count": 6966,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/how-to-categorize-your-seller-sku"
     },
     {
       "id": "how_to_create_product_titles_of_grocery_items",
@@ -1700,7 +1834,8 @@
       "filename": "Product_Listing/how_to_create_product_titles_of_grocery_items.md",
       "category_id": "product_listing",
       "category_name": "Product Listing",
-      "char_count": 3034
+      "char_count": 3034,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/how-to-create-product-titles-of-grocery-items"
     },
     {
       "id": "how_to_list_products_belonging_to_multiple_categories_in_bul",
@@ -1708,7 +1843,8 @@
       "filename": "Product_Listing/how_to_list_products_belonging_to_multiple_categories_in_bul.md",
       "category_id": "product_listing",
       "category_name": "Product Listing",
-      "char_count": 763956
+      "char_count": 8173,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/how-to-list-products-belonging-to-multiple-categories-in-bulk"
     },
     {
       "id": "how_to_make_your_fbn_products_live_reactivate",
@@ -1716,7 +1852,8 @@
       "filename": "Product_Listing/how_to_make_your_fbn_products_live_reactivate.md",
       "category_id": "product_listing",
       "category_name": "Product Listing",
-      "char_count": 6516
+      "char_count": 6516,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/how-to-make-your-fbn-products-live-reactivate"
     },
     {
       "id": "how_to_search_for_items_in_the_partner_catalog",
@@ -1724,7 +1861,8 @@
       "filename": "Product_Listing/how_to_search_for_items_in_the_partner_catalog.md",
       "category_id": "product_listing",
       "category_name": "Product Listing",
-      "char_count": 3684
+      "char_count": 3684,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/how-to-search-for-items-in-the-partner-catalog"
     },
     {
       "id": "how_to_use_and_make_changes_to_your_products_on_catalog_list",
@@ -1732,7 +1870,8 @@
       "filename": "Product_Listing/how_to_use_and_make_changes_to_your_products_on_catalog_list.md",
       "category_id": "product_listing",
       "category_name": "Product Listing",
-      "char_count": 5619
+      "char_count": 5619,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/how-to-use-and-make-changes-to-your-products-on-catalog-listing-page"
     },
     {
       "id": "listing_apple_products_with_noon",
@@ -1740,7 +1879,8 @@
       "filename": "Product_Listing/listing_apple_products_with_noon.md",
       "category_id": "product_listing",
       "category_name": "Product Listing",
-      "char_count": 2562
+      "char_count": 2562,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/listing-apple-products-with-noon"
     },
     {
       "id": "listing_products_on_noon_faq",
@@ -1748,7 +1888,8 @@
       "filename": "Product_Listing/listing_products_on_noon_faq.md",
       "category_id": "product_listing",
       "category_name": "Product Listing",
-      "char_count": 28424
+      "char_count": 28424,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/listing-products-on-noon-faq"
     },
     {
       "id": "partner_sku_delete_import",
@@ -1756,7 +1897,8 @@
       "filename": "Product_Listing/partner_sku_delete_import.md",
       "category_id": "product_listing",
       "category_name": "Product Listing",
-      "char_count": 5052
+      "char_count": 5052,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/partner-sku-delete-import"
     },
     {
       "id": "partner_sku_rename_import",
@@ -1764,7 +1906,8 @@
       "filename": "Product_Listing/partner_sku_rename_import.md",
       "category_id": "product_listing",
       "category_name": "Product Listing",
-      "char_count": 3594
+      "char_count": 3594,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/partner-sku-rename-import"
     },
     {
       "id": "picture_requirements_and_rejection_reasons_for_the_seller_sk",
@@ -1772,7 +1915,8 @@
       "filename": "Product_Listing/picture_requirements_and_rejection_reasons_for_the_seller_sk.md",
       "category_id": "product_listing",
       "category_name": "Product Listing",
-      "char_count": 10289
+      "char_count": 10289,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/picture-requirements-and-rejection-reasons-for-the-seller-sku-12-3-2024"
     },
     {
       "id": "product_listing",
@@ -1780,7 +1924,8 @@
       "filename": "Product_Listing/product_listing.md",
       "category_id": "product_listing",
       "category_name": "Product Listing",
-      "char_count": 8502
+      "char_count": 8502,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/product-listing"
     },
     {
       "id": "prohibited_products",
@@ -1788,7 +1933,8 @@
       "filename": "Product_Listing/prohibited_products.md",
       "category_id": "product_listing",
       "category_name": "Product Listing",
-      "char_count": 2713
+      "char_count": 2713,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/prohibited-products"
     },
     {
       "id": "relabeling_feature_for_non_saleable_inventory_15_4_2024",
@@ -1796,7 +1942,8 @@
       "filename": "Product_Listing/relabeling_feature_for_non_saleable_inventory_15_4_2024.md",
       "category_id": "product_listing",
       "category_name": "Product Listing",
-      "char_count": 6389
+      "char_count": 6389,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/relabeling-feature-for-non-saleable-inventory-15-4-2024"
     },
     {
       "id": "seller_sku_bulk_creation",
@@ -1804,7 +1951,8 @@
       "filename": "Product_Listing/seller_sku_bulk_creation.md",
       "category_id": "product_listing",
       "category_name": "Product Listing",
-      "char_count": 10071
+      "char_count": 10071,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/seller-sku-bulk-creation"
     },
     {
       "id": "seller_sku_content_export_12_3_2024",
@@ -1812,7 +1960,8 @@
       "filename": "Product_Listing/seller_sku_content_export_12_3_2024.md",
       "category_id": "product_listing",
       "category_name": "Product Listing",
-      "char_count": 6798
+      "char_count": 6798,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/seller-sku-content-export-12-3-2024"
     },
     {
       "id": "seller_sku_content_language_requirements",
@@ -1820,7 +1969,8 @@
       "filename": "Product_Listing/seller_sku_content_language_requirements.md",
       "category_id": "product_listing",
       "category_name": "Product Listing",
-      "char_count": 1918
+      "char_count": 1918,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/seller-sku-content-language-requirements"
     },
     {
       "id": "seller_sku_content_quality",
@@ -1828,7 +1978,8 @@
       "filename": "Product_Listing/seller_sku_content_quality.md",
       "category_id": "product_listing",
       "category_name": "Product Listing",
-      "char_count": 10367
+      "char_count": 10367,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/seller-sku-content-quality"
     },
     {
       "id": "seller_sku_quick_copy_of_the_content",
@@ -1836,7 +1987,8 @@
       "filename": "Product_Listing/seller_sku_quick_copy_of_the_content.md",
       "category_id": "product_listing",
       "category_name": "Product Listing",
-      "char_count": 1722
+      "char_count": 1722,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/seller-sku-quick-copy-of-the-content"
     },
     {
       "id": "single_sku_creation",
@@ -1844,7 +1996,8 @@
       "filename": "Product_Listing/single_sku_creation.md",
       "category_id": "product_listing",
       "category_name": "Product Listing",
-      "char_count": 8036
+      "char_count": 8036,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/single-sku-creation"
     },
     {
       "id": "the_seller_sku_brand",
@@ -1852,7 +2005,8 @@
       "filename": "Product_Listing/the_seller_sku_brand.md",
       "category_id": "product_listing",
       "category_name": "Product Listing",
-      "char_count": 4232
+      "char_count": 4232,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/the-seller-sku-brand"
     },
     {
       "id": "the_seller_sku_product_attributes",
@@ -1860,7 +2014,8 @@
       "filename": "Product_Listing/the_seller_sku_product_attributes.md",
       "category_id": "product_listing",
       "category_name": "Product Listing",
-      "char_count": 4876
+      "char_count": 4876,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/the-seller-sku-product-attributes"
     },
     {
       "id": "the_seller_sku_s_content_guidelines_for_laptop_monitors",
@@ -1868,7 +2023,8 @@
       "filename": "Product_Listing/the_seller_sku_s_content_guidelines_for_laptop_monitors.md",
       "category_id": "product_listing",
       "category_name": "Product Listing",
-      "char_count": 11231
+      "char_count": 11231,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/the-seller-sku-s-content-guidelines-for-laptop-monitors"
     },
     {
       "id": "title_requirements_and_rejection_reasons_for_the_seller_sku",
@@ -1876,7 +2032,8 @@
       "filename": "Product_Listing/title_requirements_and_rejection_reasons_for_the_seller_sku.md",
       "category_id": "product_listing",
       "category_name": "Product Listing",
-      "char_count": 7747
+      "char_count": 7747,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/title-requirements-and-rejection-reasons-for-the-seller-sku"
     },
     {
       "id": "video_guidelines_and_rejection_reasons_for_seller_skus",
@@ -1884,7 +2041,8 @@
       "filename": "Product_Listing/video_guidelines_and_rejection_reasons_for_seller_skus.md",
       "category_id": "product_listing",
       "category_name": "Product Listing",
-      "char_count": 8817
+      "char_count": 8817,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/video-guidelines-and-rejection-reasons-for-seller-skus"
     },
     {
       "id": "warranty_requirements_12_3_2024",
@@ -1892,7 +2050,8 @@
       "filename": "Product_Listing/warranty_requirements_12_3_2024.md",
       "category_id": "product_listing",
       "category_name": "Product Listing",
-      "char_count": 2343
+      "char_count": 2343,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/warranty-requirements-12-3-2024"
     },
     {
       "id": "what_is_the_noon_catalog",
@@ -1900,7 +2059,8 @@
       "filename": "Product_Listing/what_is_the_noon_catalog.md",
       "category_id": "product_listing",
       "category_name": "Product Listing",
-      "char_count": 7810
+      "char_count": 7810,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/what-is-the-noon-catalog"
     },
     {
       "id": "anti_fraud_and_seller_code_of_conduct_policy",
@@ -1908,7 +2068,8 @@
       "filename": "Program_Policies/anti_fraud_and_seller_code_of_conduct_policy.md",
       "category_id": "program_policies",
       "category_name": "Program Policies",
-      "char_count": 4461
+      "char_count": 4461,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/anti-fraud-and-seller-code-of-conduct-policy"
     },
     {
       "id": "automated_reimbursement_process_for_lost_damaged_items",
@@ -1916,7 +2077,8 @@
       "filename": "Program_Policies/automated_reimbursement_process_for_lost_damaged_items.md",
       "category_id": "program_policies",
       "category_name": "Program Policies",
-      "char_count": 8543
+      "char_count": 8543,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/automated-reimbursement-process-for-lost-damaged-items"
     },
     {
       "id": "comprehensive_guide_to_noon_seller_policies_your_path_to_suc",
@@ -1924,7 +2086,8 @@
       "filename": "Program_Policies/comprehensive_guide_to_noon_seller_policies_your_path_to_suc.md",
       "category_id": "unknown",
       "category_name": "Unknown",
-      "char_count": 6438
+      "char_count": 6438,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/comprehensive-guide-to-noon-seller-policies-your-path-to-success"
     },
     {
       "id": "cross_border_selling_7_4_2025",
@@ -1932,7 +2095,8 @@
       "filename": "Program_Policies/cross_border_selling_7_4_2025.md",
       "category_id": "program_policies",
       "category_name": "Program Policies",
-      "char_count": 1598
+      "char_count": 1598,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/cross-border-selling-7-4-2025"
     },
     {
       "id": "customer_reviews_anti_manipulation_policy",
@@ -1940,7 +2104,8 @@
       "filename": "Program_Policies/customer_reviews_anti_manipulation_policy.md",
       "category_id": "program_policies",
       "category_name": "Program Policies",
-      "char_count": 3987
+      "char_count": 3987,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/customer-reviews-anti-manipulation-policy"
     },
     {
       "id": "directship_seller_returns_dispute_and_reimbursement_policy",
@@ -1948,7 +2113,8 @@
       "filename": "Program_Policies/directship_seller_returns_dispute_and_reimbursement_policy.md",
       "category_id": "program_policies",
       "category_name": "Program Policies",
-      "char_count": 7578
+      "char_count": 7578,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/directship-seller-returns-dispute-and-reimbursement-policy"
     },
     {
       "id": "directship_volumetric_measurement_dispute_policy",
@@ -1956,7 +2122,8 @@
       "filename": "Program_Policies/directship_volumetric_measurement_dispute_policy.md",
       "category_id": "program_policies",
       "category_name": "Program Policies",
-      "char_count": 3880
+      "char_count": 3880,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/directship-volumetric-measurement-dispute-policy"
     },
     {
       "id": "disputes_claims_resolution_policy",
@@ -1964,7 +2131,8 @@
       "filename": "Program_Policies/disputes_claims_resolution_policy.md",
       "category_id": "program_policies",
       "category_name": "Program Policies",
-      "char_count": 18085
+      "char_count": 18085,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/disputes-claims-resolution-policy"
     },
     {
       "id": "e_invoicing_services_in_the_kingdom_of_saudi_arabia_ksa",
@@ -1972,7 +2140,8 @@
       "filename": "Program_Policies/e_invoicing_services_in_the_kingdom_of_saudi_arabia_ksa.md",
       "category_id": "program_policies",
       "category_name": "Program Policies",
-      "char_count": 2875
+      "char_count": 2875,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/e-invoicing-services-in-the-kingdom-of-saudi-arabia-ksa"
     },
     {
       "id": "fbn_packing_and_delivery_policy",
@@ -1980,7 +2149,8 @@
       "filename": "Program_Policies/fbn_packing_and_delivery_policy.md",
       "category_id": "program_policies",
       "category_name": "Program Policies",
-      "char_count": 5674
+      "char_count": 5674,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/fbn-packing-and-delivery-policy"
     },
     {
       "id": "fulfilled_by_noon_fbn_fees_in_egypt",
@@ -1988,7 +2158,8 @@
       "filename": "Program_Policies/fulfilled_by_noon_fbn_fees_in_egypt.md",
       "category_id": "program_policies",
       "category_name": "Program Policies",
-      "char_count": 38831
+      "char_count": 11386,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/fulfilled-by-noon-fbn-fees-in-egypt"
     },
     {
       "id": "fulfilled_by_noon_fbn_fees_in_ksa",
@@ -1996,7 +2167,8 @@
       "filename": "Program_Policies/fulfilled_by_noon_fbn_fees_in_ksa.md",
       "category_id": "program_policies",
       "category_name": "Program Policies",
-      "char_count": 27122
+      "char_count": 17966,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/fulfilled-by-noon-fbn-fees-in-ksa"
     },
     {
       "id": "fulfilled_by_noon_fbn_fees_in_ksa_refurbished_renewed",
@@ -2004,7 +2176,8 @@
       "filename": "Program_Policies/fulfilled_by_noon_fbn_fees_in_ksa_refurbished_renewed.md",
       "category_id": "program_policies",
       "category_name": "Program Policies",
-      "char_count": 21799
+      "char_count": 8202,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/fulfilled-by-noon-fbn-fees-in-ksa-refurbished-renewed"
     },
     {
       "id": "fulfilled_by_noon_fbn_fees_in_uae_11_3_2024",
@@ -2012,7 +2185,8 @@
       "filename": "Program_Policies/fulfilled_by_noon_fbn_fees_in_uae_11_3_2024.md",
       "category_id": "program_policies",
       "category_name": "Program Policies",
-      "char_count": 48894
+      "char_count": 17889,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/fulfilled-by-noon-fbn-fees-in-uae-11-3-2024"
     },
     {
       "id": "fulfilled_by_noon_fbn_fees_in_uae_refurbished_renewed",
@@ -2020,7 +2194,8 @@
       "filename": "Program_Policies/fulfilled_by_noon_fbn_fees_in_uae_refurbished_renewed.md",
       "category_id": "program_policies",
       "category_name": "Program Policies",
-      "char_count": 21858
+      "char_count": 8261,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/fulfilled-by-noon-fbn-fees-in-uae-refurbished-renewed"
     },
     {
       "id": "fulfilled_by_partner_fbp_fees_in_egypt",
@@ -2028,7 +2203,8 @@
       "filename": "Program_Policies/fulfilled_by_partner_fbp_fees_in_egypt.md",
       "category_id": "program_policies",
       "category_name": "Program Policies",
-      "char_count": 27673
+      "char_count": 11061,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/fulfilled-by-partner-fbp-fees-in-egypt"
     },
     {
       "id": "fulfilled_by_partner_fbp_fees_in_ksa",
@@ -2036,7 +2212,8 @@
       "filename": "Program_Policies/fulfilled_by_partner_fbp_fees_in_ksa.md",
       "category_id": "program_policies",
       "category_name": "Program Policies",
-      "char_count": 36075
+      "char_count": 15800,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/fulfilled-by-partner-fbp-fees-in-ksa"
     },
     {
       "id": "fulfilled_by_partner_fbp_fees_in_ksa_refurbished_renewed",
@@ -2044,7 +2221,8 @@
       "filename": "Program_Policies/fulfilled_by_partner_fbp_fees_in_ksa_refurbished_renewed.md",
       "category_id": "program_policies",
       "category_name": "Program Policies",
-      "char_count": 7679
+      "char_count": 7679,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/fulfilled-by-partner-fbp-fees-in-ksa-refurbished-renewed"
     },
     {
       "id": "fulfilled_by_partner_fbp_fees_in_uae",
@@ -2052,7 +2230,8 @@
       "filename": "Program_Policies/fulfilled_by_partner_fbp_fees_in_uae.md",
       "category_id": "program_policies",
       "category_name": "Program Policies",
-      "char_count": 36022
+      "char_count": 15747,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/fulfilled-by-partner-fbp-fees-in-uae"
     },
     {
       "id": "fulfilled_by_partner_fbp_fees_in_uae_refurbished_renewed",
@@ -2060,7 +2239,8 @@
       "filename": "Program_Policies/fulfilled_by_partner_fbp_fees_in_uae_refurbished_renewed.md",
       "category_id": "program_policies",
       "category_name": "Program Policies",
-      "char_count": 18601
+      "char_count": 7851,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/fulfilled-by-partner-fbp-fees-in-uae-refurbished-renewed"
     },
     {
       "id": "fulfilled_by_partner_fbp_policy_30_1_2024",
@@ -2068,7 +2248,8 @@
       "filename": "Program_Policies/fulfilled_by_partner_fbp_policy_30_1_2024.md",
       "category_id": "program_policies",
       "category_name": "Program Policies",
-      "char_count": 7275
+      "char_count": 7275,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/fulfilled-by-partner-fbp-policy-30-1-2024"
     },
     {
       "id": "handling_customer_returns_policy_for_fbp",
@@ -2076,7 +2257,8 @@
       "filename": "Program_Policies/handling_customer_returns_policy_for_fbp.md",
       "category_id": "program_policies",
       "category_name": "Program Policies",
-      "char_count": 4421
+      "char_count": 4421,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/handling-customer-returns-policy-for-fbp"
     },
     {
       "id": "inventory_confiscation_policy",
@@ -2084,7 +2266,8 @@
       "filename": "Program_Policies/inventory_confiscation_policy.md",
       "category_id": "program_policies",
       "category_name": "Program Policies",
-      "char_count": 1269
+      "char_count": 1269,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/inventory-confiscation-policy"
     },
     {
       "id": "inventory_removal_policy",
@@ -2092,7 +2275,8 @@
       "filename": "Program_Policies/inventory_removal_policy.md",
       "category_id": "program_policies",
       "category_name": "Program Policies",
-      "char_count": 9660
+      "char_count": 9660,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/inventory-removal-policy"
     },
     {
       "id": "issuing_tax_invoices_and_credit_notes_to_customers_in_egypt",
@@ -2100,7 +2284,8 @@
       "filename": "Program_Policies/issuing_tax_invoices_and_credit_notes_to_customers_in_egypt.md",
       "category_id": "program_policies",
       "category_name": "Program Policies",
-      "char_count": 5620
+      "char_count": 5620,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/issuing-tax-invoices-and-credit-notes-to-customers-in-egypt"
     },
     {
       "id": "negative_account_balance_recovery_policy",
@@ -2108,7 +2293,8 @@
       "filename": "Program_Policies/negative_account_balance_recovery_policy.md",
       "category_id": "program_policies",
       "category_name": "Program Policies",
-      "char_count": 3543
+      "char_count": 3543,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/negative-account-balance-recovery-policy"
     },
     {
       "id": "noon_conflict_of_interest_policy",
@@ -2116,7 +2302,8 @@
       "filename": "Program_Policies/noon_conflict_of_interest_policy.md",
       "category_id": "program_policies",
       "category_name": "Program Policies",
-      "char_count": 2102
+      "char_count": 2102,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/noon-conflict-of-interest-policy"
     },
     {
       "id": "noon_global_shipping_program",
@@ -2124,7 +2311,8 @@
       "filename": "Program_Policies/noon_global_shipping_program.md",
       "category_id": "program_policies",
       "category_name": "Program Policies",
-      "char_count": 17597
+      "char_count": 17597,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/noon-global-shipping-program"
     },
     {
       "id": "noon_ksa_uae_x_border_cb_ratecard",
@@ -2132,7 +2320,8 @@
       "filename": "Program_Policies/noon_ksa_uae_x_border_cb_ratecard.md",
       "category_id": "program_policies",
       "category_name": "Program Policies",
-      "char_count": 5558
+      "char_count": 5558,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/noon-ksa-uae-x-border-cb-ratecard"
     },
     {
       "id": "packing_guidelines_for_directshipping",
@@ -2140,7 +2329,8 @@
       "filename": "Program_Policies/packing_guidelines_for_directshipping.md",
       "category_id": "program_policies",
       "category_name": "Program Policies",
-      "char_count": 9481
+      "char_count": 9481,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/packing-guidelines-for-directshipping"
     },
     {
       "id": "payments_processing_policy",
@@ -2148,7 +2338,8 @@
       "filename": "Program_Policies/payments_processing_policy.md",
       "category_id": "program_policies",
       "category_name": "Program Policies",
-      "char_count": 3436
+      "char_count": 3436,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/payments-processing-policy"
     },
     {
       "id": "product_listing_policy",
@@ -2156,7 +2347,8 @@
       "filename": "Program_Policies/product_listing_policy.md",
       "category_id": "program_policies",
       "category_name": "Program Policies",
-      "char_count": 17274
+      "char_count": 17232,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/product-listing-policy"
     },
     {
       "id": "product_quality_control_policy",
@@ -2164,7 +2356,8 @@
       "filename": "Program_Policies/product_quality_control_policy.md",
       "category_id": "program_policies",
       "category_name": "Program Policies",
-      "char_count": 5329
+      "char_count": 5329,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/product-quality-control-policy"
     },
     {
       "id": "program_policies",
@@ -2172,7 +2365,8 @@
       "filename": "Program_Policies/program_policies.md",
       "category_id": "program_policies",
       "category_name": "Program Policies",
-      "char_count": 6391
+      "char_count": 6391,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/program-policies"
     },
     {
       "id": "returns_and_seller_protection_policy",
@@ -2180,7 +2374,8 @@
       "filename": "Program_Policies/returns_and_seller_protection_policy.md",
       "category_id": "program_policies",
       "category_name": "Program Policies",
-      "char_count": 8207
+      "char_count": 8207,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/returns-and-seller-protection-policy"
     },
     {
       "id": "rocket_model_policy_document",
@@ -2188,7 +2383,8 @@
       "filename": "Program_Policies/rocket_model_policy_document.md",
       "category_id": "unknown",
       "category_name": "Unknown",
-      "char_count": 2502
+      "char_count": 2502,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/rocket-model-policy-document"
     },
     {
       "id": "seller_compliance_policy_imei_registration_import_regulation",
@@ -2196,7 +2392,8 @@
       "filename": "Program_Policies/seller_compliance_policy_imei_registration_import_regulation.md",
       "category_id": "program_policies",
       "category_name": "Program Policies",
-      "char_count": 1597
+      "char_count": 1597,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/seller-compliance-policy-imei-registration-import-regulations-egypt"
     },
     {
       "id": "seller_offboarding_policy_11_3_2024",
@@ -2204,7 +2401,8 @@
       "filename": "Program_Policies/seller_offboarding_policy_11_3_2024.md",
       "category_id": "program_policies",
       "category_name": "Program Policies",
-      "char_count": 2533
+      "char_count": 2533,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/seller-offboarding-policy-11-3-2024"
     },
     {
       "id": "seller_review_and_rating_dispute_policy",
@@ -2212,7 +2410,8 @@
       "filename": "Program_Policies/seller_review_and_rating_dispute_policy.md",
       "category_id": "program_policies",
       "category_name": "Program Policies",
-      "char_count": 6909
+      "char_count": 6909,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/seller-review-and-rating-dispute-policy"
     },
     {
       "id": "seller_warranty_policy_11_3_2024",
@@ -2220,7 +2419,8 @@
       "filename": "Program_Policies/seller_warranty_policy_11_3_2024.md",
       "category_id": "program_policies",
       "category_name": "Program Policies",
-      "char_count": 1004
+      "char_count": 1004,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/seller-warranty-policy-11-3-2024"
     },
     {
       "id": "supermall_model_policy",
@@ -2228,7 +2428,8 @@
       "filename": "Program_Policies/supermall_model_policy.md",
       "category_id": "program_policies",
       "category_name": "Program Policies",
-      "char_count": 2497
+      "char_count": 2497,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/supermall-model-policy"
     },
     {
       "id": "the_noon_sales_promise",
@@ -2236,7 +2437,8 @@
       "filename": "Program_Policies/the_noon_sales_promise.md",
       "category_id": "program_policies",
       "category_name": "Program Policies",
-      "char_count": 2962
+      "char_count": 2962,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/the-noon-sales-promise"
     },
     {
       "id": "what_is_renewed_what_is_refurbished",
@@ -2244,7 +2446,8 @@
       "filename": "Program_Policies/what_is_renewed_what_is_refurbished.md",
       "category_id": "program_policies",
       "category_name": "Program Policies",
-      "char_count": 6373
+      "char_count": 6373,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/what-is-renewed-what-is-refurbished"
     },
     {
       "id": "advertizing_marketing",
@@ -2252,7 +2455,8 @@
       "filename": "Promotions/advertizing_marketing.md",
       "category_id": "promotions",
       "category_name": "Promotions",
-      "char_count": 1719
+      "char_count": 1719,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/advertizing-marketing"
     },
     {
       "id": "designs_and_size_specifications_for_store_creation",
@@ -2260,7 +2464,8 @@
       "filename": "Promotions/designs_and_size_specifications_for_store_creation.md",
       "category_id": "promotions",
       "category_name": "Promotions",
-      "char_count": 6173
+      "char_count": 6173,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/designs-and-size-specifications-for-store-creation"
     },
     {
       "id": "how_can_i_fix_listing_errors_in_promotions",
@@ -2268,7 +2473,8 @@
       "filename": "Promotions/how_can_i_fix_listing_errors_in_promotions.md",
       "category_id": "promotions",
       "category_name": "Promotions",
-      "char_count": 2421
+      "char_count": 2421,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/how-can-i-fix-listing-errors-in-promotions"
     },
     {
       "id": "how_can_i_participate_in_noon_mega_deals",
@@ -2276,7 +2482,8 @@
       "filename": "Promotions/how_can_i_participate_in_noon_mega_deals.md",
       "category_id": "promotions",
       "category_name": "Promotions",
-      "char_count": 10882
+      "char_count": 10882,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/how-can-i-participate-in-noon-mega-deals"
     },
     {
       "id": "how_can_i_participate_in_noon_promotions",
@@ -2284,7 +2491,8 @@
       "filename": "Promotions/how_can_i_participate_in_noon_promotions.md",
       "category_id": "promotions",
       "category_name": "Promotions",
-      "char_count": 12854
+      "char_count": 12854,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/how-can-i-participate-in-noon-promotions"
     },
     {
       "id": "how_to_enroll_your_skus_for_virtual_bundles",
@@ -2292,7 +2500,8 @@
       "filename": "Promotions/how_to_enroll_your_skus_for_virtual_bundles.md",
       "category_id": "promotions",
       "category_name": "Promotions",
-      "char_count": 11341
+      "char_count": 11341,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/how-to-enroll-your-skus-for-virtual-bundles"
     },
     {
       "id": "how_to_participate_in_flash_deals",
@@ -2300,7 +2509,8 @@
       "filename": "Promotions/how_to_participate_in_flash_deals.md",
       "category_id": "promotions",
       "category_name": "Promotions",
-      "char_count": 8121
+      "char_count": 8121,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/how-to-participate-in-flash-deals"
     },
     {
       "id": "how_to_participate_in_price_drop_deals",
@@ -2308,7 +2518,8 @@
       "filename": "Promotions/how_to_participate_in_price_drop_deals.md",
       "category_id": "promotions",
       "category_name": "Promotions",
-      "char_count": 10051
+      "char_count": 10051,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/how-to-participate-in-price-drop-deals"
     },
     {
       "id": "how_to_participate_in_promo_codes",
@@ -2316,7 +2527,8 @@
       "filename": "Promotions/how_to_participate_in_promo_codes.md",
       "category_id": "promotions",
       "category_name": "Promotions",
-      "char_count": 10685
+      "char_count": 10685,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/how-to-participate-in-promo-codes"
     },
     {
       "id": "how_to_participate_with_commission_drop",
@@ -2324,7 +2536,8 @@
       "filename": "Promotions/how_to_participate_with_commission_drop.md",
       "category_id": "promotions",
       "category_name": "Promotions",
-      "char_count": 5009
+      "char_count": 5009,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/how-to-participate-with-commission-drop"
     },
     {
       "id": "noon_finds_faqs",
@@ -2332,7 +2545,8 @@
       "filename": "Promotions/noon_finds_faqs.md",
       "category_id": "promotions",
       "category_name": "Promotions",
-      "char_count": 2639
+      "char_count": 2639,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/noon-finds-faqs"
     },
     {
       "id": "understanding_the_external_ads_tracker",
@@ -2340,7 +2554,8 @@
       "filename": "Promotions/understanding_the_external_ads_tracker.md",
       "category_id": "promotions",
       "category_name": "Promotions",
-      "char_count": 7035
+      "char_count": 7035,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/understanding-the-external-ads-tracker"
     },
     {
       "id": "reports_analytics",
@@ -2348,7 +2563,8 @@
       "filename": "Reports_and_Analytics/reports_analytics.md",
       "category_id": "reports_and_analytics",
       "category_name": "Reports & Analytics",
-      "char_count": 3545
+      "char_count": 3545,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/reports-analytics"
     },
     {
       "id": "return_to_vendor_rtv_report",
@@ -2356,7 +2572,8 @@
       "filename": "Reports_and_Analytics/return_to_vendor_rtv_report.md",
       "category_id": "reports_and_analytics",
       "category_name": "Reports & Analytics",
-      "char_count": 4911
+      "char_count": 4911,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/return-to-vendor-rtv-report"
     },
     {
       "id": "comprehensive_guide_to_managing_supermall_deals_and_offers",
@@ -2364,7 +2581,8 @@
       "filename": "Supermall/comprehensive_guide_to_managing_supermall_deals_and_offers.md",
       "category_id": "supermall",
       "category_name": "Supermall",
-      "char_count": 1053
+      "char_count": 1053,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/comprehensive-guide-to-managing-supermall-deals-and-offers"
     },
     {
       "id": "supermall_faqs",
@@ -2372,7 +2590,8 @@
       "filename": "Supermall/supermall_faqs.md",
       "category_id": "supermall",
       "category_name": "Supermall",
-      "char_count": 5026
+      "char_count": 5026,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/supermall-faqs"
     },
     {
       "id": "supermall_offer_management",
@@ -2380,7 +2599,8 @@
       "filename": "Supermall/supermall_offer_management.md",
       "category_id": "supermall",
       "category_name": "Supermall",
-      "char_count": 3219
+      "char_count": 3219,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/supermall-offer-management"
     },
     {
       "id": "article",
@@ -2388,7 +2608,8 @@
       "filename": "Support_and_Training/article.md",
       "category_id": "support_and_training",
       "category_name": "Support & Training",
-      "char_count": 1896
+      "char_count": 1896,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/article"
     },
     {
       "id": "how_to_reach_out_to_noon_for_support",
@@ -2396,7 +2617,8 @@
       "filename": "Support_and_Training/how_to_reach_out_to_noon_for_support.md",
       "category_id": "support_and_training",
       "category_name": "Support & Training",
-      "char_count": 4701
+      "char_count": 4701,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/how-to-reach-out-to-noon-for-support"
     },
     {
       "id": "noon_ads",
@@ -2404,7 +2626,8 @@
       "filename": "noon_ads/noon_ads.md",
       "category_id": "noon_ads",
       "category_name": "noon ads",
-      "char_count": 1856
+      "char_count": 1856,
+      "source_url": "https://support.noon.partners/portal/en/kb/articles/noon-ads"
     }
   ]
 }
