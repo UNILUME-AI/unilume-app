@@ -37,6 +37,10 @@ yarn-error.log*
 gcp-credentials.json
 *-credentials.json
 
+# fetched docs (downloaded at build time via GitHub API)
+src/data/noon-docs/
+.tmp-docs/
+
 # vercel
 .vercel
 
