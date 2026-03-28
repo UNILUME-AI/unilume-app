@@ -23,8 +23,8 @@ function getMessageText(message: { parts?: Array<{ type: string; text?: string }
     .join("");
 }
 
-function hasToolInvocation(message: { parts?: Array<{ type: string }> }): boolean {
-  return message.parts?.some((p) => p.type === "tool-invocation") ?? false;
+function hasToolCall(message: { parts?: Array<{ type: string }> }): boolean {
+  return message.parts?.some((p) => p.type.startsWith("tool-")) ?? false;
 }
 
 export default function ChatPage() {
@@ -32,12 +32,13 @@ export default function ChatPage() {
     () => new DefaultChatTransport({ api: "/api/chat" }),
     []
   );
-  const { messages, sendMessage, status } = useChat({ transport });
+  const { messages, sendMessage, status, error } = useChat({ transport });
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [input, setInput] = useState("");
   const [showQuickActions, setShowQuickActions] = useState(true);
+  const [lastFailedText, setLastFailedText] = useState<string | null>(null);
 
   const isLoading = status === "submitted" || status === "streaming";
 
@@ -55,13 +56,28 @@ export default function ChatPage() {
 
   const send = (text: string) => {
     if (!text.trim() || isLoading) return;
+    setLastFailedText(null);
     sendMessage({ text: text.trim() });
     setInput("");
-    // Reset textarea height
     if (inputRef.current) {
       inputRef.current.style.height = "auto";
     }
   };
+
+  const retry = () => {
+    if (lastFailedText) {
+      send(lastFailedText);
+    }
+  };
+
+  useEffect(() => {
+    if (error && messages.length > 0) {
+      const lastUserMsg = [...messages].reverse().find((m) => m.role === "user");
+      if (lastUserMsg) {
+        setLastFailedText(getMessageText(lastUserMsg));
+      }
+    }
+  }, [error, messages]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
@@ -140,7 +156,7 @@ export default function ChatPage() {
                   </div>
                 ) : (
                   <div className="max-w-[85%]">
-                    {hasToolInvocation(message) && (
+                    {hasToolCall(message) && (
                       <div className="mb-2 flex items-center gap-2 text-xs text-gray-400">
                         <span className="inline-block h-1.5 w-1.5 rounded-full bg-green-400 animate-pulse" />
                         Searching knowledge base...
@@ -170,6 +186,23 @@ export default function ChatPage() {
                 </div>
               </div>
             )}
+
+          {/* Error state */}
+          {error && (
+            <div className="mb-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+              <div className="flex items-center justify-between">
+                <span>请求失败，请稍后重试。</span>
+                {lastFailedText && (
+                  <button
+                    onClick={retry}
+                    className="ml-3 rounded-lg bg-red-100 px-3 py-1 text-xs font-medium text-red-700 hover:bg-red-200 transition-colors"
+                  >
+                    重试
+                  </button>
+                )}
+              </div>
+            </div>
+          )}
 
           <div ref={messagesEndRef} />
         </div>
