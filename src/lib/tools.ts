@@ -1,6 +1,28 @@
 import { tool } from "ai";
 import { z } from "zod";
-import { routeToCategories, loadArticles, getCategoryList } from "./knowledge-base";
+import { createVertex } from "@ai-sdk/google-vertex";
+import {
+  routeToCategories,
+  loadArticles,
+  getCategoryList,
+  hasEmbeddings,
+  semanticSearch,
+  loadArticlesByIds,
+} from "./knowledge-base";
+
+const vertex = createVertex({
+  project: process.env.GOOGLE_VERTEX_PROJECT,
+  location: process.env.GOOGLE_VERTEX_LOCATION ?? "us-east5",
+  googleAuthOptions: {
+    credentials: JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_KEY || "{}"),
+  },
+});
+
+async function embedQuery(query: string): Promise<number[]> {
+  const model = vertex.textEmbeddingModel("text-embedding-005");
+  const { embeddings } = await model.doEmbed({ values: [query] });
+  return embeddings[0];
+}
 
 export const policyTools = {
   search_policy: tool({
@@ -24,14 +46,32 @@ export const policyTools = {
         ),
     }),
     execute: async ({ query, market, categories }) => {
-      const categoryIds = routeToCategories(query, categories);
-      const { formatted, articleCount, categoryNames, failedCount } = loadArticles(
-        categoryIds,
-        market
-      );
+      let formatted: string;
+      let articleCount: number;
+      let failedCount: number;
+      let searchMethod: string;
+
+      if (hasEmbeddings()) {
+        // Semantic search path
+        const queryEmbedding = await embedQuery(query);
+        const results = semanticSearch(queryEmbedding, 8, market);
+        const loaded = loadArticlesByIds(results);
+        formatted = loaded.formatted;
+        articleCount = loaded.articleCount;
+        failedCount = loaded.failedCount;
+        searchMethod = "semantic";
+      } else {
+        // Fallback: keyword-based category routing
+        const categoryIds = routeToCategories(query, categories);
+        const loaded = loadArticles(categoryIds, market);
+        formatted = loaded.formatted;
+        articleCount = loaded.articleCount;
+        failedCount = loaded.failedCount;
+        searchMethod = "keyword";
+      }
 
       return {
-        categories_searched: categoryNames.join(", "),
+        search_method: searchMethod,
         article_count: articleCount,
         failed_count: failedCount,
         market_filter: market || "ALL",
