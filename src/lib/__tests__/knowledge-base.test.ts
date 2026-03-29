@@ -1,5 +1,12 @@
 import { describe, it, expect } from "vitest";
-import { loadAll, loadArticles, routeToCategories } from "../knowledge-base";
+import {
+  loadAll,
+  loadArticles,
+  routeToCategories,
+  hasEmbeddings,
+  semanticSearch,
+  loadArticlesByIds,
+} from "../knowledge-base";
 
 describe("knowledge-base", () => {
   describe("loadAll", () => {
@@ -79,6 +86,40 @@ describe("knowledge-base", () => {
       expect(ksaResult.articleCount).toBeLessThanOrEqual(
         allResult.articleCount
       );
+    });
+  });
+
+  describe("semantic search", () => {
+    it("hasEmbeddings returns true when embeddings.json exists", () => {
+      expect(hasEmbeddings()).toBe(true);
+    });
+
+    it("semanticSearch returns results with valid structure", () => {
+      // Use a real embedding from the first entry as a test query vector
+      const fs = require("fs");
+      const path = require("path");
+      const embeddingsPath = path.resolve(process.cwd(), "src/data/policies/embeddings.json");
+      const entries = JSON.parse(fs.readFileSync(embeddingsPath, "utf-8"));
+      const queryEmbedding = entries[0].embedding;
+
+      const results = semanticSearch(queryEmbedding, 5);
+      expect(results.length).toBe(5);
+      expect(results[0]).toHaveProperty("id");
+      expect(results[0]).toHaveProperty("title");
+      expect(results[0]).toHaveProperty("score");
+      // First result should be the same article (highest similarity to itself)
+      expect(results[0].id).toBe(entries[0].id);
+      expect(results[0].score).toBeCloseTo(1.0, 1);
+    });
+
+    it("loadArticlesByIds loads articles correctly", () => {
+      const articles = [
+        { id: "fbn", title: "FBN", filename: "Fulfilled_by_noon_FBN/fbn.md" },
+      ];
+      const result = loadArticlesByIds(articles);
+      expect(result.articleCount).toBe(1);
+      expect(result.failedCount).toBe(0);
+      expect(result.formatted).toContain("FBN");
     });
   });
 });

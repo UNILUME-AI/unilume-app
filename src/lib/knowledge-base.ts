@@ -30,15 +30,26 @@ interface PolicyIndex {
   documents: DocumentMeta[];
 }
 
+interface EmbeddingEntry {
+  id: string;
+  title: string;
+  filename: string;
+  category_id: string;
+  source_url?: string;
+  embedding: number[];
+}
+
 // ── Paths ──────────────────────────────────────────────
 
 const DATA_DIR = path.resolve(process.cwd(), "src/data");
 const INDEX_PATH = path.join(DATA_DIR, "policies/index.json");
+const EMBEDDINGS_PATH = path.join(DATA_DIR, "policies/embeddings.json");
 const ARTICLES_DIR = path.join(DATA_DIR, "noon-docs/articles");
 
 // ── Singleton state ────────────────────────────────────
 
 let index: PolicyIndex | null = null;
+let embeddings: EmbeddingEntry[] | null = null;
 const articleCache: Map<string, string> = new Map();
 const MAX_CACHE_SIZE = 200;
 
@@ -207,6 +218,121 @@ export function loadArticles(
     categoryNames,
     failedCount,
   };
+}
+
+// ── Semantic search ───────────────────────────────────
+
+function loadEmbeddings(): EmbeddingEntry[] {
+  if (embeddings) return embeddings;
+  try {
+    const raw = fs.readFileSync(EMBEDDINGS_PATH, "utf-8");
+    embeddings = JSON.parse(raw) as EmbeddingEntry[];
+    console.log(`[knowledge-base] Loaded ${embeddings.length} embeddings`);
+    return embeddings;
+  } catch {
+    console.warn("[knowledge-base] embeddings.json not found, falling back to keyword search");
+    return [];
+  }
+}
+
+function cosineSimilarity(a: number[], b: number[]): number {
+  let dot = 0, normA = 0, normB = 0;
+  for (let i = 0; i < a.length; i++) {
+    dot += a[i] * b[i];
+    normA += a[i] * a[i];
+    normB += b[i] * b[i];
+  }
+  return dot / (Math.sqrt(normA) * Math.sqrt(normB));
+}
+
+/**
+ * Find the top K most relevant articles using vector similarity.
+ * Returns article IDs sorted by relevance.
+ */
+export function semanticSearch(
+  queryEmbedding: number[],
+  topK: number = 8,
+  market?: string
+): { id: string; title: string; filename: string; source_url?: string; score: number }[] {
+  const entries = loadEmbeddings();
+  if (entries.length === 0) return [];
+
+  const idx = loadAll();
+  let candidates = entries;
+
+  // Optional market filter on document titles
+  if (market) {
+    const marketLower = market.toLowerCase();
+    candidates = entries.filter((e) => {
+      const doc = idx.documents.find((d) => d.id === e.id);
+      if (!doc) return true;
+      const titleLower = doc.title.toLowerCase();
+      return (
+        titleLower.includes(marketLower) ||
+        (!titleLower.includes("ksa") &&
+          !titleLower.includes("uae") &&
+          !titleLower.includes("egypt") &&
+          !titleLower.includes("saudi") &&
+          !titleLower.includes("emirates"))
+      );
+    });
+  }
+
+  const scored = candidates.map((entry) => ({
+    id: entry.id,
+    title: entry.title,
+    filename: entry.filename,
+    source_url: entry.source_url,
+    score: cosineSimilarity(queryEmbedding, entry.embedding),
+  }));
+
+  scored.sort((a, b) => b.score - a.score);
+  return scored.slice(0, topK);
+}
+
+/**
+ * Load specific articles by their IDs, formatted for context injection.
+ */
+export function loadArticlesByIds(
+  articleIds: { id: string; title: string; filename: string; source_url?: string }[]
+): { formatted: string; articleCount: number; failedCount: number } {
+  const parts: string[] = [];
+  let totalChars = 0;
+  let articleCount = 0;
+  let failedCount = 0;
+
+  parts.push(`[${articleIds.length} most relevant documents]`);
+
+  for (const article of articleIds) {
+    const content = loadArticleContent(article.filename);
+    if (!content) {
+      failedCount++;
+      continue;
+    }
+
+    if (totalChars + content.length > MAX_INJECTION_CHARS) {
+      parts.push("\n--- (remaining articles truncated due to context limit) ---");
+      break;
+    }
+
+    const urlLine = article.source_url ? ` | URL: ${article.source_url}` : "";
+    parts.push(`\n=== "${article.title}"${urlLine} ===`);
+    parts.push(content);
+    parts.push("=== END ===");
+
+    totalChars += content.length;
+    articleCount++;
+  }
+
+  if (failedCount > 0) {
+    console.warn(`[knowledge-base] ${failedCount} article(s) failed to load`);
+  }
+
+  return { formatted: parts.join("\n"), articleCount, failedCount };
+}
+
+export function hasEmbeddings(): boolean {
+  return loadEmbeddings().length > 0;
 }
 
 // ── Internal helpers ───────────────────────────────────
