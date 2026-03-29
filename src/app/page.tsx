@@ -49,8 +49,35 @@ export default function ChatPage() {
     () => loadHistory().length === 0
   );
   const [lastFailedText, setLastFailedText] = useState<string | null>(null);
+  const [feedbackMap, setFeedbackMap] = useState<Record<string, "up" | "down">>({});
 
   const isLoading = status === "submitted" || status === "streaming";
+
+  const submitFeedback = async (messageId: string, rating: "up" | "down") => {
+    if (feedbackMap[messageId]) return;
+    setFeedbackMap((prev) => ({ ...prev, [messageId]: rating }));
+
+    const msgIndex = messages.findIndex((m) => m.id === messageId);
+    const userMsg = messages
+      .slice(0, msgIndex)
+      .reverse()
+      .find((m) => m.role === "user");
+
+    const assistantMsg = messages[msgIndex];
+    try {
+      await fetch("/api/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          rating,
+          userQuery: userMsg ? getMessageText(userMsg) : "",
+          assistantResponse: getMessageText(assistantMsg),
+        }),
+      });
+    } catch {
+      // Silently fail — UI already shows the selection
+    }
+  };
 
   // Save messages to localStorage when a response completes
   useEffect(() => {
@@ -126,7 +153,7 @@ export default function ChatPage() {
               UNILUME
             </span>
             <span className="hidden sm:inline text-xs text-gray-400 border-l border-gray-200 pl-2 ml-1">
-              Noon Policy Agent
+              Noon 政策助手
             </span>
           </div>
           <button
@@ -138,7 +165,7 @@ export default function ChatPage() {
             }}
             className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
           >
-            New Chat
+            新对话
           </button>
         </div>
       </header>
@@ -153,11 +180,11 @@ export default function ChatPage() {
                 UNILUME
               </h1>
               <p className="text-sm text-gray-500 mb-1">
-                Illuminate Your E-commerce Decisions
+                助力你的电商决策
               </p>
               <p className="text-sm text-gray-400 mb-8 text-center max-w-md">
-                Ask anything about Noon seller policies, fees, and procedures.
-                Powered by 223+ official help articles.
+                关于 Noon 卖家政策、费用和流程的任何问题，都可以问我。
+                基于 223+ 篇官方帮助文档。
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-lg">
@@ -194,29 +221,53 @@ export default function ChatPage() {
                     {hasToolCall(message) && (
                       <div className="mb-2 flex items-center gap-2 text-xs text-gray-400">
                         <span className="inline-block h-1.5 w-1.5 rounded-full bg-green-400 animate-pulse" />
-                        Searching knowledge base...
+                        正在搜索知识库...
                       </div>
                     )}
                     {text && (
-                      <div className="rounded-2xl bg-white border border-gray-200 px-5 py-4 text-sm text-gray-800 shadow-sm prose prose-sm max-w-none prose-headings:text-gray-900 prose-a:text-blue-600 prose-strong:text-gray-900">
-                        <ReactMarkdown
-                          remarkPlugins={[remarkGfm]}
-                          components={{
-                            a: ({ href, children }) => (
-                              <a
-                                href={href}
-                                target={href?.startsWith("mailto:") ? undefined : "_blank"}
-                                rel="noopener noreferrer"
-                                className="text-blue-600 underline hover:text-blue-800"
-                              >
-                                {children}
-                              </a>
-                            ),
-                          }}
-                        >
-                          {text}
-                        </ReactMarkdown>
-                      </div>
+                      <>
+                        <div className="rounded-2xl bg-white border border-gray-200 px-5 py-4 text-sm text-gray-800 shadow-sm prose prose-sm max-w-none prose-headings:text-gray-900 prose-a:text-blue-600 prose-strong:text-gray-900">
+                          <ReactMarkdown
+                            remarkPlugins={[remarkGfm]}
+                            components={{
+                              a: ({ href, children }) => (
+                                <a
+                                  href={href}
+                                  target={href?.startsWith("mailto:") ? undefined : "_blank"}
+                                  rel="noopener noreferrer"
+                                  className="text-blue-600 underline hover:text-blue-800"
+                                >
+                                  {children}
+                                </a>
+                              ),
+                            }}
+                          >
+                            {text}
+                          </ReactMarkdown>
+                        </div>
+                        <div className="mt-1.5 flex items-center gap-1 pl-1">
+                          <button
+                            onClick={() => submitFeedback(message.id, "up")}
+                            disabled={!!feedbackMap[message.id]}
+                            className={`rounded-lg p-1.5 transition-colors ${feedbackMap[message.id] === "up" ? "text-blue-600" : "text-gray-300 hover:text-gray-500"} disabled:cursor-default`}
+                            title="有帮助"
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4">
+                              <path d="M1 8.998a1 1 0 0 1 1-1h3v9H2a1 1 0 0 1-1-1v-7Zm5.5 8.25 1.816-4.538A1 1 0 0 0 7.382 11H13.5a1 1 0 0 0 .979-.803l1.333-6.222A1.5 1.5 0 0 0 14.348 2.5H9.5v4.25a.75.75 0 0 1-1.5 0V2.5H6.5v14.748Z" />
+                            </svg>
+                          </button>
+                          <button
+                            onClick={() => submitFeedback(message.id, "down")}
+                            disabled={!!feedbackMap[message.id]}
+                            className={`rounded-lg p-1.5 transition-colors ${feedbackMap[message.id] === "down" ? "text-red-500" : "text-gray-300 hover:text-gray-500"} disabled:cursor-default`}
+                            title="没帮助"
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4 rotate-180">
+                              <path d="M1 8.998a1 1 0 0 1 1-1h3v9H2a1 1 0 0 1-1-1v-7Zm5.5 8.25 1.816-4.538A1 1 0 0 0 7.382 11H13.5a1 1 0 0 0 .979-.803l1.333-6.222A1.5 1.5 0 0 0 14.348 2.5H9.5v4.25a.75.75 0 0 1-1.5 0V2.5H6.5v14.748Z" />
+                            </svg>
+                          </button>
+                        </div>
+                      </>
                     )}
                   </div>
                 )}
@@ -231,7 +282,7 @@ export default function ChatPage() {
               <div className="mb-6">
                 <div className="flex items-center gap-2 text-xs text-gray-400">
                   <span className="inline-block h-1.5 w-1.5 rounded-full bg-blue-400 animate-pulse" />
-                  Thinking...
+                  思考中...
                 </div>
               </div>
             )}
@@ -265,7 +316,7 @@ export default function ChatPage() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Ask about Noon policies..."
+            placeholder="输入你的 Noon 卖家问题..."
             rows={1}
             disabled={isLoading}
             className="flex-1 resize-none rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-1 focus:ring-blue-500 disabled:opacity-50"
@@ -294,8 +345,7 @@ export default function ChatPage() {
           </button>
         </div>
         <p className="mx-auto max-w-3xl mt-2 text-center text-xs text-gray-400">
-          Powered by Noon official documentation. Answers may not reflect
-          the latest policy changes.
+          基于 Noon 官方文档。回答可能未反映最新政策变更。
         </p>
       </div>
     </div>

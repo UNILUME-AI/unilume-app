@@ -8,9 +8,9 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "UNILUME — Noon Seller AI Assistant",
+  title: "UNILUME — Noon 卖家 AI 助手",
   description:
-    "Ask anything about Noon seller policies, fees, and procedures. Powered by 223+ official help articles.",
+    "关于 Noon 卖家政策、费用和流程的任何问题，都可以问我。基于 223+ 篇官方帮助文档。",
 };
 
 export default function RootLayout({
@@ -19,7 +19,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full antialiased">
+    <html lang="zh-CN" className="h-full antialiased">
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
