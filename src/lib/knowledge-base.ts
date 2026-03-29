@@ -135,12 +135,14 @@ export function routeToCategories(
 export function loadArticles(
   categoryIds: string[],
   market?: string
-): { formatted: string; articleCount: number; categoryNames: string[]; failedCount: number } {
+): { formatted: string; articleCount: number; categoryNames: string[]; failedCount: number; sources: SourceRef[] } {
   const idx = loadAll();
   const parts: string[] = [];
+  const sources: SourceRef[] = [];
   let totalChars = 0;
   let articleCount = 0;
   let failedCount = 0;
+  let sourceIndex = 1;
   const categoryNames: string[] = [];
 
   for (const catId of categoryIds.slice(0, MAX_CATEGORIES)) {
@@ -149,15 +151,12 @@ export function loadArticles(
 
     categoryNames.push(category.category_name);
 
-    // Get documents for this category
     const docs = idx.documents.filter((d) => d.category_id === catId);
 
-    // Optional market filter
     const filteredDocs = market
       ? docs.filter((d) => {
           const titleLower = d.title.toLowerCase();
           const marketLower = market.toLowerCase();
-          // Include docs that mention the market or are general (no market specified)
           return (
             titleLower.includes(marketLower) ||
             titleLower.includes("all") ||
@@ -184,7 +183,6 @@ export function loadArticles(
         continue;
       }
 
-      // Check budget
       if (totalChars + content.length > MAX_INJECTION_CHARS) {
         catParts.push(
           `\n--- (remaining articles in "${category.category_name}" truncated due to context limit) ---`
@@ -194,13 +192,18 @@ export function loadArticles(
 
       const urlLine = doc.source_url ? ` | URL: ${doc.source_url}` : "";
       catParts.push(
-        `\n=== "${doc.title}" (Category: ${doc.category_name}${urlLine}) ===`
+        `\n=== [Source ${sourceIndex}] "${doc.title}" (Category: ${doc.category_name}${urlLine}) ===`
       );
       catParts.push(content);
       catParts.push("=== END ===");
 
+      if (doc.source_url) {
+        sources.push({ index: sourceIndex, title: doc.title, url: doc.source_url });
+      }
+
       totalChars += content.length;
       articleCount++;
+      sourceIndex++;
     }
 
     parts.push(catParts.join("\n"));
@@ -217,6 +220,7 @@ export function loadArticles(
     articleCount,
     categoryNames,
     failedCount,
+    sources,
   };
 }
 
@@ -290,16 +294,25 @@ export function semanticSearch(
   return scored.slice(0, topK);
 }
 
+export interface SourceRef {
+  index: number;
+  title: string;
+  url: string;
+}
+
 /**
  * Load specific articles by their IDs, formatted for context injection.
+ * Each article is numbered [1], [2], etc. for citation reference.
  */
 export function loadArticlesByIds(
   articleIds: { id: string; title: string; filename: string; source_url?: string }[]
-): { formatted: string; articleCount: number; failedCount: number } {
+): { formatted: string; articleCount: number; failedCount: number; sources: SourceRef[] } {
   const parts: string[] = [];
+  const sources: SourceRef[] = [];
   let totalChars = 0;
   let articleCount = 0;
   let failedCount = 0;
+  let sourceIndex = 1;
 
   parts.push(`[${articleIds.length} most relevant documents]`);
 
@@ -316,19 +329,24 @@ export function loadArticlesByIds(
     }
 
     const urlLine = article.source_url ? ` | URL: ${article.source_url}` : "";
-    parts.push(`\n=== "${article.title}"${urlLine} ===`);
+    parts.push(`\n=== [Source ${sourceIndex}] "${article.title}"${urlLine} ===`);
     parts.push(content);
     parts.push("=== END ===");
 
+    if (article.source_url) {
+      sources.push({ index: sourceIndex, title: article.title, url: article.source_url });
+    }
+
     totalChars += content.length;
     articleCount++;
+    sourceIndex++;
   }
 
   if (failedCount > 0) {
     console.warn(`[knowledge-base] ${failedCount} article(s) failed to load`);
   }
 
-  return { formatted: parts.join("\n"), articleCount, failedCount };
+  return { formatted: parts.join("\n"), articleCount, failedCount, sources };
 }
 
 export function hasEmbeddings(): boolean {

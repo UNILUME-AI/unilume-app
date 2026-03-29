@@ -8,6 +8,7 @@ import {
   hasEmbeddings,
   semanticSearch,
   loadArticlesByIds,
+  type SourceRef,
 } from "./knowledge-base";
 
 const vertex = createVertex({
@@ -50,23 +51,24 @@ export const policyTools = {
       let articleCount: number;
       let failedCount: number;
       let searchMethod: string;
+      let sources: SourceRef[];
 
       if (hasEmbeddings()) {
-        // Semantic search path
         const queryEmbedding = await embedQuery(query);
         const results = semanticSearch(queryEmbedding, 8, market);
         const loaded = loadArticlesByIds(results);
         formatted = loaded.formatted;
         articleCount = loaded.articleCount;
         failedCount = loaded.failedCount;
+        sources = loaded.sources;
         searchMethod = "semantic";
       } else {
-        // Fallback: keyword-based category routing
         const categoryIds = routeToCategories(query, categories);
         const loaded = loadArticles(categoryIds, market);
         formatted = loaded.formatted;
         articleCount = loaded.articleCount;
         failedCount = loaded.failedCount;
+        sources = loaded.sources;
         searchMethod = "keyword";
       }
 
@@ -76,9 +78,13 @@ export const policyTools = {
         failed_count: failedCount,
         market_filter: market || "ALL",
         articles: formatted,
+        sources,
         instruction:
           "Answer the user's question based ONLY on the documents above. " +
-          "Cite sources as markdown links using the URL from each document header, e.g. [Document Title](URL). " +
+          "CITATION FORMAT: Use numbered markers 【1】【2】【3】 to cite sources inline. " +
+          "Each number corresponds to the [Source N] label in the documents above. " +
+          "Place the marker immediately after the relevant statement. " +
+          "Do NOT use markdown links [title](url) for citations — only use 【N】 markers. " +
           "If the documents do not contain the answer, clearly state that the information is not available in the current knowledge base. " +
           "Always mention which market(s) (KSA/UAE/Egypt) a policy applies to when relevant.",
       };

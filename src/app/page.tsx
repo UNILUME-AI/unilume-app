@@ -2,13 +2,33 @@
 
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
-import { useRef, useEffect, useState, useMemo } from "react";
+import { useRef, useEffect, useState, useMemo, useCallback } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
 
 import { QUICK_ACTIONS } from "@/config/quick-actions";
 
-function getMessageText(message: { parts?: Array<{ type: string; text?: string }> }): string {
+// ── Types ──────────────────────────────────────────────
+
+interface SourceRef {
+  index: number;
+  title: string;
+  url: string;
+}
+
+interface MessagePart {
+  type: string;
+  text?: string;
+  toolInvocation?: {
+    state: string;
+    result?: { sources?: SourceRef[] };
+  };
+}
+
+// ── Helpers ────────────────────────────────────────────
+
+function getMessageText(message: { parts?: MessagePart[] }): string {
   if (!message.parts) return "";
   return message.parts
     .filter((p) => p.type === "text" && p.text)
@@ -16,9 +36,94 @@ function getMessageText(message: { parts?: Array<{ type: string; text?: string }
     .join("");
 }
 
-function hasToolCall(message: { parts?: Array<{ type: string }> }): boolean {
+function hasToolCall(message: { parts?: MessagePart[] }): boolean {
   return message.parts?.some((p) => p.type.startsWith("tool-")) ?? false;
 }
+
+function getMessageSources(message: { parts?: MessagePart[] }): SourceRef[] {
+  if (!message.parts) return [];
+  for (const part of message.parts) {
+    if (
+      part.type.startsWith("tool-") &&
+      part.toolInvocation?.state === "result" &&
+      Array.isArray(part.toolInvocation.result?.sources)
+    ) {
+      return part.toolInvocation.result.sources;
+    }
+  }
+  return [];
+}
+
+/** Convert 【N】 markers to inline HTML spans for rehype-raw to pick up */
+function injectCitationMarkers(text: string): string {
+  return text.replace(
+    /【(\d+)】/g,
+    '<cite-ref data-index="$1"></cite-ref>'
+  );
+}
+
+// ── Citation Tag Component ─────────────────────────────
+
+function CitationTag({ source }: { source: SourceRef }) {
+  const [show, setShow] = useState(false);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout>>(null);
+
+  const handleEnter = () => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    setShow(true);
+  };
+
+  const handleLeave = () => {
+    timeoutRef.current = setTimeout(() => setShow(false), 200);
+  };
+
+  // Truncate title for the pill label
+  const label = source.title.length > 20
+    ? source.title.slice(0, 18) + "…"
+    : source.title;
+
+  return (
+    <span
+      className="relative inline-flex items-center align-baseline mx-0.5"
+      onMouseEnter={handleEnter}
+      onMouseLeave={handleLeave}
+    >
+      <a
+        href={source.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center gap-1 rounded-md border border-gray-200 bg-gray-50 px-1.5 py-0.5 text-[11px] text-gray-500 no-underline hover:bg-gray-100 hover:text-gray-700 transition-colors cursor-pointer leading-tight"
+      >
+        <span className="font-medium text-gray-400">{source.index}</span>
+        <span className="hidden sm:inline truncate max-w-[120px]">{label}</span>
+      </a>
+
+      {/* Hover popover */}
+      {show && (
+        <div
+          className="absolute bottom-full left-0 mb-2 w-72 rounded-xl border border-gray-200 bg-white p-3 shadow-lg z-50"
+          onMouseEnter={handleEnter}
+          onMouseLeave={handleLeave}
+        >
+          <div className="flex items-center gap-1.5 text-[11px] text-gray-400 mb-1.5">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="h-3 w-3">
+              <path d="M1 4.75C1 3.784 1.784 3 2.75 3h10.5c.966 0 1.75.784 1.75 1.75v6.5A1.75 1.75 0 0 1 13.25 13H2.75A1.75 1.75 0 0 1 1 11.25v-6.5Zm12 0a.25.25 0 0 0-.25-.25H2.75a.25.25 0 0 0-.25.25v6.5c0 .138.112.25.25.25h10.5a.25.25 0 0 0 .25-.25v-6.5Z" />
+            </svg>
+            support.noon.partners
+          </div>
+          <p className="text-sm font-medium text-gray-900 leading-snug mb-1">
+            {source.title}
+          </p>
+          <span className="text-[11px] text-blue-600">
+            点击查看原文 →
+          </span>
+        </div>
+      )}
+    </span>
+  );
+}
+
+// ── localStorage ───────────────────────────────────────
 
 const STORAGE_KEY = "unilume-chat-history";
 
@@ -31,6 +136,8 @@ function loadHistory() {
     return [];
   }
 }
+
+// ── Main Component ─────────────────────────────────────
 
 export default function ChatPage() {
   const transport = useMemo(
@@ -98,7 +205,6 @@ export default function ChatPage() {
     if (messages.length > 0) setShowQuickActions(false);
   }, [messages]);
 
-  // Restore chat history from localStorage on mount
   useEffect(() => {
     const saved = loadHistory();
     if (saved.length > 0) {
@@ -111,15 +217,18 @@ export default function ChatPage() {
     inputRef.current?.focus();
   }, []);
 
-  const send = (text: string) => {
-    if (!text.trim() || isLoading) return;
-    setLastFailedText(null);
-    sendMessage({ text: text.trim() });
-    setInput("");
-    if (inputRef.current) {
-      inputRef.current.style.height = "auto";
-    }
-  };
+  const send = useCallback(
+    (text: string) => {
+      if (!text.trim() || isLoading) return;
+      setLastFailedText(null);
+      sendMessage({ text: text.trim() });
+      setInput("");
+      if (inputRef.current) {
+        inputRef.current.style.height = "auto";
+      }
+    },
+    [isLoading, sendMessage]
+  );
 
   const retry = () => {
     if (lastFailedText) {
@@ -142,6 +251,29 @@ export default function ChatPage() {
       send(input);
     }
   };
+
+  /** Build ReactMarkdown components with citation support */
+  const buildMarkdownComponents = useCallback(
+    (sources: SourceRef[]) => ({
+      a: ({ href, children }: { href?: string; children?: React.ReactNode }) => (
+        <a
+          href={href}
+          target={href?.startsWith("mailto:") ? undefined : "_blank"}
+          rel="noopener noreferrer"
+          className="text-blue-600 underline hover:text-blue-800"
+        >
+          {children}
+        </a>
+      ),
+      // rehype-raw turns <cite-ref data-index="N"> into this element
+      "cite-ref": ({ "data-index": dataIndex }: { "data-index"?: string }) => {
+        const idx = parseInt(dataIndex || "0");
+        const source = sources.find((s) => s.index === idx);
+        return source ? <CitationTag source={source} /> : null;
+      },
+    }),
+    []
+  );
 
   return (
     <div className="flex flex-col h-dvh bg-gray-50">
@@ -207,6 +339,11 @@ export default function ChatPage() {
           {/* Messages */}
           {messages.map((message) => {
             const text = getMessageText(message);
+            const sources = getMessageSources(message);
+            const processedText = sources.length > 0
+              ? injectCitationMarkers(text)
+              : text;
+
             return (
               <div
                 key={message.id}
@@ -229,22 +366,36 @@ export default function ChatPage() {
                         <div className="rounded-2xl bg-white border border-gray-200 px-5 py-4 text-sm text-gray-800 shadow-sm prose prose-sm max-w-none prose-headings:text-gray-900 prose-a:text-blue-600 prose-strong:text-gray-900">
                           <ReactMarkdown
                             remarkPlugins={[remarkGfm]}
-                            components={{
-                              a: ({ href, children }) => (
-                                <a
-                                  href={href}
-                                  target={href?.startsWith("mailto:") ? undefined : "_blank"}
-                                  rel="noopener noreferrer"
-                                  className="text-blue-600 underline hover:text-blue-800"
-                                >
-                                  {children}
-                                </a>
-                              ),
-                            }}
+                            rehypePlugins={[rehypeRaw]}
+                            components={buildMarkdownComponents(sources)}
                           >
-                            {text}
+                            {processedText}
                           </ReactMarkdown>
                         </div>
+
+                        {/* Source summary bar */}
+                        {sources.length > 0 && (
+                          <div className="mt-2 flex flex-wrap items-center gap-1.5 pl-1">
+                            <span className="text-[11px] text-gray-400">
+                              {sources.length} 个来源
+                            </span>
+                            {sources.map((s) => (
+                              <a
+                                key={s.index}
+                                href={s.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-1 rounded-md border border-gray-200 bg-gray-50 px-1.5 py-0.5 text-[11px] text-gray-500 no-underline hover:bg-gray-100 hover:text-gray-700 transition-colors"
+                                title={s.title}
+                              >
+                                <span className="font-medium text-gray-400">{s.index}</span>
+                                <span className="truncate max-w-[100px]">{s.title}</span>
+                              </a>
+                            ))}
+                          </div>
+                        )}
+
+                        {/* Feedback buttons */}
                         <div className="mt-1.5 flex items-center gap-1 pl-1">
                           <button
                             onClick={() => submitFeedback(message.id, "up")}
