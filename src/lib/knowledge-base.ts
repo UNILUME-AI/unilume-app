@@ -11,6 +11,7 @@ interface DocumentMeta {
   category_name: string;
   char_count: number;
   source_url?: string;
+  modified_time?: string;
 }
 
 interface CategoryMeta {
@@ -198,7 +199,7 @@ export function loadArticles(
       catParts.push("=== END ===");
 
       if (doc.source_url) {
-        sources.push({ index: sourceIndex, title: doc.title, url: doc.source_url });
+        sources.push({ index: sourceIndex, title: doc.title, url: doc.source_url, modifiedTime: doc.modified_time });
       }
 
       totalChars += content.length;
@@ -298,6 +299,7 @@ export interface SourceRef {
   index: number;
   title: string;
   url: string;
+  modifiedTime?: string;
 }
 
 /**
@@ -334,7 +336,8 @@ export function loadArticlesByIds(
     parts.push("=== END ===");
 
     if (article.source_url) {
-      sources.push({ index: sourceIndex, title: article.title, url: article.source_url });
+      const docMeta = loadAll().documents.find((d) => d.id === article.id);
+      sources.push({ index: sourceIndex, title: article.title, url: article.source_url, modifiedTime: docMeta?.modified_time });
     }
 
     totalChars += content.length;

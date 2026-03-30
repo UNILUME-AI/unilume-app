@@ -14,6 +14,7 @@ interface SourceRef {
   index: number;
   title: string;
   url: string;
+  modifiedTime?: string;
 }
 
 interface MessagePart {
@@ -26,7 +27,7 @@ interface MessagePart {
 }
 
 function getMessageText(message: { parts?: MessagePart[] }): string {
-  if (!message.parts) return [];
+  if (!message.parts) return "";
   return message.parts
     .filter((p) => p.type === "text" && p.text)
     .map((p) => p.text)
@@ -104,7 +105,7 @@ describe("getMessageText", () => {
   });
 
   it("returns empty string for message with no parts", () => {
-    expect(getMessageText({})).toEqual([]);
+    expect(getMessageText({})).toBe("");
   });
 });
 
@@ -154,7 +155,7 @@ describe("getMessageSources", () => {
           type: "tool-search_policy",
           toolInvocation: {
             state: "result",
-            result: { articles: "some content" },
+            result: { sources: undefined } as { sources?: SourceRef[] },
           },
         },
       ],

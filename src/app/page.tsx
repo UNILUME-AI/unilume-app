@@ -15,6 +15,7 @@ interface SourceRef {
   index: number;
   title: string;
   url: string;
+  modifiedTime?: string;
 }
 
 interface MessagePart {
@@ -114,9 +115,16 @@ function CitationTag({ source }: { source: SourceRef }) {
           <p className="text-sm font-medium text-gray-900 leading-snug mb-1">
             {source.title}
           </p>
-          <span className="text-[11px] text-blue-600">
-            点击查看原文 →
-          </span>
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] text-blue-600">
+              点击查看原文 →
+            </span>
+            {source.modifiedTime && (
+              <span className="text-[10px] text-gray-400">
+                更新于 {source.modifiedTime.slice(0, 10)}
+              </span>
+            )}
+          </div>
         </div>
       )}
     </span>
@@ -496,7 +504,7 @@ export default function ChatPage() {
           </button>
         </div>
         <p className="mx-auto max-w-3xl mt-2 text-center text-xs text-gray-400">
-          基于 Noon 官方文档。回答可能未反映最新政策变更。
+          基于 Noon 官方文档。引用来源标签显示文章最后更新日期，请留意时效性。
         </p>
       </div>
     </div>
