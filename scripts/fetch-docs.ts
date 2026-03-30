@@ -82,24 +82,29 @@ async function main() {
   const extractedRoot = path.join(tmpDir, extractedDirs[0]);
 
   // Copy articles/ and _metadata/ to output
-  fs.rmSync(OUTPUT_DIR, { recursive: true, force: true });
-  fs.mkdirSync(OUTPUT_DIR, { recursive: true });
-
   const articlesSrc = path.join(extractedRoot, "articles");
   const metadataSrc = path.join(extractedRoot, "_metadata");
 
+  // Only wipe output if the tarball actually contains articles
+  // (prevents losing cached articles when repo temporarily lacks them)
   if (fs.existsSync(articlesSrc)) {
+    fs.rmSync(OUTPUT_DIR, { recursive: true, force: true });
+    fs.mkdirSync(OUTPUT_DIR, { recursive: true });
     copyDirRecursive(articlesSrc, path.join(OUTPUT_DIR, "articles"));
     console.log("Copied articles/");
   } else {
-    console.error("Warning: articles/ directory not found in repo");
+    console.warn("Warning: articles/ not found in repo tarball — keeping existing articles");
+    fs.mkdirSync(OUTPUT_DIR, { recursive: true });
   }
 
   if (fs.existsSync(metadataSrc)) {
-    copyDirRecursive(metadataSrc, path.join(OUTPUT_DIR, "_metadata"));
+    // Always update metadata
+    const metaDest = path.join(OUTPUT_DIR, "_metadata");
+    fs.rmSync(metaDest, { recursive: true, force: true });
+    copyDirRecursive(metadataSrc, metaDest);
     console.log("Copied _metadata/");
   } else {
-    console.error("Warning: _metadata/ directory not found in repo");
+    console.warn("Warning: _metadata/ not found in repo tarball");
   }
 
   // Clean up tmp
