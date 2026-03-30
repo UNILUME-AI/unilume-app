@@ -285,7 +285,7 @@ export default function ChatPage() {
               UNILUME
             </span>
             <span className="hidden sm:inline text-xs text-gray-400 border-l border-gray-200 pl-2 ml-1">
-              Noon 政策助手
+              Noon 卖家运营助手
             </span>
           </div>
           <button
