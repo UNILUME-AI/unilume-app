@@ -8,9 +8,9 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "UNILUME — Noon 卖家 AI 助手",
+  title: "UNILUME — Noon 卖家运营助手",
   description:
-    "关于 Noon 卖家政策、费用和流程的任何问题，都可以问我。基于 223+ 篇官方帮助文档。",
+    "Noon 卖家运营助手：政策查询、费用计算、物流选择、listing 优化。基于 223+ 篇官方帮助文档。",
 };
 
 export default function RootLayout({
