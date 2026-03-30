@@ -87,6 +87,36 @@ describe("knowledge-base", () => {
         allResult.articleCount
       );
     });
+
+    it("returns sources array with index, title, url", () => {
+      const result = loadArticles(["fulfilled_by_noon_fbn"]);
+      expect(result.sources).toBeDefined();
+      expect(Array.isArray(result.sources)).toBe(true);
+
+      if (result.sources.length > 0) {
+        const source = result.sources[0];
+        expect(source).toHaveProperty("index");
+        expect(source).toHaveProperty("title");
+        expect(source).toHaveProperty("url");
+        expect(source.index).toBe(1);
+        expect(typeof source.title).toBe("string");
+        expect(source.url).toContain("support.noon.partners");
+      }
+    });
+
+    it("numbers sources sequentially starting from 1", () => {
+      const result = loadArticles(["fulfilled_by_noon_fbn"]);
+      for (let i = 0; i < result.sources.length; i++) {
+        expect(result.sources[i].index).toBe(i + 1);
+      }
+    });
+
+    it("includes [Source N] labels in formatted text", () => {
+      const result = loadArticles(["fulfilled_by_noon_fbn"]);
+      if (result.articleCount > 0) {
+        expect(result.formatted).toContain("[Source 1]");
+      }
+    });
   });
 
   describe("semantic search", () => {
@@ -95,7 +125,6 @@ describe("knowledge-base", () => {
     });
 
     it("semanticSearch returns results with valid structure", () => {
-      // Use a real embedding from the first entry as a test query vector
       const fs = require("fs");
       const path = require("path");
       const embeddingsPath = path.resolve(process.cwd(), "src/data/policies/embeddings.json");
@@ -112,14 +141,35 @@ describe("knowledge-base", () => {
       expect(results[0].score).toBeCloseTo(1.0, 1);
     });
 
-    it("loadArticlesByIds loads articles correctly", () => {
+    it("loadArticlesByIds loads articles and returns sources", () => {
+      const index = loadAll();
+      // Find a real article with a source_url
+      const docWithUrl = index.documents.find((d) => d.source_url);
+      if (!docWithUrl) return; // skip if no articles have URLs
+
       const articles = [
-        { id: "fbn", title: "FBN", filename: "Fulfilled_by_noon_FBN/fbn.md" },
+        {
+          id: docWithUrl.id,
+          title: docWithUrl.title,
+          filename: docWithUrl.filename,
+          source_url: docWithUrl.source_url,
+        },
       ];
       const result = loadArticlesByIds(articles);
       expect(result.articleCount).toBe(1);
       expect(result.failedCount).toBe(0);
-      expect(result.formatted).toContain("FBN");
+      expect(result.sources).toHaveLength(1);
+      expect(result.sources[0].index).toBe(1);
+      expect(result.sources[0].title).toBe(docWithUrl.title);
+      expect(result.sources[0].url).toBe(docWithUrl.source_url);
+    });
+
+    it("loadArticlesByIds skips sources for articles without URLs", () => {
+      const articles = [
+        { id: "no-url", title: "No URL Article", filename: "Fulfilled_by_noon_FBN/fbn.md" },
+      ];
+      const result = loadArticlesByIds(articles);
+      expect(result.sources).toHaveLength(0);
     });
   });
 });
