@@ -332,6 +332,7 @@ interface DocumentMeta {
   category_name: string;
   char_count: number;
   source_url?: string;
+  modified_time?: string;
 }
 
 interface CategoryEntry {
@@ -370,6 +371,11 @@ function extractTitle(content: string): string {
 
 function extractSourceUrl(content: string): string | null {
   const match = content.match(/>\s*Source:\s*(https?:\/\/[^\s]+)/m);
+  return match ? match[1] : null;
+}
+
+function extractModifiedTime(content: string): string | null {
+  const match = content.match(/>\s*Modified:\s*(\S+)/m);
   return match ? match[1] : null;
 }
 
@@ -415,6 +421,7 @@ function main() {
       const categoryId = slugify(categoryName);
 
       const sourceUrl = extractSourceUrl(content);
+      const modifiedTime = extractModifiedTime(content);
       const doc: DocumentMeta = {
         id: file.replace(/\.md$/, ""),
         title,
@@ -423,6 +430,7 @@ function main() {
         category_name: categoryName,
         char_count: content.length,
         ...(sourceUrl && { source_url: sourceUrl }),
+        ...(modifiedTime && { modified_time: modifiedTime }),
       };
       documents.push(doc);
 

@@ -45,5 +45,5 @@ ${categoryList}
 ## Important Notes
 - Fee structures and policies may differ between markets (KSA, UAE, Egypt)
 - Always check if the user's question is market-specific
-- If a policy has changed recently, note the document's context when available`;
+- Each source document has a last-modified date. If the information is about fees or time-sensitive policies and the source is older than 6 months, note this: "该信息来源更新于 YYYY-MM-DD，建议核实最新政策"`;
 }
