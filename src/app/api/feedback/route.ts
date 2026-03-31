@@ -1,6 +1,12 @@
+import { auth } from "@clerk/nextjs/server";
 import { getDb } from "@/lib/db";
 
 export async function POST(req: Request) {
+  const { userId } = await auth();
+  if (!userId) {
+    return Response.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   let body: Record<string, unknown>;
   try {
     body = await req.json();
@@ -21,8 +27,8 @@ export async function POST(req: Request) {
   try {
     const sql = getDb();
     await sql`
-      INSERT INTO feedback (rating, user_query, assistant_response)
-      VALUES (${rating}, ${userQuery.slice(0, 5000)}, ${assistantResponse.slice(0, 20000)})
+      INSERT INTO feedback (rating, user_query, assistant_response, user_id)
+      VALUES (${rating}, ${userQuery.slice(0, 5000)}, ${assistantResponse.slice(0, 20000)}, ${userId})
     `;
     return Response.json({ ok: true });
   } catch (error) {
