@@ -2,6 +2,7 @@ import { streamText, stepCountIs, convertToModelMessages } from "ai";
 import { createVertex } from "@ai-sdk/google-vertex";
 import { buildSystemPrompt } from "@/lib/prompts";
 import { policyTools, marketTools } from "@/lib/tools";
+import { auth } from "@clerk/nextjs/server";
 export const maxDuration = 60;
 
 const vertex = createVertex({
@@ -13,6 +14,11 @@ const vertex = createVertex({
 });
 
 export async function POST(req: Request) {
+  const { userId } = await auth();
+  if (!userId) {
+    return Response.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   let body: Record<string, unknown>;
   try {
     body = await req.json();
