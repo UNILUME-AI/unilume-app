@@ -323,6 +323,7 @@ export default function ChatPage() {
               </svg>
             </button>
             <SignIn
+              routing="hash"
               fallbackRedirectUrl="/"
               appearance={{
                 elements: {
