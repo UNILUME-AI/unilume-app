@@ -358,7 +358,7 @@ export default function ChatPage() {
               新对话
             </button>
             {isLoaded && isSignedIn && (
-              <UserButton afterSignOutUrl="/" />
+              <UserButton />
             )}
           </div>
         </div>
