@@ -6,6 +6,7 @@ import { useRef, useEffect, useState, useMemo, useCallback } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
+import { useUser, SignIn, UserButton } from "@clerk/nextjs";
 
 import { QUICK_ACTIONS } from "@/config/quick-actions";
 
@@ -63,6 +64,10 @@ function injectCitationMarkers(text: string): string {
   );
 }
 
+function generateId(): string {
+  return crypto.randomUUID();
+}
+
 // ── Citation Tag Component ─────────────────────────────
 
 function CitationTag({ source }: { source: SourceRef }) {
@@ -78,7 +83,6 @@ function CitationTag({ source }: { source: SourceRef }) {
     timeoutRef.current = setTimeout(() => setShow(false), 200);
   };
 
-  // Truncate title for the pill label
   const label = source.title.length > 20
     ? source.title.slice(0, 18) + "…"
     : source.title;
@@ -99,7 +103,6 @@ function CitationTag({ source }: { source: SourceRef }) {
         <span className="hidden sm:inline truncate max-w-[120px]">{label}</span>
       </a>
 
-      {/* Hover popover */}
       {show && (
         <div
           className="absolute bottom-full left-0 mb-2 w-72 rounded-xl border border-gray-200 bg-white p-3 shadow-lg z-50"
@@ -131,23 +134,11 @@ function CitationTag({ source }: { source: SourceRef }) {
   );
 }
 
-// ── localStorage ───────────────────────────────────────
-
-const STORAGE_KEY = "unilume-chat-history";
-
-function loadHistory() {
-  if (typeof window === "undefined") return [];
-  try {
-    const data = localStorage.getItem(STORAGE_KEY);
-    return data ? JSON.parse(data) : [];
-  } catch {
-    return [];
-  }
-}
-
 // ── Main Component ─────────────────────────────────────
 
 export default function ChatPage() {
+  const { isSignedIn, isLoaded } = useUser();
+
   const transport = useMemo(
     () => new DefaultChatTransport({ api: "/api/chat" }),
     []
@@ -160,13 +151,56 @@ export default function ChatPage() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [input, setInput] = useState("");
-  const [showQuickActions, setShowQuickActions] = useState(
-    () => loadHistory().length === 0
-  );
+  const [showQuickActions, setShowQuickActions] = useState(true);
   const [lastFailedText, setLastFailedText] = useState<string | null>(null);
   const [feedbackMap, setFeedbackMap] = useState<Record<string, "up" | "down">>({});
+  const [showSignIn, setShowSignIn] = useState(false);
+  const [pendingText, setPendingText] = useState<string | null>(null);
+  const [conversationId, setConversationId] = useState<string>(() => generateId());
 
   const isLoading = status === "submitted" || status === "streaming";
+
+  // ── Cloud sync: load conversation on mount ──
+  useEffect(() => {
+    if (!isLoaded || !isSignedIn) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch("/api/conversations");
+        if (!res.ok) return;
+        const { conversation } = await res.json();
+        if (cancelled || !conversation) return;
+        setConversationId(conversation.id);
+        setMessages(conversation.messages);
+        setShowQuickActions(false);
+      } catch {
+        // Silently fall back to empty state
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [isLoaded, isSignedIn, setMessages]);
+
+  // ── Cloud sync: save conversation when AI finishes responding ──
+  useEffect(() => {
+    if (status !== "ready" || messages.length === 0 || !isSignedIn) return;
+    fetch("/api/conversations", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: conversationId, messages }),
+    }).catch(() => {
+      // Silently fail — conversation still works locally
+    });
+  }, [status, messages, isSignedIn, conversationId]);
+
+  // ── Auto-send pending message after login ──
+  useEffect(() => {
+    if (isSignedIn && pendingText) {
+      sendMessage({ text: pendingText });
+      setPendingText(null);
+      setShowSignIn(false);
+      setShowQuickActions(false);
+    }
+  }, [isSignedIn, pendingText, sendMessage]);
 
   const submitFeedback = async (messageId: string, rating: "up" | "down") => {
     if (feedbackMap[messageId]) return;
@@ -190,20 +224,9 @@ export default function ChatPage() {
         }),
       });
     } catch {
-      // Silently fail — UI already shows the selection
+      // Silently fail
     }
   };
-
-  // Save messages to localStorage when a response completes
-  useEffect(() => {
-    if (status === "ready" && messages.length > 0) {
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
-      } catch {
-        // localStorage full or unavailable
-      }
-    }
-  }, [status, messages]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -214,20 +237,21 @@ export default function ChatPage() {
   }, [messages]);
 
   useEffect(() => {
-    const saved = loadHistory();
-    if (saved.length > 0) {
-      setMessages(saved);
-      setShowQuickActions(false);
-    }
-  }, [setMessages]);
-
-  useEffect(() => {
     inputRef.current?.focus();
   }, []);
 
   const send = useCallback(
     (text: string) => {
       if (!text.trim() || isLoading) return;
+
+      // Auth gate: if not signed in, store text and show login overlay
+      if (!isSignedIn) {
+        setPendingText(text.trim());
+        setShowSignIn(true);
+        setInput("");
+        return;
+      }
+
       setLastFailedText(null);
       sendMessage({ text: text.trim() });
       setInput("");
@@ -235,7 +259,7 @@ export default function ChatPage() {
         inputRef.current.style.height = "auto";
       }
     },
-    [isLoading, sendMessage]
+    [isLoading, isSignedIn, sendMessage]
   );
 
   const retry = () => {
@@ -260,7 +284,6 @@ export default function ChatPage() {
     }
   };
 
-  /** Build ReactMarkdown components with citation support */
   const buildMarkdownComponents = useCallback(
     (sources: SourceRef[]) => ({
       a: ({ href, children }: { href?: string; children?: React.ReactNode }) => (
@@ -273,7 +296,6 @@ export default function ChatPage() {
           {children}
         </a>
       ),
-      // rehype-raw turns <cite-ref data-index="N"> into this element
       "cite-ref": ({ "data-index": dataIndex }: { "data-index"?: string }) => {
         const idx = parseInt(dataIndex || "0");
         const source = sources.find((s) => s.index === idx);
@@ -285,6 +307,33 @@ export default function ChatPage() {
 
   return (
     <div className="flex flex-col h-dvh bg-gray-50">
+      {/* Login Overlay */}
+      {showSignIn && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+          <div className="relative">
+            <button
+              onClick={() => {
+                setShowSignIn(false);
+                setPendingText(null);
+              }}
+              className="absolute -top-3 -right-3 z-10 rounded-full bg-white p-1.5 shadow-md hover:bg-gray-100 transition-colors"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4 text-gray-500">
+                <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
+              </svg>
+            </button>
+            <SignIn
+              fallbackRedirectUrl="/"
+              appearance={{
+                elements: {
+                  card: "shadow-2xl",
+                },
+              }}
+            />
+          </div>
+        </div>
+      )}
+
       {/* Header */}
       <header className="flex-none border-b border-gray-200 bg-white px-4 py-3">
         <div className="mx-auto flex max-w-3xl items-center justify-between">
@@ -296,17 +345,22 @@ export default function ChatPage() {
               Noon 卖家运营助手
             </span>
           </div>
-          <button
-            onClick={() => {
-              localStorage.removeItem(STORAGE_KEY);
-              setMessages([]);
-              setShowQuickActions(true);
-              setLastFailedText(null);
-            }}
-            className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
-          >
-            新对话
-          </button>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => {
+                setMessages([]);
+                setShowQuickActions(true);
+                setLastFailedText(null);
+                setConversationId(generateId());
+              }}
+              className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
+            >
+              新对话
+            </button>
+            {isLoaded && isSignedIn && (
+              <UserButton afterSignOutUrl="/" />
+            )}
+          </div>
         </div>
       </header>
 
@@ -381,7 +435,6 @@ export default function ChatPage() {
                           </ReactMarkdown>
                         </div>
 
-                        {/* Source summary bar */}
                         {sources.length > 0 && (
                           <div className="mt-2 flex flex-wrap items-center gap-1.5 pl-1">
                             <span className="text-[11px] text-gray-400">
@@ -403,7 +456,6 @@ export default function ChatPage() {
                           </div>
                         )}
 
-                        {/* Feedback buttons */}
                         <div className="mt-1.5 flex items-center gap-1 pl-1">
                           <button
                             onClick={() => submitFeedback(message.id, "up")}
@@ -434,7 +486,6 @@ export default function ChatPage() {
             );
           })}
 
-          {/* Loading indicator */}
           {isLoading &&
             messages.length > 0 &&
             messages[messages.length - 1]?.role === "user" && (
@@ -446,7 +497,6 @@ export default function ChatPage() {
               </div>
             )}
 
-          {/* Error state */}
           {error && (
             <div className="mb-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
               <div className="flex items-center justify-between">
