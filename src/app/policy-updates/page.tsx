@@ -8,8 +8,18 @@ interface ArticleChange {
   permalink: string;
   title: string;
   category: string;
+  webUrl?: string;
   old_time?: string;
   new_time?: string;
+}
+
+interface RenamedArticle {
+  permalink: string;
+  title: string;
+  old_title: string;
+  old_permalink: string;
+  category: string;
+  webUrl?: string;
 }
 
 interface ContentDiff {
@@ -22,6 +32,7 @@ interface ChangeReport {
   added: ArticleChange[];
   removed: ArticleChange[];
   modified: ArticleChange[];
+  renamed?: RenamedArticle[];
   content_diffs?: Record<string, ContentDiff>;
   old_total: number;
   new_total: number;
@@ -42,9 +53,8 @@ function loadChangeReport(): ChangeReport | null {
 
 // ── Helpers ────────────────────────────────────────────
 
-/** Group articles by category */
-function groupByCategory(articles: ArticleChange[]) {
-  const groups: Record<string, ArticleChange[]> = {};
+function groupByCategory<T extends { category: string }>(articles: T[]) {
+  const groups: Record<string, T[]> = {};
   for (const a of articles) {
     const cat = a.category || "Unknown";
     if (!groups[cat]) groups[cat] = [];
@@ -67,12 +77,13 @@ function StatCard({
 }: {
   label: string;
   count: number;
-  color: "green" | "amber" | "red" | "gray";
+  color: "green" | "amber" | "red" | "blue" | "gray";
 }) {
   const colorClasses = {
     green: "bg-green-50 text-green-700 border-green-200",
     amber: "bg-amber-50 text-amber-700 border-amber-200",
     red: "bg-red-50 text-red-700 border-red-200",
+    blue: "bg-blue-50 text-blue-700 border-blue-200",
     gray: "bg-gray-50 text-gray-700 border-gray-200",
   };
   return (
@@ -83,6 +94,29 @@ function StatCard({
       <div className="text-xs mt-0.5">{label}</div>
     </div>
   );
+}
+
+function ArticleTitle({
+  title,
+  webUrl,
+}: {
+  title: string;
+  webUrl?: string;
+}) {
+  if (webUrl) {
+    return (
+      <a
+        href={webUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-sm text-blue-700 hover:text-blue-900 hover:underline"
+      >
+        {title}
+        <span className="inline-block ml-1 text-gray-400 text-xs">↗</span>
+      </a>
+    );
+  }
+  return <span className="text-sm text-gray-800">{title}</span>;
 }
 
 function DiffBadge({ diff }: { diff: ContentDiff }) {
@@ -149,7 +183,7 @@ function ArticleList({
                   className="rounded-lg border border-gray-100 bg-white px-3 py-2"
                 >
                   <div className="flex items-start justify-between gap-2">
-                    <span className="text-sm text-gray-800">{a.title}</span>
+                    <ArticleTitle title={a.title} webUrl={a.webUrl} />
                     <div className="flex-none">
                       {type === "modified" && diff && <DiffBadge diff={diff} />}
                       {type === "added" && diff && (
@@ -177,6 +211,38 @@ function ArticleList({
   );
 }
 
+function RenamedList({ articles }: { articles: RenamedArticle[] }) {
+  const grouped = groupByCategory(articles);
+
+  return (
+    <div className="space-y-4">
+      {grouped.map(([category, items]) => (
+        <div key={category}>
+          <h4 className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-2">
+            {category}
+          </h4>
+          <div className="space-y-2">
+            {items.map((a) => (
+              <div
+                key={a.permalink}
+                className="rounded-lg border border-gray-100 bg-white px-3 py-2"
+              >
+                <div className="text-sm">
+                  <span className="text-gray-400 line-through">
+                    {a.old_title}
+                  </span>
+                  <span className="text-gray-400 mx-2">&rarr;</span>
+                  <ArticleTitle title={a.title} webUrl={a.webUrl} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 // ── Page ───────────────────────────────────────────────
 
 export const metadata = {
@@ -187,11 +253,13 @@ export const metadata = {
 export default function PolicyUpdatesPage() {
   const report = loadChangeReport();
 
+  const renamed = report?.renamed ?? [];
   const hasChanges =
     report &&
     (report.added.length > 0 ||
       report.modified.length > 0 ||
-      report.removed.length > 0);
+      report.removed.length > 0 ||
+      renamed.length > 0);
 
   return (
     <div className="flex flex-col min-h-dvh bg-gray-50">
@@ -244,7 +312,16 @@ export default function PolicyUpdatesPage() {
               </div>
 
               {/* Summary cards */}
-              <div className="grid grid-cols-3 gap-3 mb-6">
+              <div
+                className={`grid gap-3 mb-6 ${renamed.length > 0 ? "grid-cols-4" : "grid-cols-3"}`}
+              >
+                {renamed.length > 0 && (
+                  <StatCard
+                    label="重命名"
+                    count={renamed.length}
+                    color="blue"
+                  />
+                )}
                 <StatCard
                   label="新增"
                   count={report.added.length}
@@ -269,6 +346,18 @@ export default function PolicyUpdatesPage() {
                 </div>
               ) : (
                 <div className="space-y-6">
+                  {/* Renamed */}
+                  {renamed.length > 0 && (
+                    <section>
+                      <details open>
+                        <summary className="cursor-pointer text-sm font-semibold text-blue-700 mb-3 select-none">
+                          重命名文章（{renamed.length}）
+                        </summary>
+                        <RenamedList articles={renamed} />
+                      </details>
+                    </section>
+                  )}
+
                   {/* Modified */}
                   {report.modified.length > 0 && (
                     <section>
