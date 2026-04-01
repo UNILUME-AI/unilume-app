@@ -385,10 +385,19 @@ function RenamedList({
                     <ArticleTitle title={a.title} webUrl={a.webUrl} />
                   </div>
                   {diff?.change_analysis ? (
-                    <p className="text-sm text-gray-700 mt-1">{diff.change_analysis.impact}</p>
+                    <div className="mt-1.5 space-y-1">
+                      <p className="text-sm text-gray-700">
+                        {diff.change_analysis.impact}
+                      </p>
+                      {diff.change_analysis.before_after && (
+                        <BeforeAfterBlock text={diff.change_analysis.before_after} />
+                      )}
+                    </div>
                   ) : diff?.summary ? (
                     <p className="text-sm text-gray-600 mt-1">{diff.summary}</p>
-                  ) : null}
+                  ) : (
+                    <p className="text-sm text-gray-400 mt-1 italic">仅标题变更，内容无实质变化</p>
+                  )}
                   {diff && diff.excerpts.length > 0 && (
                     <DiffDetails
                       addedLines={diff.added_lines}
