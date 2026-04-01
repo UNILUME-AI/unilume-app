@@ -279,7 +279,7 @@ function ArticleList({
                         {diff.change_analysis.impact}
                       </p>
                       {diff.change_analysis.before_after && (
-                        <div className="text-xs bg-gray-50 rounded px-2.5 py-1.5 space-y-0.5">
+                        <div className="text-sm space-y-0.5">
                           {diff.change_analysis.before_after.split("\n").map((line, i) => (
                             <p key={i} className={
                               line.startsWith("旧") ? "text-red-500" :
