@@ -29,9 +29,20 @@ interface ContentDiff {
   summary?: string;
 }
 
+interface ArticleChange {
+  permalink: string;
+  title: string;
+  category: string;
+  old_title?: string;
+}
+
 interface ChangeReport {
-  modified: { permalink: string; title: string; category: string }[];
+  added: ArticleChange[];
+  removed: ArticleChange[];
+  modified: ArticleChange[];
+  renamed?: ArticleChange[];
   content_diffs?: Record<string, ContentDiff>;
+  overview?: string;
   [key: string]: unknown;
 }
 
@@ -52,8 +63,12 @@ async function main() {
     return d && d.excerpts.length > 0 && !d.summary;
   });
 
-  if (toSummarize.length === 0) {
-    console.log("No articles need summarization.");
+  const needsOverview = !report.overview &&
+    (report.modified.length > 0 || (report.added ?? []).length > 0 ||
+     (report.removed ?? []).length > 0 || (report.renamed ?? []).length > 0);
+
+  if (toSummarize.length === 0 && !needsOverview) {
+    console.log("No articles need summarization and overview exists.");
     return;
   }
 
@@ -90,6 +105,7 @@ async function main() {
     },
   });
 
+  if (toSummarize.length > 0) {
   console.log(`Generating summaries for ${toSummarize.length} articles...`);
 
   // Batch all articles into a single LLM call for efficiency
@@ -124,7 +140,60 @@ ${articlesBlock}`,
     }
   }
 
+  } // end if toSummarize
+
   report.content_diffs = diffs;
+
+  // Generate overall overview
+  if (!report.overview) {
+    console.log("Generating overall overview...");
+
+    const renamed = (report.renamed ?? []) as ArticleChange[];
+    const added = report.added ?? [];
+    const removed = report.removed ?? [];
+    const metadataOnly = report.modified.filter((a) => {
+      const d = diffs[a.permalink];
+      return d && d.excerpts.length === 0;
+    });
+    const contentModified = report.modified.filter((a) => {
+      const d = diffs[a.permalink];
+      return !d || d.excerpts.length > 0;
+    });
+
+    // Build context for overview
+    const parts: string[] = [];
+    if (renamed.length > 0)
+      parts.push(`重命名 ${renamed.length} 篇: ${renamed.map((a) => `${a.old_title} → ${a.title}`).join("、")}`);
+    if (added.length > 0)
+      parts.push(`新增 ${added.length} 篇: ${added.map((a) => a.title).join("、")}`);
+    if (contentModified.length > 0) {
+      const summaryLines = contentModified
+        .map((a) => `${a.title}: ${diffs[a.permalink]?.summary ?? "内容更新"}`)
+        .join("\n");
+      parts.push(`内容修改 ${contentModified.length} 篇:\n${summaryLines}`);
+    }
+    if (removed.length > 0)
+      parts.push(`删除 ${removed.length} 篇: ${removed.map((a) => a.title).join("、")}`);
+    if (metadataOnly.length > 0)
+      parts.push(`仅元数据更新 ${metadataOnly.length} 篇`);
+
+    const overviewResult = await generateText({
+      model: vertex("gemini-2.5-flash"),
+      prompt: `你是 Noon 电商平台的政策分析助手。以下是今日帮助中心的变更汇总：
+
+${parts.join("\n\n")}
+
+请生成一段变更概览，格式如下（严格遵守）：
+第一行：一句话总结本次变更的整体情况（20-40字）
+之后每行以"- "开头，分点列出关键变更（3-5条，每条15-25字）
+
+只输出概览内容，不要添加标题或其他格式。`,
+    });
+
+    report.overview = overviewResult.text.trim();
+    console.log("Overview:\n" + report.overview);
+  }
+
   fs.writeFileSync(REPORT_PATH, JSON.stringify(report, null, 2));
   console.log("Done. Enriched report saved.");
 }

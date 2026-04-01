@@ -35,6 +35,7 @@ interface ChangeReport {
   modified: ArticleChange[];
   renamed?: RenamedArticle[];
   content_diffs?: Record<string, ContentDiff>;
+  overview?: string;
   old_total: number;
   new_total: number;
   old_timestamp: string;
@@ -172,10 +173,12 @@ function StatCard({
   label,
   count,
   color,
+  href,
 }: {
   label: string;
   count: number;
   color: "green" | "amber" | "red" | "blue" | "gray";
+  href?: string;
 }) {
   const colorClasses = {
     green: "bg-green-50 text-green-700 border-green-200",
@@ -184,12 +187,27 @@ function StatCard({
     blue: "bg-blue-50 text-blue-700 border-blue-200",
     gray: "bg-gray-50 text-gray-700 border-gray-200",
   };
+  const inner = (
+    <>
+      <div className="text-2xl font-semibold">{count}</div>
+      <div className="text-xs mt-0.5">{label}</div>
+    </>
+  );
+  if (href && count > 0) {
+    return (
+      <a
+        href={href}
+        className={`rounded-xl border px-4 py-3 text-center hover:shadow-md transition-shadow ${colorClasses[color]}`}
+      >
+        {inner}
+      </a>
+    );
+  }
   return (
     <div
       className={`rounded-xl border px-4 py-3 text-center ${colorClasses[color]}`}
     >
-      <div className="text-2xl font-semibold">{count}</div>
-      <div className="text-xs mt-0.5">{label}</div>
+      {inner}
     </div>
   );
 }
@@ -436,31 +454,56 @@ export default function PolicyUpdatesPage() {
 
               {/* Summary cards */}
               <div
-                className={`grid gap-3 mb-6 ${renamed.length > 0 ? "grid-cols-4" : "grid-cols-3"}`}
+                className={`grid gap-3 mb-4 ${renamed.length > 0 ? "grid-cols-4" : "grid-cols-3"}`}
               >
                 {renamed.length > 0 && (
                   <StatCard
                     label="重命名"
                     count={renamed.length}
                     color="blue"
+                    href="#section-renamed"
                   />
                 )}
                 <StatCard
                   label="新增"
                   count={report.added.length}
                   color="green"
+                  href="#section-added"
                 />
                 <StatCard
                   label="内容修改"
                   count={contentModified.length}
                   color="amber"
+                  href="#section-modified"
                 />
                 <StatCard
                   label="删除"
                   count={report.removed.length}
                   color="red"
+                  href="#section-removed"
                 />
               </div>
+
+              {/* Overview */}
+              {report.overview && (
+                <div className="mb-6 rounded-xl border border-gray-200 bg-white px-4 py-3">
+                  {report.overview.split("\n").map((line, i) => {
+                    if (line.startsWith("- ")) {
+                      return (
+                        <p key={i} className="text-sm text-gray-600 ml-2 mt-1">
+                          <span className="text-gray-400 mr-1">&bull;</span>
+                          {line.slice(2)}
+                        </p>
+                      );
+                    }
+                    return (
+                      <p key={i} className="text-sm font-medium text-gray-800">
+                        {line}
+                      </p>
+                    );
+                  })}
+                </div>
+              )}
 
               {!hasChanges ? (
                 <div className="text-center text-gray-500 py-12 rounded-xl border border-gray-200 bg-white">
@@ -471,7 +514,7 @@ export default function PolicyUpdatesPage() {
                 <div className="space-y-6">
                   {/* Renamed */}
                   {renamed.length > 0 && (
-                    <section>
+                    <section id="section-renamed">
                       <details open>
                         <summary className="cursor-pointer text-sm font-semibold text-blue-700 mb-3 select-none">
                           重命名文章（{renamed.length}）
@@ -483,7 +526,7 @@ export default function PolicyUpdatesPage() {
 
                   {/* Content Modified */}
                   {contentModified.length > 0 && (
-                    <section>
+                    <section id="section-modified">
                       <details open>
                         <summary className="cursor-pointer text-sm font-semibold text-amber-700 mb-3 select-none">
                           内容修改（{contentModified.length}）
@@ -499,7 +542,7 @@ export default function PolicyUpdatesPage() {
 
                   {/* Added */}
                   {report.added.length > 0 && (
-                    <section>
+                    <section id="section-added">
                       <details open={report.added.length <= 20}>
                         <summary className="cursor-pointer text-sm font-semibold text-green-700 mb-3 select-none">
                           新增文章（{report.added.length}）
@@ -515,7 +558,7 @@ export default function PolicyUpdatesPage() {
 
                   {/* Removed */}
                   {report.removed.length > 0 && (
-                    <section>
+                    <section id="section-removed">
                       <details open>
                         <summary className="cursor-pointer text-sm font-semibold text-red-600 mb-3 select-none">
                           删除文章（{report.removed.length}）
