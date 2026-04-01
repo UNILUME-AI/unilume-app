@@ -9,9 +9,11 @@ const PLATFORMS = [
 
 export default function PlatformTabs({
   current,
+  date,
   children,
 }: {
   current: string;
+  date?: string;
   children?: React.ReactNode;
 }) {
   const router = useRouter();
@@ -19,6 +21,8 @@ export default function PlatformTabs({
   const navigate = (platform: string) => {
     const params = new URLSearchParams();
     if (platform !== "noon") params.set("platform", platform);
+    // Preserve current date when switching platforms
+    if (date) params.set("date", date);
     const url = params.toString()
       ? `/policy-updates?${params}`
       : "/policy-updates";

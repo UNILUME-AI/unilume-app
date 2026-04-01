@@ -537,7 +537,7 @@ export default async function PolicyUpdatesPage({
       {/* Content */}
       <main className="flex-1 overflow-y-auto">
         <div className="mx-auto max-w-3xl px-4 py-6">
-          <PlatformTabs current={platform}>
+          <PlatformTabs current={platform} date={date}>
             {availableDates.length > 0 && (
               <DatePicker
                 currentDate={currentDate}
