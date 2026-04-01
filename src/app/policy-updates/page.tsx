@@ -40,15 +40,112 @@ interface ChangeReport {
   new_timestamp: string;
 }
 
+interface SnapshotArticle {
+  webUrl?: string;
+  title?: string;
+  category?: string;
+}
+
 // ── Data Loading ───────────────────────────────────────
 
-function loadChangeReport(): ChangeReport | null {
-  const filePath = path.join(
-    process.cwd(),
-    "src/data/noon-docs/_metadata/change_report.json"
-  );
+function loadJson<T>(relPath: string): T | null {
+  const filePath = path.join(process.cwd(), relPath);
   if (!fs.existsSync(filePath)) return null;
   return JSON.parse(fs.readFileSync(filePath, "utf-8"));
+}
+
+/** Compute string similarity (0–1) */
+function similarity(a: string, b: string): number {
+  if (a === b) return 1;
+  const longer = a.length > b.length ? a : b;
+  const shorter = a.length > b.length ? b : a;
+  if (longer.length === 0) return 1;
+  // Levenshtein-based ratio
+  const costs: number[] = [];
+  for (let i = 0; i <= shorter.length; i++) {
+    let lastVal = i;
+    for (let j = 0; j <= longer.length; j++) {
+      if (i === 0) { costs[j] = j; continue; }
+      if (j > 0) {
+        let newVal = costs[j - 1];
+        if (shorter[i - 1] !== longer[j - 1])
+          newVal = Math.min(newVal, lastVal, costs[j]) + 1;
+        costs[j - 1] = lastVal;
+        lastVal = newVal;
+      }
+    }
+    if (i > 0) costs[longer.length] = lastVal;
+  }
+  return 1 - costs[longer.length] / longer.length;
+}
+
+function enrichReport(report: ChangeReport): ChangeReport {
+  // If the crawler already produced renamed/webUrl, use as-is
+  if (report.renamed && report.renamed.length > 0) return report;
+
+  // Load snapshot for webUrl lookup
+  const snapshot = loadJson<{ articles: Record<string, SnapshotArticle> }>(
+    "src/data/noon-docs/_metadata/previous_snapshot.json"
+  );
+  const snapArticles = snapshot?.articles ?? {};
+
+  // Build webUrl lookup from snapshot (both old and current)
+  const urlMap: Record<string, string> = {};
+  for (const [k, v] of Object.entries(snapArticles)) {
+    if (v.webUrl) urlMap[k] = v.webUrl;
+  }
+
+  // Enrich webUrl on all articles
+  const enrich = (a: ArticleChange): ArticleChange => ({
+    ...a,
+    webUrl: a.webUrl || urlMap[a.permalink] || "",
+  });
+
+  const added = report.added.map(enrich);
+  const removed = report.removed.map(enrich);
+  const modified = report.modified.map(enrich);
+
+  // Detect renames: match added/removed with similar permalink or title in same category
+  const renamed: RenamedArticle[] = [];
+  const usedAdded = new Set<number>();
+  const usedRemoved = new Set<number>();
+
+  for (let ri = 0; ri < removed.length; ri++) {
+    const r = removed[ri];
+    let bestScore = 0;
+    let bestAi = -1;
+    for (let ai = 0; ai < added.length; ai++) {
+      if (usedAdded.has(ai)) continue;
+      const a = added[ai];
+      if (a.category !== r.category) continue;
+      const score = Math.max(
+        similarity(r.permalink, a.permalink),
+        similarity(r.title, a.title)
+      );
+      if (score > bestScore) { bestScore = score; bestAi = ai; }
+    }
+    if (bestScore >= 0.7 && bestAi >= 0) {
+      const a = added[bestAi];
+      renamed.push({
+        permalink: a.permalink,
+        title: a.title,
+        old_title: r.title,
+        old_permalink: r.permalink,
+        category: a.category,
+        webUrl: a.webUrl,
+      });
+      usedAdded.add(bestAi);
+      usedRemoved.add(ri);
+    }
+  }
+
+  return {
+    ...report,
+    added: added.filter((_, i) => !usedAdded.has(i)),
+    removed: removed.filter((_, i) => !usedRemoved.has(i)),
+    modified,
+    renamed,
+  };
 }
 
 // ── Helpers ────────────────────────────────────────────
@@ -198,9 +295,13 @@ function ArticleList({
                       {a.old_time} &rarr; {a.new_time}
                     </div>
                   )}
-                  {diff && diff.excerpts.length > 0 && (
+                  {diff && diff.excerpts.length > 0 ? (
                     <ExcerptList excerpts={diff.excerpts} />
-                  )}
+                  ) : diff && diff.excerpts.length === 0 && type === "modified" ? (
+                    <div className="text-xs text-gray-400 mt-0.5 italic">
+                      仅元数据更新，正文内容无实质变化
+                    </div>
+                  ) : null}
                 </div>
               );
             })}
@@ -251,7 +352,10 @@ export const metadata = {
 };
 
 export default function PolicyUpdatesPage() {
-  const report = loadChangeReport();
+  const raw = loadJson<ChangeReport>(
+    "src/data/noon-docs/_metadata/change_report.json"
+  );
+  const report = raw ? enrichReport(raw) : null;
 
   const renamed = report?.renamed ?? [];
   const hasChanges =
