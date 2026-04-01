@@ -295,13 +295,9 @@ function ArticleList({
                       {a.old_time} &rarr; {a.new_time}
                     </div>
                   )}
-                  {diff && diff.excerpts.length > 0 ? (
+                  {diff && diff.excerpts.length > 0 && (
                     <ExcerptList excerpts={diff.excerpts} />
-                  ) : diff && diff.excerpts.length === 0 && type === "modified" ? (
-                    <div className="text-xs text-gray-400 mt-0.5 italic">
-                      仅元数据更新，正文内容无实质变化
-                    </div>
-                  ) : null}
+                  )}
                 </div>
               );
             })}
@@ -358,12 +354,25 @@ export default function PolicyUpdatesPage() {
   const report = raw ? enrichReport(raw) : null;
 
   const renamed = report?.renamed ?? [];
+  const diffs = report?.content_diffs ?? {};
+
+  // 将 modified 拆分为"内容修改"和"仅元数据更新"
+  const contentModified = report?.modified.filter((a) => {
+    const d = diffs[a.permalink];
+    return !d || d.excerpts.length > 0;
+  }) ?? [];
+  const metadataOnly = report?.modified.filter((a) => {
+    const d = diffs[a.permalink];
+    return d && d.excerpts.length === 0;
+  }) ?? [];
+
   const hasChanges =
     report &&
     (report.added.length > 0 ||
-      report.modified.length > 0 ||
+      contentModified.length > 0 ||
       report.removed.length > 0 ||
-      renamed.length > 0);
+      renamed.length > 0 ||
+      metadataOnly.length > 0);
 
   return (
     <div className="flex flex-col min-h-dvh bg-gray-50">
@@ -432,8 +441,8 @@ export default function PolicyUpdatesPage() {
                   color="green"
                 />
                 <StatCard
-                  label="修改"
-                  count={report.modified.length}
+                  label="内容修改"
+                  count={contentModified.length}
                   color="amber"
                 />
                 <StatCard
@@ -462,15 +471,15 @@ export default function PolicyUpdatesPage() {
                     </section>
                   )}
 
-                  {/* Modified */}
-                  {report.modified.length > 0 && (
+                  {/* Content Modified */}
+                  {contentModified.length > 0 && (
                     <section>
                       <details open>
                         <summary className="cursor-pointer text-sm font-semibold text-amber-700 mb-3 select-none">
-                          修改文章（{report.modified.length}）
+                          内容修改（{contentModified.length}）
                         </summary>
                         <ArticleList
-                          articles={report.modified}
+                          articles={contentModified}
                           type="modified"
                           contentDiffs={report.content_diffs}
                         />
@@ -504,6 +513,22 @@ export default function PolicyUpdatesPage() {
                         <ArticleList
                           articles={report.removed}
                           type="removed"
+                        />
+                      </details>
+                    </section>
+                  )}
+
+                  {/* Metadata Only */}
+                  {metadataOnly.length > 0 && (
+                    <section>
+                      <details>
+                        <summary className="cursor-pointer text-sm font-medium text-gray-400 mb-3 select-none">
+                          仅元数据更新（{metadataOnly.length}）— 正文内容无实质变化
+                        </summary>
+                        <ArticleList
+                          articles={metadataOnly}
+                          type="modified"
+                          contentDiffs={report.content_diffs}
                         />
                       </details>
                     </section>
