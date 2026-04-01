@@ -17,10 +17,14 @@ import { createVertex } from "@ai-sdk/google-vertex";
 // Load .env.local
 config({ path: path.resolve(__dirname, "../.env.local") });
 
-const REPORT_PATH = path.resolve(
-  __dirname,
-  "../src/data/noon-docs/_metadata/change_report.json"
-);
+const PLATFORMS = [
+  { name: "noon", docsDir: "noon-docs" },
+  { name: "noon-ads", docsDir: "noon-ads-docs" },
+];
+
+function reportPath(docsDir: string) {
+  return path.resolve(__dirname, `../src/data/${docsDir}/_metadata/change_report.json`);
+}
 
 interface ContentDiff {
   added_lines: number;
@@ -53,12 +57,13 @@ interface ChangeReport {
   [key: string]: unknown;
 }
 
-async function main() {
+async function enrichPlatform(platformName: string, REPORT_PATH: string, articlesDir: string, vertex: ReturnType<typeof createVertex>) {
   if (!fs.existsSync(REPORT_PATH)) {
-    console.log("No change_report.json found, skipping enrichment.");
+    console.log(`No change_report.json for ${platformName}, skipping.`);
     return;
   }
 
+  console.log(`\n=== Enriching ${platformName} ===`);
   const report: ChangeReport = JSON.parse(
     fs.readFileSync(REPORT_PATH, "utf-8")
   );
@@ -85,42 +90,9 @@ async function main() {
   });
 
   if (toSummarize.length === 0 && !needsOverview && !needsTranslation && !needsAnalysisCheck) {
-    console.log("Nothing to enrich.");
+    console.log(`Nothing to enrich for ${platformName}.`);
     return;
   }
-
-  const projectId = process.env.GOOGLE_VERTEX_PROJECT;
-  const credentials = process.env.GOOGLE_SERVICE_ACCOUNT_KEY;
-
-  if (!projectId || !credentials) {
-    console.log(
-      "Missing GOOGLE_VERTEX_PROJECT or GOOGLE_SERVICE_ACCOUNT_KEY, skipping."
-    );
-    return;
-  }
-
-  // dotenv expands \n → real newlines. To JSON.parse the service account key,
-  // re-escape newlines only inside JSON string values (e.g. private_key PEM).
-  // Strategy: escape ALL newlines, then selectively unescape structural ones.
-  let jsonStr = credentials.replace(/\n/g, "\\n");
-  // Structural newlines are outside of quotes: after { , : and before }
-  // Simplest reliable way: iteratively fix non-string newlines
-  jsonStr = jsonStr
-    .replace(/\\n\s*"/g, ' "')          // \n before a key quote
-    .replace(/,\\n\s*/g, ", ")          // ,\n between properties
-    .replace(/\{\\n\s*/g, "{ ")         // {\n opening
-    .replace(/\\n\s*\}/g, " }")         // \n} closing
-    .replace(/"\\n\s*\}/g, '" }');      // "\n} end of last value
-
-  const parsed = JSON.parse(jsonStr);
-
-  const vertex = createVertex({
-    project: projectId,
-    location: process.env.GOOGLE_VERTEX_LOCATION ?? "us-east5",
-    googleAuthOptions: {
-      credentials: parsed,
-    },
-  });
 
   // Also find articles needing structured analysis
   const needsAnalysis = report.modified.filter((a) => {
@@ -132,7 +104,7 @@ async function main() {
     console.log(`Generating structured analysis for ${needsAnalysis.length} articles...`);
 
     // Read full article content for each
-    const articlesDir = path.resolve(__dirname, "../src/data/noon-docs/articles");
+    // articlesDir passed as parameter
 
     for (const article of needsAnalysis) {
       const d = diffs[article.permalink];
@@ -313,7 +285,38 @@ ${parts.join("\n\n")}
   }
 
   fs.writeFileSync(REPORT_PATH, JSON.stringify(report, null, 2));
-  console.log("Done. Enriched report saved.");
+  console.log(`Done. Enriched report saved for ${platformName}.`);
+}
+
+async function main() {
+  const projectId = process.env.GOOGLE_VERTEX_PROJECT;
+  const credentials = process.env.GOOGLE_SERVICE_ACCOUNT_KEY;
+
+  if (!projectId || !credentials) {
+    console.log("Missing GOOGLE_VERTEX_PROJECT or GOOGLE_SERVICE_ACCOUNT_KEY, skipping.");
+    return;
+  }
+
+  let jsonStr = credentials.replace(/\n/g, "\\n");
+  jsonStr = jsonStr
+    .replace(/\\n\s*"/g, ' "')
+    .replace(/,\\n\s*/g, ", ")
+    .replace(/\{\\n\s*/g, "{ ")
+    .replace(/\\n\s*\}/g, " }")
+    .replace(/"\\n\s*\}/g, '" }');
+  const parsed = JSON.parse(jsonStr);
+
+  const vertex = createVertex({
+    project: projectId,
+    location: process.env.GOOGLE_VERTEX_LOCATION ?? "us-east5",
+    googleAuthOptions: { credentials: parsed },
+  });
+
+  for (const platform of PLATFORMS) {
+    const rPath = reportPath(platform.docsDir);
+    const aDir = path.resolve(__dirname, `../src/data/${platform.docsDir}/articles`);
+    await enrichPlatform(platform.name, rPath, aDir, vertex);
+  }
 }
 
 main().catch((err) => {

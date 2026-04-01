@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 interface DatePickerProps {
   currentDate: string;
   availableDates: string[];
+  platform?: string;
 }
 
 function formatDateLabel(dateStr: string): string {
@@ -18,6 +19,7 @@ function formatDateLabel(dateStr: string): string {
 export default function DatePicker({
   currentDate,
   availableDates,
+  platform,
 }: DatePickerProps) {
   const router = useRouter();
 
@@ -26,12 +28,13 @@ export default function DatePicker({
   const hasNext = currentIdx > 0;
 
   const navigate = (date: string) => {
-    // If it's the latest date, go to bare URL
-    if (date === availableDates[0]) {
-      router.push("/policy-updates");
-    } else {
-      router.push(`/policy-updates?date=${date}`);
-    }
+    const params = new URLSearchParams();
+    if (date !== availableDates[0]) params.set("date", date);
+    if (platform && platform !== "noon") params.set("platform", platform);
+    const url = params.toString()
+      ? `/policy-updates?${params}`
+      : "/policy-updates";
+    router.push(url);
   };
 
   return (

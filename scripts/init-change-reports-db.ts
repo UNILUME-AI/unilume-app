@@ -17,14 +17,15 @@ async function main() {
   await sql`
     CREATE TABLE IF NOT EXISTS change_reports (
       id SERIAL PRIMARY KEY,
-      report_date DATE NOT NULL UNIQUE,
+      report_date DATE NOT NULL,
       platform TEXT NOT NULL DEFAULT 'noon',
       old_timestamp TIMESTAMPTZ,
       new_timestamp TIMESTAMPTZ,
       old_total INTEGER DEFAULT 0,
       new_total INTEGER DEFAULT 0,
       report_data JSONB NOT NULL,
-      created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+      created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+      UNIQUE(report_date, platform)
     )
   `;
 

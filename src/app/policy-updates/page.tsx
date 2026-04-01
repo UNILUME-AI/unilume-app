@@ -3,6 +3,7 @@ import path from "path";
 import Link from "next/link";
 import DiffDetails from "./diff-details";
 import DatePicker from "./date-picker";
+import PlatformTabs from "./platform-tabs";
 import { getDb } from "@/lib/db";
 
 // ── Types ──────────────────────────────────────────────
@@ -67,19 +68,19 @@ function loadJsonFile<T>(relPath: string): T | null {
   return JSON.parse(fs.readFileSync(filePath, "utf-8"));
 }
 
-async function loadReportFromDb(date?: string): Promise<ChangeReport | null> {
+async function loadReportFromDb(platform: string, date?: string): Promise<ChangeReport | null> {
   try {
     const sql = getDb();
     let rows;
     if (date) {
       rows = await sql`
         SELECT report_data FROM change_reports
-        WHERE report_date = ${date} AND platform = 'noon'
+        WHERE report_date = ${date} AND platform = ${platform}
       `;
     } else {
       rows = await sql`
         SELECT report_data FROM change_reports
-        WHERE platform = 'noon'
+        WHERE platform = ${platform}
         ORDER BY report_date DESC LIMIT 1
       `;
     }
@@ -90,12 +91,12 @@ async function loadReportFromDb(date?: string): Promise<ChangeReport | null> {
   }
 }
 
-async function loadAvailableDates(): Promise<string[]> {
+async function loadAvailableDates(platform: string): Promise<string[]> {
   try {
     const sql = getDb();
     const rows = await sql`
       SELECT to_char(report_date, 'YYYY-MM-DD') as d FROM change_reports
-      WHERE platform = 'noon'
+      WHERE platform = ${platform}
       ORDER BY report_date DESC
       LIMIT 90
     `;
@@ -130,13 +131,13 @@ function similarity(a: string, b: string): number {
   return 1 - costs[longer.length] / longer.length;
 }
 
-function enrichReport(report: ChangeReport): ChangeReport {
+function enrichReport(report: ChangeReport, docsDir = "noon-docs"): ChangeReport {
   // If the crawler already produced renamed/webUrl, use as-is
   if (report.renamed && report.renamed.length > 0) return report;
 
   // Load snapshot for webUrl lookup
   const snapshot = loadJsonFile<{ articles: Record<string, SnapshotArticle> }>(
-    "src/data/noon-docs/_metadata/previous_snapshot.json"
+    `src/data/${docsDir}/_metadata/previous_snapshot.json`
   );
   const snapArticles = snapshot?.articles ?? {};
 
@@ -466,19 +467,22 @@ export const metadata = {
 export default async function PolicyUpdatesPage({
   searchParams,
 }: {
-  searchParams: Promise<{ date?: string }>;
+  searchParams: Promise<{ date?: string; platform?: string }>;
 }) {
-  const { date } = await searchParams;
+  const { date, platform: platformParam } = await searchParams;
+  const platform = platformParam === "noon-ads" ? "noon-ads" : "noon";
+  const docsDir = platform === "noon-ads" ? "noon-ads-docs" : "noon-docs";
+  const platformLabel = platform === "noon-ads" ? "Noon Ads" : "Noon";
 
   // Try DB first, fall back to local file
-  const dbReport = await loadReportFromDb(date);
+  const dbReport = await loadReportFromDb(platform, date);
   const raw = dbReport ?? loadJsonFile<ChangeReport>(
-    "src/data/noon-docs/_metadata/change_report.json"
+    `src/data/${docsDir}/_metadata/change_report.json`
   );
-  const report = raw ? enrichReport(raw) : null;
+  const report = raw ? enrichReport(raw, docsDir) : null;
 
   // Load available dates for the date picker
-  const availableDates = await loadAvailableDates();
+  const availableDates = await loadAvailableDates(platform);
   const currentDate = date ?? availableDates[0] ?? "";
 
   const renamed = report?.renamed ?? [];
@@ -530,6 +534,8 @@ export default async function PolicyUpdatesPage({
       {/* Content */}
       <main className="flex-1 overflow-y-auto">
         <div className="mx-auto max-w-3xl px-4 py-6">
+          <PlatformTabs current={platform} />
+
           {!report ? (
             <div className="text-center text-gray-500 py-20">
               <p className="text-lg font-medium">暂无变更数据</p>
@@ -543,12 +549,13 @@ export default async function PolicyUpdatesPage({
               <div className="mb-6">
                 <div className="flex items-center justify-between">
                   <h1 className="text-xl font-semibold text-gray-900">
-                    Noon 帮助中心变更报告
+                    {platformLabel} 帮助中心变更报告
                   </h1>
                   {availableDates.length > 1 && (
                     <DatePicker
                       currentDate={currentDate}
                       availableDates={availableDates}
+                      platform={platform}
                     />
                   )}
                 </div>
