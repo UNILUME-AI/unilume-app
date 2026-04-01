@@ -2,6 +2,8 @@ import fs from "fs";
 import path from "path";
 import Link from "next/link";
 import DiffDetails from "./diff-details";
+import DatePicker from "./date-picker";
+import { getDb } from "@/lib/db";
 
 // ── Types ──────────────────────────────────────────────
 
@@ -59,10 +61,48 @@ interface SnapshotArticle {
 
 // ── Data Loading ───────────────────────────────────────
 
-function loadJson<T>(relPath: string): T | null {
+function loadJsonFile<T>(relPath: string): T | null {
   const filePath = path.join(process.cwd(), relPath);
   if (!fs.existsSync(filePath)) return null;
   return JSON.parse(fs.readFileSync(filePath, "utf-8"));
+}
+
+async function loadReportFromDb(date?: string): Promise<ChangeReport | null> {
+  try {
+    const sql = getDb();
+    let rows;
+    if (date) {
+      rows = await sql`
+        SELECT report_data FROM change_reports
+        WHERE report_date = ${date} AND platform = 'noon'
+      `;
+    } else {
+      rows = await sql`
+        SELECT report_data FROM change_reports
+        WHERE platform = 'noon'
+        ORDER BY report_date DESC LIMIT 1
+      `;
+    }
+    if (rows.length === 0) return null;
+    return rows[0].report_data as ChangeReport;
+  } catch {
+    return null;
+  }
+}
+
+async function loadAvailableDates(): Promise<string[]> {
+  try {
+    const sql = getDb();
+    const rows = await sql`
+      SELECT to_char(report_date, 'YYYY-MM-DD') as d FROM change_reports
+      WHERE platform = 'noon'
+      ORDER BY report_date DESC
+      LIMIT 90
+    `;
+    return rows.map((r) => r.d as string);
+  } catch {
+    return [];
+  }
 }
 
 /** Compute string similarity (0–1) */
@@ -95,14 +135,14 @@ function enrichReport(report: ChangeReport): ChangeReport {
   if (report.renamed && report.renamed.length > 0) return report;
 
   // Load snapshot for webUrl lookup
-  const snapshot = loadJson<{ articles: Record<string, SnapshotArticle> }>(
+  const snapshot = loadJsonFile<{ articles: Record<string, SnapshotArticle> }>(
     "src/data/noon-docs/_metadata/previous_snapshot.json"
   );
   const snapArticles = snapshot?.articles ?? {};
 
   // Build webUrl lookup from snapshot (both old and current)
   const urlMap: Record<string, string> = {};
-  for (const [k, v] of Object.entries(snapArticles)) {
+  for (const [k, v] of Object.entries(snapArticles) as [string, SnapshotArticle][]) {
     if (v.webUrl) urlMap[k] = v.webUrl;
   }
 
@@ -423,11 +463,23 @@ export const metadata = {
   description: "Noon 卖家帮助中心每日内容变更追踪",
 };
 
-export default function PolicyUpdatesPage() {
-  const raw = loadJson<ChangeReport>(
+export default async function PolicyUpdatesPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ date?: string }>;
+}) {
+  const { date } = await searchParams;
+
+  // Try DB first, fall back to local file
+  const dbReport = await loadReportFromDb(date);
+  const raw = dbReport ?? loadJsonFile<ChangeReport>(
     "src/data/noon-docs/_metadata/change_report.json"
   );
   const report = raw ? enrichReport(raw) : null;
+
+  // Load available dates for the date picker
+  const availableDates = await loadAvailableDates();
+  const currentDate = date ?? availableDates[0] ?? "";
 
   const renamed = report?.renamed ?? [];
   const diffs = report?.content_diffs ?? {};
@@ -489,9 +541,17 @@ export default function PolicyUpdatesPage() {
             <>
               {/* Report header */}
               <div className="mb-6">
-                <h1 className="text-xl font-semibold text-gray-900">
-                  Noon 帮助中心变更报告
-                </h1>
+                <div className="flex items-center justify-between">
+                  <h1 className="text-xl font-semibold text-gray-900">
+                    Noon 帮助中心变更报告
+                  </h1>
+                  {availableDates.length > 1 && (
+                    <DatePicker
+                      currentDate={currentDate}
+                      availableDates={availableDates}
+                    />
+                  )}
+                </div>
                 <p className="text-sm text-gray-500 mt-1">
                   快照对比：{formatDate(report.old_timestamp)} &rarr;{" "}
                   {formatDate(report.new_timestamp)}
