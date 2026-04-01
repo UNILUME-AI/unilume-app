@@ -7,6 +7,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import { useUser, SignIn, UserButton } from "@clerk/nextjs";
+import Link from "next/link";
 
 import { QUICK_ACTIONS } from "@/config/quick-actions";
 
@@ -347,6 +348,12 @@ export default function ChatPage() {
             </span>
           </div>
           <div className="flex items-center gap-3">
+            <Link
+              href="/policy-updates"
+              className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
+            >
+              变更日报
+            </Link>
             <button
               onClick={() => {
                 setMessages([]);

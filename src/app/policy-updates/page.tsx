@@ -1,0 +1,333 @@
+import fs from "fs";
+import path from "path";
+import Link from "next/link";
+
+// ── Types ──────────────────────────────────────────────
+
+interface ArticleChange {
+  permalink: string;
+  title: string;
+  category: string;
+  old_time?: string;
+  new_time?: string;
+}
+
+interface ContentDiff {
+  added_lines: number;
+  removed_lines: number;
+  excerpts: string[];
+}
+
+interface ChangeReport {
+  added: ArticleChange[];
+  removed: ArticleChange[];
+  modified: ArticleChange[];
+  content_diffs?: Record<string, ContentDiff>;
+  old_total: number;
+  new_total: number;
+  old_timestamp: string;
+  new_timestamp: string;
+}
+
+// ── Data Loading ───────────────────────────────────────
+
+function loadChangeReport(): ChangeReport | null {
+  const filePath = path.join(
+    process.cwd(),
+    "src/data/noon-docs/_metadata/change_report.json"
+  );
+  if (!fs.existsSync(filePath)) return null;
+  return JSON.parse(fs.readFileSync(filePath, "utf-8"));
+}
+
+// ── Helpers ────────────────────────────────────────────
+
+/** Group articles by category */
+function groupByCategory(articles: ArticleChange[]) {
+  const groups: Record<string, ArticleChange[]> = {};
+  for (const a of articles) {
+    const cat = a.category || "Unknown";
+    if (!groups[cat]) groups[cat] = [];
+    groups[cat].push(a);
+  }
+  return Object.entries(groups).sort(([a], [b]) => a.localeCompare(b));
+}
+
+function formatDate(ts: string) {
+  if (!ts || ts === "?" || ts === "(first run)") return ts;
+  return ts.slice(0, 10);
+}
+
+// ── Components ─────────────────────────────────────────
+
+function StatCard({
+  label,
+  count,
+  color,
+}: {
+  label: string;
+  count: number;
+  color: "green" | "amber" | "red" | "gray";
+}) {
+  const colorClasses = {
+    green: "bg-green-50 text-green-700 border-green-200",
+    amber: "bg-amber-50 text-amber-700 border-amber-200",
+    red: "bg-red-50 text-red-700 border-red-200",
+    gray: "bg-gray-50 text-gray-700 border-gray-200",
+  };
+  return (
+    <div
+      className={`rounded-xl border px-4 py-3 text-center ${colorClasses[color]}`}
+    >
+      <div className="text-2xl font-semibold">{count}</div>
+      <div className="text-xs mt-0.5">{label}</div>
+    </div>
+  );
+}
+
+function DiffBadge({ diff }: { diff: ContentDiff }) {
+  return (
+    <span className="inline-flex items-center gap-1 text-xs font-mono">
+      <span className="text-green-600">+{diff.added_lines}</span>
+      <span className="text-gray-400">/</span>
+      <span className="text-red-500">-{diff.removed_lines}</span>
+      <span className="text-gray-400">行</span>
+    </span>
+  );
+}
+
+function ExcerptList({ excerpts }: { excerpts: string[] }) {
+  if (excerpts.length === 0) return null;
+  return (
+    <div className="mt-1.5 space-y-0.5">
+      {excerpts.map((line, i) => {
+        const isAdd = line.startsWith("+ ");
+        const isRemove = line.startsWith("- ");
+        return (
+          <div
+            key={i}
+            className={`text-xs font-mono rounded px-2 py-0.5 ${
+              isAdd
+                ? "bg-green-50 text-green-700"
+                : isRemove
+                  ? "bg-red-50 text-red-500 line-through"
+                  : "bg-gray-50 text-gray-600"
+            }`}
+          >
+            {line}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function ArticleList({
+  articles,
+  type,
+  contentDiffs,
+}: {
+  articles: ArticleChange[];
+  type: "added" | "modified" | "removed";
+  contentDiffs?: Record<string, ContentDiff>;
+}) {
+  const grouped = groupByCategory(articles);
+
+  return (
+    <div className="space-y-4">
+      {grouped.map(([category, items]) => (
+        <div key={category}>
+          <h4 className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-2">
+            {category}
+          </h4>
+          <div className="space-y-2">
+            {items.map((a) => {
+              const diff = contentDiffs?.[a.permalink];
+              return (
+                <div
+                  key={a.permalink}
+                  className="rounded-lg border border-gray-100 bg-white px-3 py-2"
+                >
+                  <div className="flex items-start justify-between gap-2">
+                    <span className="text-sm text-gray-800">{a.title}</span>
+                    <div className="flex-none">
+                      {type === "modified" && diff && <DiffBadge diff={diff} />}
+                      {type === "added" && diff && (
+                        <span className="text-xs text-green-600 font-mono">
+                          {diff.added_lines} 行
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  {type === "modified" && a.old_time && a.new_time && !diff && (
+                    <div className="text-xs text-gray-400 mt-0.5">
+                      {a.old_time} &rarr; {a.new_time}
+                    </div>
+                  )}
+                  {diff && diff.excerpts.length > 0 && (
+                    <ExcerptList excerpts={diff.excerpts} />
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ── Page ───────────────────────────────────────────────
+
+export const metadata = {
+  title: "政策变更日报 — UNILUME",
+  description: "Noon 卖家帮助中心每日内容变更追踪",
+};
+
+export default function PolicyUpdatesPage() {
+  const report = loadChangeReport();
+
+  const hasChanges =
+    report &&
+    (report.added.length > 0 ||
+      report.modified.length > 0 ||
+      report.removed.length > 0);
+
+  return (
+    <div className="flex flex-col min-h-dvh bg-gray-50">
+      {/* Header */}
+      <header className="flex-none border-b border-gray-200 bg-white px-4 py-3">
+        <div className="mx-auto flex max-w-3xl items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Link
+              href="/"
+              className="text-lg font-semibold tracking-tight text-gray-900 hover:text-blue-600 transition-colors"
+            >
+              UNILUME
+            </Link>
+            <span className="text-xs text-gray-400 border-l border-gray-200 pl-2 ml-1">
+              政策变更日报
+            </span>
+          </div>
+          <Link
+            href="/"
+            className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
+          >
+            &larr; 返回助手
+          </Link>
+        </div>
+      </header>
+
+      {/* Content */}
+      <main className="flex-1 overflow-y-auto">
+        <div className="mx-auto max-w-3xl px-4 py-6">
+          {!report ? (
+            <div className="text-center text-gray-500 py-20">
+              <p className="text-lg font-medium">暂无变更数据</p>
+              <p className="text-sm mt-1">
+                变更报告将在每日爬取完成后自动生成。
+              </p>
+            </div>
+          ) : (
+            <>
+              {/* Report header */}
+              <div className="mb-6">
+                <h1 className="text-xl font-semibold text-gray-900">
+                  Noon 帮助中心变更报告
+                </h1>
+                <p className="text-sm text-gray-500 mt-1">
+                  快照对比：{formatDate(report.old_timestamp)} &rarr;{" "}
+                  {formatDate(report.new_timestamp)}
+                  &nbsp;&middot;&nbsp;
+                  总文章数 {report.old_total} &rarr; {report.new_total}
+                </p>
+              </div>
+
+              {/* Summary cards */}
+              <div className="grid grid-cols-3 gap-3 mb-6">
+                <StatCard
+                  label="新增"
+                  count={report.added.length}
+                  color="green"
+                />
+                <StatCard
+                  label="修改"
+                  count={report.modified.length}
+                  color="amber"
+                />
+                <StatCard
+                  label="删除"
+                  count={report.removed.length}
+                  color="red"
+                />
+              </div>
+
+              {!hasChanges ? (
+                <div className="text-center text-gray-500 py-12 rounded-xl border border-gray-200 bg-white">
+                  <p className="text-lg font-medium">无变更</p>
+                  <p className="text-sm mt-1">本次快照对比未发现内容变化。</p>
+                </div>
+              ) : (
+                <div className="space-y-6">
+                  {/* Modified */}
+                  {report.modified.length > 0 && (
+                    <section>
+                      <details open>
+                        <summary className="cursor-pointer text-sm font-semibold text-amber-700 mb-3 select-none">
+                          修改文章（{report.modified.length}）
+                        </summary>
+                        <ArticleList
+                          articles={report.modified}
+                          type="modified"
+                          contentDiffs={report.content_diffs}
+                        />
+                      </details>
+                    </section>
+                  )}
+
+                  {/* Added */}
+                  {report.added.length > 0 && (
+                    <section>
+                      <details open={report.added.length <= 20}>
+                        <summary className="cursor-pointer text-sm font-semibold text-green-700 mb-3 select-none">
+                          新增文章（{report.added.length}）
+                        </summary>
+                        <ArticleList
+                          articles={report.added}
+                          type="added"
+                          contentDiffs={report.content_diffs}
+                        />
+                      </details>
+                    </section>
+                  )}
+
+                  {/* Removed */}
+                  {report.removed.length > 0 && (
+                    <section>
+                      <details open>
+                        <summary className="cursor-pointer text-sm font-semibold text-red-600 mb-3 select-none">
+                          删除文章（{report.removed.length}）
+                        </summary>
+                        <ArticleList
+                          articles={report.removed}
+                          type="removed"
+                        />
+                      </details>
+                    </section>
+                  )}
+                </div>
+              )}
+            </>
+          )}
+        </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="flex-none border-t border-gray-200 bg-white px-4 py-3">
+        <p className="mx-auto max-w-3xl text-center text-xs text-gray-400">
+          数据来源：Noon 官方帮助中心 &middot; 每日自动更新
+        </p>
+      </footer>
+    </div>
+  );
+}
