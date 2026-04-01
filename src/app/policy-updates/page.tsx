@@ -244,7 +244,46 @@ function ArticleTitle({
   return <span className="text-sm text-gray-800">{title}</span>;
 }
 
-// DiffBadge and ExcerptList are now in diff-details.tsx (client component)
+function BeforeAfterBlock({ text }: { text: string }) {
+  // Split into "旧" block and "新" block by finding the "新：" boundary
+  const lines = text.split("\n");
+  let currentBlock: "old" | "new" | "none" = "none";
+  const oldLines: string[] = [];
+  const newLines: string[] = [];
+
+  for (const line of lines) {
+    if (line.startsWith("旧：") || line.startsWith("旧:")) {
+      currentBlock = "old";
+      oldLines.push(line);
+    } else if (line.startsWith("新：") || line.startsWith("新:")) {
+      currentBlock = "new";
+      newLines.push(line);
+    } else if (currentBlock === "old") {
+      oldLines.push(line);
+    } else if (currentBlock === "new") {
+      newLines.push(line);
+    }
+  }
+
+  return (
+    <div className="text-sm space-y-1">
+      {oldLines.length > 0 && (
+        <div className="text-red-500">
+          {oldLines.map((line, i) => (
+            <p key={i}>{line}</p>
+          ))}
+        </div>
+      )}
+      {newLines.length > 0 && (
+        <div className="text-green-600">
+          {newLines.map((line, i) => (
+            <p key={i}>{line}</p>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
 function ArticleList({
   articles,
@@ -279,17 +318,7 @@ function ArticleList({
                         {diff.change_analysis.impact}
                       </p>
                       {diff.change_analysis.before_after && (
-                        <div className="text-sm space-y-0.5">
-                          {diff.change_analysis.before_after.split("\n").map((line, i) => (
-                            <p key={i} className={
-                              line.startsWith("旧") ? "text-red-500" :
-                              line.startsWith("新") ? "text-green-600" :
-                              "text-gray-600"
-                            }>
-                              {line}
-                            </p>
-                          ))}
-                        </div>
+                        <BeforeAfterBlock text={diff.change_analysis.before_after} />
                       )}
                     </div>
                   ) : type === "modified" && diff?.summary ? (
