@@ -26,6 +26,7 @@ interface ContentDiff {
   added_lines: number;
   removed_lines: number;
   excerpts: string[];
+  summary?: string;
 }
 
 interface ChangeReport {
@@ -279,24 +280,33 @@ function ArticleList({
                   key={a.permalink}
                   className="rounded-lg border border-gray-100 bg-white px-3 py-2"
                 >
-                  <div className="flex items-start justify-between gap-2">
-                    <ArticleTitle title={a.title} webUrl={a.webUrl} />
-                    <div className="flex-none">
-                      {type === "modified" && diff && <DiffBadge diff={diff} />}
-                      {type === "added" && diff && (
-                        <span className="text-xs text-green-600 font-mono">
-                          {diff.added_lines} 行
-                        </span>
-                      )}
-                    </div>
-                  </div>
+                  <ArticleTitle title={a.title} webUrl={a.webUrl} />
+                  {/* Summary (LLM-generated) */}
+                  {type === "modified" && diff?.summary && (
+                    <p className="text-sm text-gray-600 mt-1">
+                      {diff.summary}
+                    </p>
+                  )}
+                  {/* Fallback: date range when no diff data */}
                   {type === "modified" && a.old_time && a.new_time && !diff && (
                     <div className="text-xs text-gray-400 mt-0.5">
                       {a.old_time} &rarr; {a.new_time}
                     </div>
                   )}
+                  {/* Expandable diff details */}
                   {diff && diff.excerpts.length > 0 && (
-                    <ExcerptList excerpts={diff.excerpts} />
+                    <details className="mt-1.5">
+                      <summary className="text-xs text-gray-400 cursor-pointer select-none hover:text-gray-600">
+                        <DiffBadge diff={diff} />
+                        <span className="ml-1">查看详情</span>
+                      </summary>
+                      <ExcerptList excerpts={diff.excerpts} />
+                    </details>
+                  )}
+                  {type === "added" && diff && (
+                    <div className="text-xs text-gray-400 mt-0.5">
+                      {diff.added_lines} 行
+                    </div>
                   )}
                 </div>
               );

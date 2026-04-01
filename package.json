@@ -10,8 +10,9 @@
     "fetch-docs": "tsx scripts/fetch-docs.ts",
     "build-index": "tsx scripts/build-index.ts",
     "build-embeddings": "tsx scripts/build-embeddings.ts",
-    "prebuild": "tsx scripts/fetch-docs.ts && tsx scripts/build-index.ts",
-    "update-docs": "tsx scripts/fetch-docs.ts && tsx scripts/build-index.ts",
+    "enrich-report": "tsx scripts/enrich-change-report.ts",
+    "prebuild": "tsx scripts/fetch-docs.ts && tsx scripts/build-index.ts && tsx scripts/enrich-change-report.ts",
+    "update-docs": "tsx scripts/fetch-docs.ts && tsx scripts/build-index.ts && tsx scripts/enrich-change-report.ts",
     "test": "vitest run",
     "test:watch": "vitest"
   },
