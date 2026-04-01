@@ -47,38 +47,40 @@ export default function DiffDetails({
     <details className="mt-1.5">
       <summary className="text-xs text-gray-400 cursor-pointer select-none hover:text-gray-600">
         查看详情
-        <span className="ml-1.5 font-mono">
-          <span className="text-green-600">+{addedLines}</span>
-          <span className="text-gray-400"> / </span>
-          <span className="text-red-500">-{removedLines}</span>
-          <span className="text-gray-400"> 行</span>
-        </span>
       </summary>
       <div className="mt-1.5">
-        {excerptsZh && (
-          <div className="flex gap-1 mb-1.5">
-            <button
-              onClick={() => setLang("zh")}
-              className={`px-2 py-0.5 rounded text-xs transition-colors ${
-                lang === "zh"
-                  ? "bg-gray-800 text-white"
-                  : "bg-gray-100 text-gray-500 hover:bg-gray-200"
-              }`}
-            >
-              中文
-            </button>
-            <button
-              onClick={() => setLang("en")}
-              className={`px-2 py-0.5 rounded text-xs transition-colors ${
-                lang === "en"
-                  ? "bg-gray-800 text-white"
-                  : "bg-gray-100 text-gray-500 hover:bg-gray-200"
-              }`}
-            >
-              English
-            </button>
-          </div>
-        )}
+        <div className="flex items-center justify-between mb-1.5">
+          <span className="text-xs font-mono">
+            <span className="text-green-600">+{addedLines}</span>
+            <span className="text-gray-400"> / </span>
+            <span className="text-red-500">-{removedLines}</span>
+            <span className="text-gray-400"> 行</span>
+          </span>
+          {excerptsZh && (
+            <div className="flex gap-1">
+              <button
+                onClick={() => setLang("zh")}
+                className={`px-2 py-0.5 rounded text-xs transition-colors ${
+                  lang === "zh"
+                    ? "bg-gray-800 text-white"
+                    : "bg-gray-100 text-gray-500 hover:bg-gray-200"
+                }`}
+              >
+                中文
+              </button>
+              <button
+                onClick={() => setLang("en")}
+                className={`px-2 py-0.5 rounded text-xs transition-colors ${
+                  lang === "en"
+                    ? "bg-gray-800 text-white"
+                    : "bg-gray-100 text-gray-500 hover:bg-gray-200"
+                }`}
+              >
+                English
+              </button>
+            </div>
+          )}
+        </div>
         <ExcerptList excerpts={activeExcerpts} />
       </div>
     </details>
