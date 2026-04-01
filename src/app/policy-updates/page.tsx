@@ -336,7 +336,13 @@ function ArticleList({
   );
 }
 
-function RenamedList({ articles }: { articles: RenamedArticle[] }) {
+function RenamedList({
+  articles,
+  contentDiffs,
+}: {
+  articles: RenamedArticle[];
+  contentDiffs?: Record<string, ContentDiff>;
+}) {
   const grouped = groupByCategory(articles);
 
   return (
@@ -347,20 +353,35 @@ function RenamedList({ articles }: { articles: RenamedArticle[] }) {
             {category}
           </h4>
           <div className="space-y-2">
-            {items.map((a) => (
-              <div
-                key={a.permalink}
-                className="rounded-lg border border-gray-100 bg-white px-3 py-2"
-              >
-                <div className="text-sm">
-                  <span className="text-gray-400 line-through">
-                    {a.old_title}
-                  </span>
-                  <span className="text-gray-400 mx-2">&rarr;</span>
-                  <ArticleTitle title={a.title} webUrl={a.webUrl} />
+            {items.map((a) => {
+              const diff = contentDiffs?.[a.permalink];
+              return (
+                <div
+                  key={a.permalink}
+                  className="rounded-lg border border-gray-100 bg-white px-3 py-2"
+                >
+                  <div className="text-sm">
+                    <span className="text-gray-400 line-through">
+                      {a.old_title}
+                    </span>
+                    <span className="text-gray-400 mx-2">&rarr;</span>
+                    <ArticleTitle title={a.title} webUrl={a.webUrl} />
+                  </div>
+                  {diff?.summary && (
+                    <p className="text-sm text-gray-600 mt-1">{diff.summary}</p>
+                  )}
+                  {diff && diff.excerpts.length > 0 && (
+                    <details className="mt-1.5">
+                      <summary className="text-xs text-gray-400 cursor-pointer select-none hover:text-gray-600">
+                        <DiffBadge diff={diff} />
+                        <span className="ml-1">查看详情</span>
+                      </summary>
+                      <ExcerptList excerpts={diff.excerpts} />
+                    </details>
+                  )}
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       ))}
@@ -519,7 +540,7 @@ export default function PolicyUpdatesPage() {
                         <summary className="cursor-pointer text-sm font-semibold text-blue-700 mb-3 select-none">
                           重命名文章（{renamed.length}）
                         </summary>
-                        <RenamedList articles={renamed} />
+                        <RenamedList articles={renamed} contentDiffs={report.content_diffs} />
                       </details>
                     </section>
                   )}
