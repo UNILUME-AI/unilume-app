@@ -276,7 +276,7 @@ function ArticleList({
                   {type === "modified" && diff?.change_analysis ? (
                     <div className="mt-1.5 space-y-1">
                       <p className="text-sm text-gray-700">
-                        {diff.change_analysis.what}
+                        {diff.change_analysis.impact}
                       </p>
                       {diff.change_analysis.before_after && (
                         <div className="text-xs bg-gray-50 rounded px-2.5 py-1.5 space-y-0.5">
@@ -291,9 +291,6 @@ function ArticleList({
                           ))}
                         </div>
                       )}
-                      <p className="text-xs text-amber-700">
-                        {diff.change_analysis.impact}
-                      </p>
                     </div>
                   ) : type === "modified" && diff?.summary ? (
                     <p className="text-sm text-gray-600 mt-1">
@@ -359,12 +356,7 @@ function RenamedList({
                     <ArticleTitle title={a.title} webUrl={a.webUrl} />
                   </div>
                   {diff?.change_analysis ? (
-                    <div className="mt-1.5 space-y-1">
-                      <p className="text-sm text-gray-700">{diff.change_analysis.what}</p>
-                      {diff.change_analysis.impact && (
-                        <p className="text-xs text-amber-700">{diff.change_analysis.impact}</p>
-                      )}
-                    </div>
+                    <p className="text-sm text-gray-700 mt-1">{diff.change_analysis.impact}</p>
                   ) : diff?.summary ? (
                     <p className="text-sm text-gray-600 mt-1">{diff.summary}</p>
                   ) : null}
