@@ -537,7 +537,15 @@ export default async function PolicyUpdatesPage({
       {/* Content */}
       <main className="flex-1 overflow-y-auto">
         <div className="mx-auto max-w-3xl px-4 py-6">
-          <PlatformTabs current={platform} />
+          <PlatformTabs current={platform}>
+            {availableDates.length > 0 && (
+              <DatePicker
+                currentDate={currentDate}
+                availableDates={availableDates}
+                platform={platform}
+              />
+            )}
+          </PlatformTabs>
 
           {!report ? (
             <div className="text-center text-gray-500 py-20">
@@ -550,18 +558,9 @@ export default async function PolicyUpdatesPage({
             <>
               {/* Report header */}
               <div className="mb-6">
-                <div className="flex items-center justify-between">
-                  <h1 className="text-xl font-semibold text-gray-900">
-                    {platformLabel} 帮助中心变更报告
-                  </h1>
-                  {availableDates.length > 1 && (
-                    <DatePicker
-                      currentDate={currentDate}
-                      availableDates={availableDates}
-                      platform={platform}
-                    />
-                  )}
-                </div>
+                <h1 className="text-xl font-semibold text-gray-900">
+                  {platformLabel} 帮助中心变更报告
+                </h1>
                 <p className="text-sm text-gray-500 mt-1">
                   快照对比：{formatDate(report.old_timestamp)} &rarr;{" "}
                   {formatDate(report.new_timestamp)}

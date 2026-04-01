@@ -8,14 +8,6 @@ interface DatePickerProps {
   platform?: string;
 }
 
-function formatDateLabel(dateStr: string): string {
-  const d = new Date(dateStr + "T00:00:00");
-  const weekdays = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
-  const mm = String(d.getMonth() + 1).padStart(2, "0");
-  const dd = String(d.getDate()).padStart(2, "0");
-  return `${d.getFullYear()}-${mm}-${dd} (${weekdays[d.getDay()]})`;
-}
-
 export default function DatePicker({
   currentDate,
   availableDates,
@@ -37,8 +29,12 @@ export default function DatePicker({
     router.push(url);
   };
 
+  // Min/max from available dates
+  const minDate = availableDates[availableDates.length - 1] ?? "";
+  const maxDate = availableDates[0] ?? "";
+
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-1">
       <button
         onClick={() => hasPrev && navigate(availableDates[currentIdx + 1])}
         disabled={!hasPrev}
@@ -46,17 +42,19 @@ export default function DatePicker({
       >
         &larr;
       </button>
-      <select
+      <input
+        type="date"
         value={currentDate}
-        onChange={(e) => navigate(e.target.value)}
-        className="text-sm border border-gray-200 rounded-lg px-3 py-1.5 bg-white text-gray-700 focus:outline-none focus:border-blue-500"
-      >
-        {availableDates.map((d) => (
-          <option key={d} value={d}>
-            {formatDateLabel(d)}
-          </option>
-        ))}
-      </select>
+        min={minDate}
+        max={maxDate}
+        onChange={(e) => {
+          const val = e.target.value;
+          if (val && availableDates.includes(val)) {
+            navigate(val);
+          }
+        }}
+        className="text-sm border border-gray-200 rounded-lg px-2 py-1 bg-white text-gray-700 focus:outline-none focus:border-blue-500"
+      />
       <button
         onClick={() => hasNext && navigate(availableDates[currentIdx - 1])}
         disabled={!hasNext}
