@@ -26,6 +26,7 @@ interface ContentDiff {
   added_lines: number;
   removed_lines: number;
   excerpts: string[];
+  excerpts_zh?: string[];
   summary?: string;
 }
 
@@ -67,8 +68,13 @@ async function main() {
     (report.modified.length > 0 || (report.added ?? []).length > 0 ||
      (report.removed ?? []).length > 0 || (report.renamed ?? []).length > 0);
 
-  if (toSummarize.length === 0 && !needsOverview) {
-    console.log("No articles need summarization and overview exists.");
+  const needsTranslation = report.modified.some((a) => {
+    const d = diffs[a.permalink];
+    return d && d.excerpts.length > 0 && !d.excerpts_zh;
+  });
+
+  if (toSummarize.length === 0 && !needsOverview && !needsTranslation) {
+    console.log("Nothing to enrich.");
     return;
   }
 
@@ -141,6 +147,61 @@ ${articlesBlock}`,
   }
 
   } // end if toSummarize
+
+  // Generate Chinese translations of excerpts
+  const toTranslate = report.modified.filter((a) => {
+    const d = diffs[a.permalink];
+    return d && d.excerpts.length > 0 && !d.excerpts_zh;
+  });
+
+  if (toTranslate.length > 0) {
+    console.log(`Translating excerpts for ${toTranslate.length} articles...`);
+
+    // Collect all excerpt lines with article index markers
+    const allLines: string[] = [];
+    const lineMap: { articleIdx: number; lineIdx: number }[] = [];
+    for (let ai = 0; ai < toTranslate.length; ai++) {
+      const d = diffs[toTranslate[ai].permalink];
+      for (let li = 0; li < d.excerpts.length; li++) {
+        allLines.push(d.excerpts[li]);
+        lineMap.push({ articleIdx: ai, lineIdx: li });
+      }
+    }
+
+    const numbered = allLines.map((l, i) => `[${i + 1}] ${l}`).join("\n");
+    const translateResult = await generateText({
+      model: vertex("gemini-2.5-flash"),
+      prompt: `将以下变更行翻译为中文。保留行首的 + 或 - 符号和序号格式。
+每行格式：[序号] + 或 - 中文翻译内容
+不要添加其他解释。
+
+${numbered}`,
+    });
+
+    // Parse translations and assign back
+    const initArrays: Record<number, string[]> = {};
+    for (let ai = 0; ai < toTranslate.length; ai++) {
+      initArrays[ai] = new Array(diffs[toTranslate[ai].permalink].excerpts.length).fill("");
+    }
+
+    for (const line of translateResult.text.trim().split("\n")) {
+      const match = line.match(/^\[(\d+)\]\s*(.+)/);
+      if (!match) continue;
+      const idx = parseInt(match[1]) - 1;
+      if (idx < 0 || idx >= lineMap.length) continue;
+      const { articleIdx, lineIdx } = lineMap[idx];
+      initArrays[articleIdx][lineIdx] = match[2].trim();
+    }
+
+    for (let ai = 0; ai < toTranslate.length; ai++) {
+      const permalink = toTranslate[ai].permalink;
+      // Only set if we got valid translations
+      if (initArrays[ai].some((t) => t.length > 0)) {
+        diffs[permalink].excerpts_zh = initArrays[ai];
+        console.log(`  ${toTranslate[ai].title}: ${initArrays[ai].length} lines translated`);
+      }
+    }
+  }
 
   report.content_diffs = diffs;
 

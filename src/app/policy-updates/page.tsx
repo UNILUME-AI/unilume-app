@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import Link from "next/link";
+import DiffDetails from "./diff-details";
 
 // ── Types ──────────────────────────────────────────────
 
@@ -26,6 +27,7 @@ interface ContentDiff {
   added_lines: number;
   removed_lines: number;
   excerpts: string[];
+  excerpts_zh?: string[];
   summary?: string;
 }
 
@@ -235,42 +237,7 @@ function ArticleTitle({
   return <span className="text-sm text-gray-800">{title}</span>;
 }
 
-function DiffBadge({ diff }: { diff: ContentDiff }) {
-  return (
-    <span className="inline-flex items-center gap-1 text-xs font-mono">
-      <span className="text-green-600">+{diff.added_lines}</span>
-      <span className="text-gray-400">/</span>
-      <span className="text-red-500">-{diff.removed_lines}</span>
-      <span className="text-gray-400">行</span>
-    </span>
-  );
-}
-
-function ExcerptList({ excerpts }: { excerpts: string[] }) {
-  if (excerpts.length === 0) return null;
-  return (
-    <div className="mt-1.5 space-y-0.5">
-      {excerpts.map((line, i) => {
-        const isAdd = line.startsWith("+ ");
-        const isRemove = line.startsWith("- ");
-        return (
-          <div
-            key={i}
-            className={`text-xs font-mono rounded px-2 py-0.5 ${
-              isAdd
-                ? "bg-green-50 text-green-700"
-                : isRemove
-                  ? "bg-red-50 text-red-500 line-through"
-                  : "bg-gray-50 text-gray-600"
-            }`}
-          >
-            {line}
-          </div>
-        );
-      })}
-    </div>
-  );
-}
+// DiffBadge and ExcerptList are now in diff-details.tsx (client component)
 
 function ArticleList({
   articles,
@@ -299,27 +266,23 @@ function ArticleList({
                   className="rounded-lg border border-gray-100 bg-white px-3 py-2"
                 >
                   <ArticleTitle title={a.title} webUrl={a.webUrl} />
-                  {/* Summary (LLM-generated) */}
                   {type === "modified" && diff?.summary && (
                     <p className="text-sm text-gray-600 mt-1">
                       {diff.summary}
                     </p>
                   )}
-                  {/* Fallback: date range when no diff data */}
                   {type === "modified" && a.old_time && a.new_time && !diff && (
                     <div className="text-xs text-gray-400 mt-0.5">
                       {a.old_time} &rarr; {a.new_time}
                     </div>
                   )}
-                  {/* Expandable diff details */}
                   {diff && diff.excerpts.length > 0 && (
-                    <details className="mt-1.5">
-                      <summary className="text-xs text-gray-400 cursor-pointer select-none hover:text-gray-600">
-                        <DiffBadge diff={diff} />
-                        <span className="ml-1">查看详情</span>
-                      </summary>
-                      <ExcerptList excerpts={diff.excerpts} />
-                    </details>
+                    <DiffDetails
+                      addedLines={diff.added_lines}
+                      removedLines={diff.removed_lines}
+                      excerpts={diff.excerpts}
+                      excerptsZh={diff.excerpts_zh}
+                    />
                   )}
                   {type === "added" && diff && (
                     <div className="text-xs text-gray-400 mt-0.5">
@@ -371,13 +334,12 @@ function RenamedList({
                     <p className="text-sm text-gray-600 mt-1">{diff.summary}</p>
                   )}
                   {diff && diff.excerpts.length > 0 && (
-                    <details className="mt-1.5">
-                      <summary className="text-xs text-gray-400 cursor-pointer select-none hover:text-gray-600">
-                        <DiffBadge diff={diff} />
-                        <span className="ml-1">查看详情</span>
-                      </summary>
-                      <ExcerptList excerpts={diff.excerpts} />
-                    </details>
+                    <DiffDetails
+                      addedLines={diff.added_lines}
+                      removedLines={diff.removed_lines}
+                      excerpts={diff.excerpts}
+                      excerptsZh={diff.excerpts_zh}
+                    />
                   )}
                 </div>
               );
