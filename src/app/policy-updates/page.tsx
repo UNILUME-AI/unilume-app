@@ -47,6 +47,7 @@ interface ChangeReport {
   modified: ArticleChange[];
   renamed?: RenamedArticle[];
   content_diffs?: Record<string, ContentDiff>;
+  added_summaries?: Record<string, string>;
   overview?: string;
   old_total: number;
   new_total: number;
@@ -330,10 +331,12 @@ function ArticleList({
   articles,
   type,
   contentDiffs,
+  addedSummaries,
 }: {
   articles: ArticleChange[];
   type: "added" | "modified" | "removed";
   contentDiffs?: Record<string, ContentDiff>;
+  addedSummaries?: Record<string, string>;
 }) {
   const grouped = groupByCategory(articles);
 
@@ -379,10 +382,10 @@ function ArticleList({
                       excerptsZh={diff.excerpts_zh}
                     />
                   )}
-                  {type === "added" && diff && (
-                    <div className="text-xs text-gray-400 mt-0.5">
-                      {diff.added_lines} 行
-                    </div>
+                  {type === "added" && addedSummaries?.[a.permalink] && (
+                    <p className="text-sm text-gray-600 mt-1">
+                      {addedSummaries[a.permalink]}
+                    </p>
                   )}
                 </div>
               );
@@ -666,6 +669,7 @@ export default async function PolicyUpdatesPage({
                           articles={report.added}
                           type="added"
                           contentDiffs={report.content_diffs}
+                          addedSummaries={report.added_summaries}
                         />
                       </details>
                     </section>
