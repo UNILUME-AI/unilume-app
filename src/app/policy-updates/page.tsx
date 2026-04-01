@@ -23,12 +23,19 @@ interface RenamedArticle {
   webUrl?: string;
 }
 
+interface ChangeAnalysis {
+  what: string;
+  before_after?: string;
+  impact: string;
+}
+
 interface ContentDiff {
   added_lines: number;
   removed_lines: number;
   excerpts: string[];
   excerpts_zh?: string[];
   summary?: string;
+  change_analysis?: ChangeAnalysis;
 }
 
 interface ChangeReport {
@@ -266,16 +273,37 @@ function ArticleList({
                   className="rounded-lg border border-gray-100 bg-white px-3 py-2"
                 >
                   <ArticleTitle title={a.title} webUrl={a.webUrl} />
-                  {type === "modified" && diff?.summary && (
+                  {type === "modified" && diff?.change_analysis ? (
+                    <div className="mt-1.5 space-y-1">
+                      <p className="text-sm text-gray-700">
+                        {diff.change_analysis.what}
+                      </p>
+                      {diff.change_analysis.before_after && (
+                        <div className="text-xs bg-gray-50 rounded px-2.5 py-1.5 space-y-0.5">
+                          {diff.change_analysis.before_after.split("\n").map((line, i) => (
+                            <p key={i} className={
+                              line.startsWith("旧") ? "text-red-500" :
+                              line.startsWith("新") ? "text-green-600" :
+                              "text-gray-600"
+                            }>
+                              {line}
+                            </p>
+                          ))}
+                        </div>
+                      )}
+                      <p className="text-xs text-amber-700">
+                        {diff.change_analysis.impact}
+                      </p>
+                    </div>
+                  ) : type === "modified" && diff?.summary ? (
                     <p className="text-sm text-gray-600 mt-1">
                       {diff.summary}
                     </p>
-                  )}
-                  {type === "modified" && a.old_time && a.new_time && !diff && (
+                  ) : type === "modified" && a.old_time && a.new_time && !diff ? (
                     <div className="text-xs text-gray-400 mt-0.5">
                       {a.old_time} &rarr; {a.new_time}
                     </div>
-                  )}
+                  ) : null}
                   {diff && diff.excerpts.length > 0 && (
                     <DiffDetails
                       addedLines={diff.added_lines}
@@ -330,9 +358,16 @@ function RenamedList({
                     <span className="text-gray-400 mx-2">&rarr;</span>
                     <ArticleTitle title={a.title} webUrl={a.webUrl} />
                   </div>
-                  {diff?.summary && (
+                  {diff?.change_analysis ? (
+                    <div className="mt-1.5 space-y-1">
+                      <p className="text-sm text-gray-700">{diff.change_analysis.what}</p>
+                      {diff.change_analysis.impact && (
+                        <p className="text-xs text-amber-700">{diff.change_analysis.impact}</p>
+                      )}
+                    </div>
+                  ) : diff?.summary ? (
                     <p className="text-sm text-gray-600 mt-1">{diff.summary}</p>
-                  )}
+                  ) : null}
                   {diff && diff.excerpts.length > 0 && (
                     <DiffDetails
                       addedLines={diff.added_lines}

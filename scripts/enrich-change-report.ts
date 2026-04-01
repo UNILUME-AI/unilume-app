@@ -28,6 +28,12 @@ interface ContentDiff {
   excerpts: string[];
   excerpts_zh?: string[];
   summary?: string;
+  /** Structured change analysis for sellers */
+  change_analysis?: {
+    what: string;       // 变更内容：具体改了什么
+    before_after?: string; // 操作变化：旧 → 新（如适用）
+    impact: string;     // 卖家影响：对卖家意味着什么
+  };
 }
 
 interface ArticleChange {
@@ -73,7 +79,12 @@ async function main() {
     return d && d.excerpts.length > 0 && !d.excerpts_zh;
   });
 
-  if (toSummarize.length === 0 && !needsOverview && !needsTranslation) {
+  const needsAnalysisCheck = report.modified.some((a) => {
+    const d = diffs[a.permalink];
+    return d && d.excerpts.length > 0 && !d.change_analysis;
+  });
+
+  if (toSummarize.length === 0 && !needsOverview && !needsTranslation && !needsAnalysisCheck) {
     console.log("Nothing to enrich.");
     return;
   }
@@ -111,42 +122,88 @@ async function main() {
     },
   });
 
-  if (toSummarize.length > 0) {
-  console.log(`Generating summaries for ${toSummarize.length} articles...`);
-
-  // Batch all articles into a single LLM call for efficiency
-  const articlesBlock = toSummarize
-    .map((a, i) => {
-      const d = diffs[a.permalink];
-      return `[${i + 1}] ${a.title}\n${d.excerpts.join("\n")}`;
-    })
-    .join("\n\n");
-
-  const { text } = await generateText({
-    model: vertex("gemini-2.5-flash"),
-    prompt: `你是 Noon 电商平台的政策分析助手。以下是若干篇帮助中心文章的内容变更摘录（+ 为新增行，- 为删除行）。
-
-请为每篇文章生成一句简短的中文变更总结（15-30字），说明改了什么。
-格式：每行一条，以 [序号] 开头，与输入对应。不要添加其他内容。
-
-${articlesBlock}`,
+  // Also find articles needing structured analysis
+  const needsAnalysis = report.modified.filter((a) => {
+    const d = diffs[a.permalink];
+    return d && d.excerpts.length > 0 && !d.change_analysis;
   });
 
-  // Parse summaries
-  const lines = text.trim().split("\n");
-  for (const line of lines) {
-    const match = line.match(/^\[(\d+)\]\s*(.+)/);
-    if (!match) continue;
-    const idx = parseInt(match[1]) - 1;
-    if (idx < 0 || idx >= toSummarize.length) continue;
-    const permalink = toSummarize[idx].permalink;
-    if (diffs[permalink]) {
-      diffs[permalink].summary = match[2].trim();
-      console.log(`  ${toSummarize[idx].title}: ${diffs[permalink].summary}`);
+  if (needsAnalysis.length > 0) {
+    console.log(`Generating structured analysis for ${needsAnalysis.length} articles...`);
+
+    // Read full article content for each
+    const articlesDir = path.resolve(__dirname, "../src/data/noon-docs/articles");
+
+    for (const article of needsAnalysis) {
+      const d = diffs[article.permalink];
+      const filename = article.permalink.replace(/-/g, "_").slice(0, 60) + ".md";
+
+      // Find article file recursively
+      let articleContent = "";
+      const findFile = (dir: string): string | null => {
+        for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+          if (entry.isDirectory()) {
+            const result = findFile(path.join(dir, entry.name));
+            if (result) return result;
+          } else if (entry.name === filename) {
+            return path.join(dir, entry.name);
+          }
+        }
+        return null;
+      };
+      const filePath = findFile(articlesDir);
+      if (filePath) {
+        articleContent = fs.readFileSync(filePath, "utf-8");
+        // Truncate to first 2000 chars to save tokens
+        if (articleContent.length > 2000) {
+          articleContent = articleContent.slice(0, 2000) + "\n...(truncated)";
+        }
+      }
+
+      const { text } = await generateText({
+        model: vertex("gemini-2.5-flash"),
+        prompt: `你是 Noon 电商平台的政策分析助手，需要向卖家解释帮助中心文章的变更。
+
+## 文章标题
+${article.title}
+
+## 当前文章内容（节选）
+${articleContent || "(无法获取)"}
+
+## 本次变更的 diff（+ 为新增行，- 为删除行）
+${d.excerpts.join("\n")}
+
+请用中文生成结构化的变更分析，严格按以下 JSON 格式输出（不要添加 markdown 代码块标记）：
+{
+  "what": "一句话说明具体改了什么（20-40字，要具体，不要笼统）",
+  "before_after": "旧：...\\n新：...（描述操作流程或内容的前后变化，如果变更不涉及流程变化则设为 null）",
+  "impact": "对卖家的具体影响和建议操作（20-40字）"
+}
+
+注意：
+- what 要具体到改了哪个按钮、哪个路径、哪个规则，不要说"更新了流程"这种空话
+- before_after 用"旧：…新：…"格式，让卖家一眼看出区别
+- impact 要说对哪类卖家有影响、需要做什么`,
+      });
+
+      try {
+        // Strip markdown code block wrappers if present
+        let jsonText = text.trim();
+        jsonText = jsonText.replace(/^```(?:json)?\s*\n?/i, "").replace(/\n?```\s*$/, "");
+        const analysis = JSON.parse(jsonText);
+        d.change_analysis = {
+          what: analysis.what,
+          before_after: analysis.before_after || undefined,
+          impact: analysis.impact,
+        };
+        d.summary = analysis.what;
+        console.log(`  ${article.title}: ${analysis.what}`);
+      } catch {
+        console.error(`  ${article.title}: Failed to parse analysis JSON`);
+        console.error(`  Raw output: ${text.slice(0, 200)}`);
+      }
     }
   }
-
-  } // end if toSummarize
 
   // Generate Chinese translations of excerpts
   const toTranslate = report.modified.filter((a) => {
