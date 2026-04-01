@@ -47,6 +47,29 @@ async function main() {
     }
 
     const reportDate = newTs.slice(0, 10);
+    const reportJson = JSON.stringify(report);
+
+    // Check if DB already has a richer version (with change_analysis)
+    const existing = await sql`
+      SELECT report_data->'content_diffs' is not null
+        AND jsonb_typeof(report_data->'content_diffs') = 'object'
+        AND EXISTS (
+          SELECT 1 FROM jsonb_each(report_data->'content_diffs') cd
+          WHERE (cd.value->'change_analysis') is not null
+        ) as has_analysis
+      FROM change_reports
+      WHERE report_date = ${reportDate} AND platform = ${platform.name}
+    `;
+
+    const dbHasAnalysis = existing.length > 0 && existing[0].has_analysis === true;
+    const newHasAnalysis = report.content_diffs &&
+      Object.values(report.content_diffs as Record<string, { change_analysis?: unknown }>)
+        .some((d) => d.change_analysis);
+
+    if (dbHasAnalysis && !newHasAnalysis) {
+      console.log(`Skipping ${platform.name} ${reportDate} — DB has richer data`);
+      continue;
+    }
 
     await sql`
       INSERT INTO change_reports (report_date, platform, old_timestamp, new_timestamp, old_total, new_total, report_data)
@@ -57,11 +80,11 @@ async function main() {
         ${report.new_timestamp ?? null},
         ${report.old_total ?? 0},
         ${report.new_total ?? 0},
-        ${JSON.stringify(report)}::jsonb
+        ${reportJson}::jsonb
       )
       ON CONFLICT (report_date, platform)
       DO UPDATE SET
-        report_data = ${JSON.stringify(report)}::jsonb,
+        report_data = ${reportJson}::jsonb,
         old_timestamp = ${report.old_timestamp ?? null},
         new_timestamp = ${report.new_timestamp ?? null},
         old_total = ${report.old_total ?? 0},
