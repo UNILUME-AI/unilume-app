@@ -29,9 +29,10 @@ export default function DatePicker({
     router.push(url);
   };
 
-  // Min/max from available dates
   const minDate = availableDates[availableDates.length - 1] ?? "";
-  const maxDate = availableDates[0] ?? "";
+  // Allow selecting up to today
+  const today = new Date().toISOString().slice(0, 10);
+  const maxDate = today;
 
   return (
     <div className="flex items-center gap-1">
@@ -49,9 +50,7 @@ export default function DatePicker({
         max={maxDate}
         onChange={(e) => {
           const val = e.target.value;
-          if (val && availableDates.includes(val)) {
-            navigate(val);
-          }
+          if (val) navigate(val);
         }}
         className="text-sm border border-gray-200 rounded-lg px-2 py-1 bg-white text-gray-700 focus:outline-none focus:border-blue-500"
       />

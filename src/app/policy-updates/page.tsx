@@ -477,11 +477,11 @@ export default async function PolicyUpdatesPage({
   const docsDir = platform === "noon-ads" ? "noon-ads-docs" : "noon-docs";
   const platformLabel = platform === "noon-ads" ? "Noon Ads" : "Noon";
 
-  // Try DB first, fall back to local file
+  // Try DB first, fall back to local file only when no specific date requested
   const dbReport = await loadReportFromDb(platform, date);
-  const raw = dbReport ?? loadJsonFile<ChangeReport>(
+  const raw = dbReport ?? (date ? null : loadJsonFile<ChangeReport>(
     `src/data/${docsDir}/_metadata/change_report.json`
-  );
+  ));
   const report = raw ? enrichReport(raw, docsDir) : null;
 
   // Load available dates for the date picker
