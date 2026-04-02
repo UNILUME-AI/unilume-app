@@ -4,7 +4,6 @@ import { vertex } from "./vertex";
 import {
   routeToCategories,
   loadArticles,
-  getCategoryList,
   hasEmbeddings,
   semanticSearch,
   loadArticlesByIds,
@@ -42,11 +41,7 @@ export const policyTools = {
       categories: z
         .array(z.string())
         .optional()
-        .describe(
-          `Optional category IDs to search. Available categories: ${getCategoryList()
-            .map((c) => `"${c.category_id}" (${c.category_name})`)
-            .join(", ")}`
-        ),
+        .describe("Optional category IDs to narrow search scope"),
     }),
     execute: async ({ query, market, categories }) => {
       let formatted: string;
@@ -55,18 +50,18 @@ export const policyTools = {
       let searchMethod: string;
       let sources: SourceRef[];
 
-      if (hasEmbeddings()) {
+      if (await hasEmbeddings()) {
         const queryEmbedding = await embedQuery(query);
-        const results = semanticSearch(queryEmbedding, 8, market);
-        const loaded = loadArticlesByIds(results);
+        const results = await semanticSearch(queryEmbedding, 8, market);
+        const loaded = await loadArticlesByIds(results);
         formatted = loaded.formatted;
         articleCount = loaded.articleCount;
         failedCount = loaded.failedCount;
         sources = loaded.sources;
         searchMethod = "semantic";
       } else {
-        const categoryIds = routeToCategories(query, categories);
-        const loaded = loadArticles(categoryIds, market);
+        const categoryIds = await routeToCategories(query, categories);
+        const loaded = await loadArticles(categoryIds, market);
         formatted = loaded.formatted;
         articleCount = loaded.articleCount;
         failedCount = loaded.failedCount;

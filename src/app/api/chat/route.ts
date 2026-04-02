@@ -36,7 +36,7 @@ export async function POST(req: Request) {
   try {
     const result = streamText({
       model: vertex("gemini-2.5-flash"),
-      system: buildSystemPrompt(),
+      system: await buildSystemPrompt(),
       messages: await convertToModelMessages(messages),
       tools: { ...policyTools, ...marketTools },
       stopWhen: stepCountIs(3),
