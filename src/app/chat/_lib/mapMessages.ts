@@ -10,6 +10,7 @@ export interface BubbleExtra {
   isToolCall: boolean;
   toolParts: ToolPart[];
   reasoningParts: ReasoningPart[];
+  isStreaming: boolean;
 }
 
 export function extractToolParts(msg: ChatMessage): ToolPart[] {
@@ -25,8 +26,8 @@ export function extractToolParts(msg: ChatMessage): ToolPart[] {
 export function extractReasoningParts(msg: ChatMessage): ReasoningPart[] {
   if (!msg.parts) return [];
   return msg.parts
-    .filter((p) => p.type === "reasoning" && p.reasoning)
-    .map((p) => ({ text: p.reasoning! }));
+    .filter((p) => p.type === "reasoning" && p.text)
+    .map((p) => ({ text: p.text! }));
 }
 
 /**
@@ -40,11 +41,14 @@ export function mapMessagesToBubbles(
   onFeedback: (messageId: string, rating: "up" | "down") => void,
 ): BubbleItemType[] {
   const items: BubbleItemType[] = [];
+  const isActive = status === "submitted" || status === "streaming";
 
-  for (const msg of messages) {
+  for (let i = 0; i < messages.length; i++) {
+    const msg = messages[i];
     const text = getMessageText(msg);
     const sources = getMessageSources(msg);
     const processedText = sources.length > 0 ? injectCitationMarkers(text) : text;
+    const isLastAssistant = isActive && msg.role === "assistant" && i === messages.length - 1;
 
     const extra: BubbleExtra = {
       messageId: msg.id,
@@ -54,6 +58,7 @@ export function mapMessagesToBubbles(
       isToolCall: hasToolCall(msg),
       toolParts: extractToolParts(msg),
       reasoningParts: extractReasoningParts(msg),
+      isStreaming: isLastAssistant,
     };
 
     if (msg.role === "user") {

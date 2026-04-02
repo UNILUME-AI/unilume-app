@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { ThoughtChain } from "@ant-design/x";
 import type { ThoughtChainItemType } from "@ant-design/x";
 import type { BubbleExtra } from "../_lib/mapMessages";
@@ -21,37 +22,46 @@ interface Props {
   extra: BubbleExtra;
 }
 
-/**
- * Header slot for AI bubbles — shows thinking process and tool calls
- * in a ThoughtChain before the final answer.
- * Display order: thinking → tool calls
- */
 export default function ToolThoughtChain({ extra }: Props) {
-  const { reasoningParts, toolParts } = extra;
+  const { reasoningParts, toolParts, isStreaming } = extra;
 
   const hasReasoning = reasoningParts.length > 0;
   const hasTools = toolParts.length > 0;
+
+  // Track expanded keys — open during streaming, collapse when done
+  const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
+  const wasStreamingRef = useRef(false);
+
+  useEffect(() => {
+    if (isStreaming && hasReasoning) {
+      // Auto-expand thinking during streaming
+      setExpandedKeys(["thinking"]);
+      wasStreamingRef.current = true;
+    } else if (!isStreaming && wasStreamingRef.current) {
+      // Auto-collapse when streaming ends
+      setExpandedKeys([]);
+      wasStreamingRef.current = false;
+    }
+  }, [isStreaming, hasReasoning]);
 
   if (!hasReasoning && !hasTools) return null;
 
   const items: ThoughtChainItemType[] = [];
 
-  // Thinking items — collapsed by default
   if (hasReasoning) {
     items.push({
       key: "thinking",
-      title: "思考过程",
-      status: "success",
+      title: isStreaming ? "思考中..." : "思考过程",
+      status: isStreaming ? "loading" : "success",
       collapsible: true,
       content: (
-        <div className="text-xs text-gray-500 whitespace-pre-wrap leading-relaxed">
+        <div className="text-xs text-gray-500 whitespace-pre-wrap leading-relaxed max-h-60 overflow-auto">
           {reasoningParts.map((p) => p.text).join("\n\n")}
         </div>
       ),
     });
   }
 
-  // Tool call items
   for (let i = 0; i < toolParts.length; i++) {
     const part = toolParts[i];
     const isDone = part.state === "result";
@@ -63,14 +73,12 @@ export default function ToolThoughtChain({ extra }: Props) {
     });
   }
 
-  // Default expand keys: nothing (so thinking is collapsed by default)
-  const defaultExpandedKeys: string[] = [];
-
   return (
     <div className="mb-3">
       <ThoughtChain
         items={items}
-        defaultExpandedKeys={defaultExpandedKeys}
+        expandedKeys={expandedKeys}
+        onExpand={(keys) => setExpandedKeys(keys)}
         styles={{
           root: { fontSize: 13 },
         }}

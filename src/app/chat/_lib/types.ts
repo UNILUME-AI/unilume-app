@@ -8,7 +8,6 @@ export interface SourceRef {
 export interface MessagePart {
   type: string;
   text?: string;
-  reasoning?: string;
   toolInvocation?: {
     toolName?: string;
     state: string;
