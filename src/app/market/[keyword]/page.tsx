@@ -1,5 +1,4 @@
 import Link from "next/link";
-import dynamic from "next/dynamic";
 import {
   getMarketOverview,
   getPriceTrend,
@@ -11,34 +10,11 @@ import {
 import MarketTabs from "./market-tabs";
 import ProductTable from "./product-table";
 import CrossMarketSection from "./cross-market-section";
-
-const PriceTrendChart = dynamic(
-  () => import("@/components/charts/price-trend-chart"),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="h-64 bg-gray-50 animate-pulse rounded-lg" />
-    ),
-  },
-);
-const PriceDistributionChart = dynamic(
-  () => import("@/components/charts/price-distribution-chart"),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="h-64 bg-gray-50 animate-pulse rounded-lg" />
-    ),
-  },
-);
-const BrandPieChart = dynamic(
-  () => import("@/components/charts/brand-pie-chart"),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="h-64 bg-gray-50 animate-pulse rounded-lg" />
-    ),
-  },
-);
+import {
+  PriceTrendSection,
+  PriceDistributionSection,
+  BrandPieSection,
+} from "./charts-section";
 
 // ── Helpers ──────────────────────────────────────
 
@@ -220,13 +196,13 @@ export default async function KeywordDetailPage({
           <h2 className="text-sm font-semibold text-gray-700 mb-3">
             价格趋势 (30天)
           </h2>
-          <PriceTrendChart data={trend.daily} />
+          <PriceTrendSection data={trend.daily} />
         </div>
         <div className="rounded-lg border border-gray-200 bg-white p-4">
           <h2 className="text-sm font-semibold text-gray-700 mb-3">
             价格分布
           </h2>
-          <PriceDistributionChart
+          <PriceDistributionSection
             data={priceDist?.buckets ?? []}
           />
         </div>
@@ -238,7 +214,7 @@ export default async function KeywordDetailPage({
           <h2 className="text-sm font-semibold text-gray-700 mb-3">
             品牌分布
           </h2>
-          <BrandPieChart data={brands?.brands ?? []} />
+          <BrandPieSection data={brands?.brands ?? []} />
         </div>
         <div className="rounded-lg border border-gray-200 bg-white p-4">
           <h2 className="text-sm font-semibold text-gray-700 mb-3">
