@@ -1,7 +1,7 @@
 import { getCategoryList } from "./knowledge-base";
 
-export function buildSystemPrompt(): string {
-  const categories = getCategoryList();
+export async function buildSystemPrompt(): Promise<string> {
+  const categories = await getCategoryList();
 
   const categoryList = categories
     .map(

@@ -1,5 +1,10 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
+// Mock Clerk auth to avoid server-only module errors
+vi.mock("@clerk/nextjs/server", () => ({
+  auth: vi.fn().mockResolvedValue({ userId: "test-user-id" }),
+}));
+
 // Mock the database module
 vi.mock("@/lib/db", () => ({
   getDb: () => {
