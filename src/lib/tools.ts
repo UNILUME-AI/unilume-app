@@ -1,6 +1,6 @@
 import { tool } from "ai";
 import { z } from "zod";
-import { createVertex } from "@ai-sdk/google-vertex";
+import { vertex } from "./vertex";
 import {
   routeToCategories,
   loadArticles,
@@ -20,14 +20,6 @@ import {
   getBrandDistribution,
   getKeywordCategories,
 } from "./market-data";
-
-const vertex = createVertex({
-  project: process.env.GOOGLE_VERTEX_PROJECT,
-  location: process.env.GOOGLE_VERTEX_LOCATION ?? "us-east5",
-  googleAuthOptions: {
-    credentials: JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_KEY || "{}"),
-  },
-});
 
 async function embedQuery(query: string): Promise<number[]> {
   const model = vertex.textEmbeddingModel("text-embedding-005");
