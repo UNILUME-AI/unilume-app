@@ -232,10 +232,10 @@ function StatCard({
   href?: string;
 }) {
   const colorClasses = {
-    green: "bg-green-50 text-green-700 border-green-200",
-    amber: "bg-amber-50 text-amber-700 border-amber-200",
-    red: "bg-red-50 text-red-700 border-red-200",
-    blue: "bg-blue-50 text-blue-700 border-blue-200",
+    green: "bg-[#e1faed] text-[#069469] border-[#80e0b7]",
+    amber: "bg-[#fffae6] text-[#cf7c00] border-[#ffde85]",
+    red: "bg-[#fff2f0] text-[#c92e34] border-[#ffc8c2]",
+    blue: "bg-[#f4f0ff] text-[#533afd] border-[#c6b5ff]",
     gray: "bg-gray-50 text-gray-700 border-gray-200",
   };
   const inner = (
@@ -276,7 +276,7 @@ function ArticleTitle({
         href={webUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-sm text-blue-700 hover:text-blue-900 hover:underline"
+        className="text-sm text-[#533afd] hover:text-[#3827d6] hover:underline"
       >
         {title}
         <span className="inline-block ml-1 text-gray-400 text-xs">↗</span>
@@ -310,14 +310,14 @@ function BeforeAfterBlock({ text }: { text: string }) {
   return (
     <div className="text-sm space-y-1">
       {oldLines.length > 0 && (
-        <div className="text-red-500">
+        <div className="text-[#c92e34]">
           {oldLines.map((line, i) => (
             <p key={i}>{line}</p>
           ))}
         </div>
       )}
       {newLines.length > 0 && (
-        <div className="text-green-600">
+        <div className="text-[#069469]">
           {newLines.map((line, i) => (
             <p key={i}>{line}</p>
           ))}
@@ -517,7 +517,7 @@ export default async function PolicyUpdatesPage({
           <div className="flex items-center gap-2">
             <Link
               href="/"
-              className="text-lg font-semibold tracking-tight text-gray-900 hover:text-blue-600 transition-colors"
+              className="text-lg font-semibold tracking-tight text-gray-900 hover:text-[#533afd] transition-colors"
             >
               UNILUME
             </Link>
@@ -641,7 +641,7 @@ export default async function PolicyUpdatesPage({
                   {renamed.length > 0 && (
                     <section id="section-renamed">
                       <details open>
-                        <summary className="cursor-pointer text-sm font-semibold text-blue-700 mb-3 select-none">
+                        <summary className="cursor-pointer text-sm font-semibold text-[#533afd] mb-3 select-none">
                           重命名文章（{renamed.length}）
                         </summary>
                         <RenamedList articles={renamed} contentDiffs={report.content_diffs} />
@@ -653,7 +653,7 @@ export default async function PolicyUpdatesPage({
                   {contentModified.length > 0 && (
                     <section id="section-modified">
                       <details open>
-                        <summary className="cursor-pointer text-sm font-semibold text-amber-700 mb-3 select-none">
+                        <summary className="cursor-pointer text-sm font-semibold text-[#cf7c00] mb-3 select-none">
                           内容修改（{contentModified.length}）
                         </summary>
                         <ArticleList
@@ -669,7 +669,7 @@ export default async function PolicyUpdatesPage({
                   {report.added.length > 0 && (
                     <section id="section-added">
                       <details open={report.added.length <= 20}>
-                        <summary className="cursor-pointer text-sm font-semibold text-green-700 mb-3 select-none">
+                        <summary className="cursor-pointer text-sm font-semibold text-[#069469] mb-3 select-none">
                           新增文章（{report.added.length}）
                         </summary>
                         <ArticleList
@@ -686,7 +686,7 @@ export default async function PolicyUpdatesPage({
                   {report.removed.length > 0 && (
                     <section id="section-removed">
                       <details open>
-                        <summary className="cursor-pointer text-sm font-semibold text-red-600 mb-3 select-none">
+                        <summary className="cursor-pointer text-sm font-semibold text-[#c92e34] mb-3 select-none">
                           删除文章（{report.removed.length}）
                         </summary>
                         <ArticleList

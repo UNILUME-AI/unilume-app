@@ -52,7 +52,7 @@ export default function DatePicker({
           const val = e.target.value;
           if (val) navigate(val);
         }}
-        className="text-sm border border-gray-200 rounded-lg px-2 py-1 bg-white text-gray-700 focus:outline-none focus:border-blue-500"
+        className="text-sm border border-gray-200 rounded-lg px-2 py-1 bg-white text-gray-700 focus:outline-none focus:border-[#7d63ff]"
       />
       <button
         onClick={() => hasNext && navigate(availableDates[currentIdx - 1])}

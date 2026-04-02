@@ -18,9 +18,10 @@ function timeAgo(dateStr: string): string {
   return `${diffMonth} 个月前`;
 }
 
-const MARKET_COLORS: Record<string, string> = {
-  UAE: "bg-green-50 text-green-700 border-green-200",
-  KSA: "bg-purple-50 text-purple-700 border-purple-200",
+const MARKET_FLAGS: Record<string, string> = {
+  UAE: "🇦🇪",
+  KSA: "🇸🇦",
+  Egypt: "🇪🇬",
 };
 
 export default async function MarketPage() {
@@ -31,7 +32,7 @@ export default async function MarketPage() {
 
   return (
     <>
-      <h1 className="text-xl font-semibold text-gray-900 mb-1">市场数据</h1>
+      <h1 className="text-[30px] font-semibold leading-[1.27] text-gray-900 mb-1">市场数据</h1>
       <p className="text-sm text-gray-500 mb-6">
         浏览已收录的关键词市场数据，或搜索新关键词。
       </p>
@@ -75,7 +76,7 @@ export default async function MarketPage() {
                     <td className="px-4 py-2.5">
                       <Link
                         href={`/market/${encodeURIComponent(kw.keyword)}`}
-                        className="text-blue-600 hover:text-blue-800 hover:underline"
+                        className="text-[#533afd] hover:text-[#3827d6] hover:underline"
                       >
                         {kw.keyword}
                       </Link>
@@ -85,9 +86,9 @@ export default async function MarketPage() {
                         {kw.markets.map((m) => (
                           <span
                             key={m}
-                            className={`inline-block rounded-md border px-1.5 py-0.5 text-xs font-medium ${MARKET_COLORS[m] ?? "bg-gray-50 text-gray-600 border-gray-200"}`}
+                            className="inline-block rounded-md border border-gray-200 bg-gray-50 px-1.5 py-0.5 text-xs font-medium text-gray-600"
                           >
-                            {m}
+                            {MARKET_FLAGS[m] ?? ""} {m}
                           </span>
                         ))}
                       </div>

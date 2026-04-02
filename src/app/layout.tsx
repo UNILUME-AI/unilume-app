@@ -1,7 +1,21 @@
 import type { Metadata, Viewport } from "next";
+import { Inter, Noto_Sans_Arabic } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import AntdProvider from "@/components/shared/AntdProvider";
 import "./globals.css";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const notoSansArabic = Noto_Sans_Arabic({
+  subsets: ["arabic"],
+  variable: "--font-noto-arabic",
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
+});
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -22,7 +36,7 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider afterSignOutUrl="/">
-      <html lang="zh-CN" className="h-full antialiased">
+      <html lang="zh-CN" className={`h-full antialiased ${inter.variable} ${notoSansArabic.variable}`}>
         <body className="min-h-full flex flex-col">
           <AntdProvider>{children}</AntdProvider>
         </body>

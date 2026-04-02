@@ -20,9 +20,9 @@ function ExcerptList({ excerpts }: { excerpts: string[] }) {
             key={i}
             className={`text-sm rounded px-2 py-0.5 break-words ${
               isAdd
-                ? "bg-green-50 text-green-700"
+                ? "bg-[#e1faed] text-[#069469]"
                 : isRemove
-                  ? "bg-red-50 text-red-500 line-through"
+                  ? "bg-[#fff2f0] text-[#c92e34] line-through"
                   : "bg-gray-50 text-gray-600"
             }`}
           >
@@ -51,9 +51,9 @@ export default function DiffDetails({
       <div className="mt-1.5">
         <div className="flex items-center justify-between mb-1.5">
           <span className="text-sm">
-            <span className="text-green-600">+{addedLines}</span>
+            <span className="text-[#069469]">+{addedLines}</span>
             <span className="text-gray-400"> / </span>
-            <span className="text-red-500">-{removedLines}</span>
+            <span className="text-[#c92e34]">-{removedLines}</span>
             <span className="text-gray-400"> 行</span>
           </span>
           {excerptsZh && (
@@ -62,7 +62,7 @@ export default function DiffDetails({
                 onClick={() => setLang("zh")}
                 className={`px-2 py-0.5 rounded text-sm transition-colors ${
                   lang === "zh"
-                    ? "bg-gray-800 text-white"
+                    ? "bg-[#533afd] text-white"
                     : "bg-gray-100 text-gray-500 hover:bg-gray-200"
                 }`}
               >
@@ -72,7 +72,7 @@ export default function DiffDetails({
                 onClick={() => setLang("en")}
                 className={`px-2 py-0.5 rounded text-sm transition-colors ${
                   lang === "en"
-                    ? "bg-gray-800 text-white"
+                    ? "bg-[#533afd] text-white"
                     : "bg-gray-100 text-gray-500 hover:bg-gray-200"
                 }`}
               >

@@ -119,7 +119,7 @@ export default function CrossMarketSection({
         </table>
       </div>
       {data.recommendation && (
-        <p className="mt-4 text-sm text-blue-700 bg-blue-50 rounded-md px-3 py-2">
+        <p className="mt-4 text-sm text-[#533afd] bg-[#f4f0ff] rounded-md px-3 py-2">
           {data.recommendation}
         </p>
       )}
