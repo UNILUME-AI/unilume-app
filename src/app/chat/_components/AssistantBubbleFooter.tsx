@@ -1,6 +1,7 @@
 "use client";
 
 import type { BubbleExtra } from "../_lib/mapMessages";
+import SourcesList from "./SourcesList";
 
 /**
  * Footer for assistant bubbles: source tags + feedback buttons.
@@ -16,26 +17,7 @@ export default function AssistantBubbleFooter({
 
   return (
     <div>
-      {sources.length > 0 && (
-        <div className="mt-2 flex flex-wrap items-center gap-1.5">
-          <span className="text-[11px] text-gray-400">
-            {sources.length} 个来源
-          </span>
-          {sources.map((s) => (
-            <a
-              key={s.index}
-              href={s.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 rounded-md border border-gray-200 bg-gray-50 px-1.5 py-0.5 text-[11px] text-gray-500 no-underline hover:bg-gray-100 hover:text-gray-700 transition-colors"
-              title={s.title}
-            >
-              <span className="font-medium text-gray-400">{s.index}</span>
-              <span className="truncate max-w-[100px]">{s.title}</span>
-            </a>
-          ))}
-        </div>
-      )}
+      <SourcesList sources={sources} />
 
       <div className="mt-1.5 flex items-center gap-1">
         <button
