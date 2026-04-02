@@ -162,8 +162,8 @@ export default function ErpLayout({
         )}
 
         <Content
-          className="bg-gray-50"
-          style={{ padding: 24, minHeight: "calc(100dvh - 56px)" }}
+          className="bg-gray-50 p-6"
+          style={{ minHeight: isMobile ? "calc(100dvh - 56px)" : "100dvh" }}
         >
           {children}
         </Content>
