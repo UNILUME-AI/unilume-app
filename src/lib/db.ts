@@ -14,7 +14,7 @@ export async function ensureConversation(
 ) {
   const sql = getDb();
   await sql`
-    INSERT INTO conversations_v2 (id, user_id, title)
+    INSERT INTO conversations (id, user_id, title)
     VALUES (${id}, ${userId}, ${title ?? "新对话"})
     ON CONFLICT (id) DO NOTHING
   `;
@@ -28,7 +28,7 @@ export async function updateConversationTitle(
 ) {
   const sql = getDb();
   await sql`
-    UPDATE conversations_v2 SET title = ${title}, updated_at = now()
+    UPDATE conversations SET title = ${title}, updated_at = now()
     WHERE id = ${id} AND user_id = ${userId}
   `;
 }
@@ -38,7 +38,7 @@ export async function listConversations(userId: string) {
   const sql = getDb();
   return sql`
     SELECT id, title AS label, updated_at
-    FROM conversations_v2
+    FROM conversations
     WHERE user_id = ${userId}
     ORDER BY updated_at DESC
     LIMIT 50
@@ -49,7 +49,7 @@ export async function listConversations(userId: string) {
 export async function deleteConversation(id: string, userId: string) {
   const sql = getDb();
   await sql`
-    DELETE FROM conversations_v2
+    DELETE FROM conversations
     WHERE id = ${id} AND user_id = ${userId}
   `;
 }
@@ -94,7 +94,7 @@ export async function appendMessage(
   `;
   // Touch conversation updated_at
   await sql`
-    UPDATE conversations_v2 SET updated_at = now() WHERE id = ${conversationId}
+    UPDATE conversations SET updated_at = now() WHERE id = ${conversationId}
   `;
 }
 
@@ -125,7 +125,7 @@ export async function finalizeMessage(
     WHERE id = ${messageId} AND conversation_id = ${conversationId}
   `;
   await sql`
-    UPDATE conversations_v2 SET updated_at = now() WHERE id = ${conversationId}
+    UPDATE conversations SET updated_at = now() WHERE id = ${conversationId}
   `;
 }
 
@@ -137,7 +137,7 @@ export async function getConversationMessages(
   const sql = getDb();
   // Verify ownership
   const convRows = await sql`
-    SELECT id, title FROM conversations_v2
+    SELECT id, title FROM conversations
     WHERE id = ${conversationId} AND user_id = ${userId}
   `;
   if (convRows.length === 0) return null;
