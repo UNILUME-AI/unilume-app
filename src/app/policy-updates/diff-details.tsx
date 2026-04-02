@@ -62,7 +62,7 @@ export default function DiffDetails({
                 onClick={() => setLang("zh")}
                 className={`px-2 py-0.5 rounded text-sm transition-colors ${
                   lang === "zh"
-                    ? "bg-[#533afd] text-white"
+                    ? "bg-brand-500 text-white"
                     : "bg-gray-100 text-gray-500 hover:bg-gray-200"
                 }`}
               >
@@ -72,7 +72,7 @@ export default function DiffDetails({
                 onClick={() => setLang("en")}
                 className={`px-2 py-0.5 rounded text-sm transition-colors ${
                   lang === "en"
-                    ? "bg-[#533afd] text-white"
+                    ? "bg-brand-500 text-white"
                     : "bg-gray-100 text-gray-500 hover:bg-gray-200"
                 }`}
               >

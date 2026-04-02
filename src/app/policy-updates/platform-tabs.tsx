@@ -38,7 +38,7 @@ export default function PlatformTabs({
             onClick={() => navigate(p.key)}
             className={`px-4 py-2 text-sm font-medium transition-colors -mb-px ${
               current === p.key
-                ? "text-[#533afd] border-b-2 border-[#533afd]"
+                ? "text-brand-500 border-b-2 border-brand-500"
                 : "text-gray-500 hover:text-gray-700"
             }`}
           >

@@ -235,7 +235,7 @@ function StatCard({
     green: "bg-[#e1faed] text-[#069469] border-[#80e0b7]",
     amber: "bg-[#fffae6] text-[#cf7c00] border-[#ffde85]",
     red: "bg-[#fff2f0] text-[#c92e34] border-[#ffc8c2]",
-    blue: "bg-[#f4f0ff] text-[#533afd] border-[#c6b5ff]",
+    blue: "bg-brand-50 text-brand-500 border-brand-200",
     gray: "bg-gray-50 text-gray-700 border-gray-200",
   };
   const inner = (
@@ -276,7 +276,7 @@ function ArticleTitle({
         href={webUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-sm text-[#533afd] hover:text-[#3827d6] hover:underline"
+        className="text-sm text-brand-500 hover:text-brand-600 hover:underline"
       >
         {title}
         <span className="inline-block ml-1 text-gray-400 text-xs">↗</span>
@@ -517,7 +517,7 @@ export default async function PolicyUpdatesPage({
           <div className="flex items-center gap-2">
             <Link
               href="/"
-              className="text-lg font-semibold tracking-tight text-gray-900 hover:text-[#533afd] transition-colors"
+              className="text-lg font-semibold tracking-tight text-gray-900 hover:text-brand-500 transition-colors"
             >
               UNILUME
             </Link>
@@ -641,7 +641,7 @@ export default async function PolicyUpdatesPage({
                   {renamed.length > 0 && (
                     <section id="section-renamed">
                       <details open>
-                        <summary className="cursor-pointer text-sm font-semibold text-[#533afd] mb-3 select-none">
+                        <summary className="cursor-pointer text-sm font-semibold text-brand-500 mb-3 select-none">
                           重命名文章（{renamed.length}）
                         </summary>
                         <RenamedList articles={renamed} contentDiffs={report.content_diffs} />

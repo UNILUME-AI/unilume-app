@@ -120,7 +120,7 @@ function CitationTag({ source }: { source: SourceRef }) {
             {source.title}
           </p>
           <div className="flex items-center justify-between">
-            <span className="text-[11px] text-[#533afd]">
+            <span className="text-[11px] text-brand-500">
               点击查看原文 →
             </span>
             {source.modifiedTime && (
@@ -292,7 +292,7 @@ export default function ChatPage() {
           href={href}
           target={href?.startsWith("mailto:") ? undefined : "_blank"}
           rel="noopener noreferrer"
-          className="text-[#533afd] underline hover:text-[#3827d6]"
+          className="text-brand-500 underline hover:text-brand-600"
         >
           {children}
         </a>
@@ -426,7 +426,7 @@ export default function ChatPage() {
                 className={`mb-4 sm:mb-6 ${message.role === "user" ? "flex justify-end" : ""}`}
               >
                 {message.role === "user" ? (
-                  <div className="max-w-[85%] rounded-2xl bg-[#533afd] px-4 py-3 text-white text-sm whitespace-pre-wrap">
+                  <div className="max-w-[85%] rounded-2xl bg-brand-500 px-4 py-3 text-white text-sm whitespace-pre-wrap">
                     {text}
                   </div>
                 ) : (
@@ -439,7 +439,7 @@ export default function ChatPage() {
                     )}
                     {text && (
                       <>
-                        <div className="rounded-2xl bg-white border border-gray-200 px-5 py-4 text-sm text-gray-800 shadow-sm prose prose-sm max-w-none prose-headings:text-gray-900 prose-a:text-[#533afd] prose-strong:text-gray-900">
+                        <div className="rounded-2xl bg-white border border-gray-200 px-5 py-4 text-sm text-gray-800 shadow-sm prose prose-sm max-w-none prose-headings:text-gray-900 prose-a:text-brand-500 prose-strong:text-gray-900">
                           <ReactMarkdown
                             remarkPlugins={[remarkGfm]}
                             rehypePlugins={[rehypeRaw]}
@@ -474,7 +474,7 @@ export default function ChatPage() {
                           <button
                             onClick={() => submitFeedback(message.id, "up")}
                             disabled={!!feedbackMap[message.id]}
-                            className={`rounded-lg p-1.5 transition-colors ${feedbackMap[message.id] === "up" ? "text-[#533afd]" : "text-gray-300 hover:text-gray-500"} disabled:cursor-default`}
+                            className={`rounded-lg p-1.5 transition-colors ${feedbackMap[message.id] === "up" ? "text-brand-500" : "text-gray-300 hover:text-gray-500"} disabled:cursor-default`}
                             title="有帮助"
                           >
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4">
@@ -505,7 +505,7 @@ export default function ChatPage() {
             messages[messages.length - 1]?.role === "user" && (
               <div className="mb-6">
                 <div className="flex items-center gap-2 text-xs text-gray-400">
-                  <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#7d63ff] animate-pulse" />
+                  <span className="inline-block h-1.5 w-1.5 rounded-full bg-brand-400 animate-pulse" />
                   思考中...
                 </div>
               </div>
@@ -542,7 +542,7 @@ export default function ChatPage() {
             placeholder="输入你的 Noon 卖家问题..."
             rows={1}
             disabled={isLoading}
-            className="flex-1 resize-none rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm text-gray-900 placeholder-gray-400 focus:border-[#7d63ff] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#7d63ff] disabled:opacity-50"
+            className="flex-1 resize-none rounded-xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm text-gray-900 placeholder-gray-400 focus:border-brand-400 focus:bg-white focus:outline-none focus:ring-1 focus:ring-brand-400 disabled:opacity-50"
             style={{ maxHeight: "120px" }}
             onInput={(e) => {
               const target = e.target as HTMLTextAreaElement;
@@ -555,7 +555,7 @@ export default function ChatPage() {
             type="button"
             onClick={() => send(input)}
             disabled={isLoading || !input.trim()}
-            className="flex-none rounded-xl bg-[#533afd] px-4 py-3 text-sm font-medium text-white hover:bg-[#3827d6] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            className="flex-none rounded-xl bg-brand-500 px-4 py-3 text-sm font-medium text-white hover:bg-brand-600 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
