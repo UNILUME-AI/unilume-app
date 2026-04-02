@@ -31,9 +31,9 @@ function timeAgo(isoDate: string): string {
 function freshnessColor(isoDate: string): string {
   const hours =
     (Date.now() - new Date(isoDate).getTime()) / (1000 * 60 * 60);
-  if (hours < 24) return "bg-green-100 text-green-700";
-  if (hours < 72) return "bg-amber-100 text-amber-700";
-  return "bg-red-100 text-red-700";
+  if (hours < 24) return "bg-[#e1faed] text-[#069469]";
+  if (hours < 72) return "bg-[#fffae6] text-[#cf7c00]";
+  return "bg-[#fff2f0] text-[#c92e34]";
 }
 
 function FreshnessBadge({
@@ -60,9 +60,9 @@ function currencyLabel(market: string): string {
 }
 
 const BARRIER_STYLE: Record<string, { bg: string; text: string; label: string }> = {
-  low: { bg: "bg-green-100", text: "text-green-700", label: "低门槛" },
-  medium: { bg: "bg-amber-100", text: "text-amber-700", label: "中等门槛" },
-  high: { bg: "bg-red-100", text: "text-red-700", label: "高门槛" },
+  low: { bg: "bg-[#e1faed]", text: "text-[#069469]", label: "低门槛" },
+  medium: { bg: "bg-[#fffae6]", text: "text-[#cf7c00]", label: "中等门槛" },
+  high: { bg: "bg-[#fff2f0]", text: "text-[#c92e34]", label: "高门槛" },
 };
 
 // ── Page ─────────────────────────────────────────
@@ -98,7 +98,7 @@ export default async function KeywordDetailPage({
         </p>
         <Link
           href="/market"
-          className="text-blue-600 hover:underline text-sm"
+          className="text-[#533afd] hover:underline text-sm"
         >
           返回市场数据首页
         </Link>
@@ -115,7 +115,7 @@ export default async function KeywordDetailPage({
       {/* ── Header ─────────────────────────────── */}
       <div>
         <div className="flex items-center gap-2 text-sm text-gray-500 mb-3">
-          <Link href="/market" className="hover:text-blue-600 transition-colors">
+          <Link href="/market" className="hover:text-[#533afd] transition-colors">
             市场数据
           </Link>
           <span>/</span>

@@ -18,7 +18,7 @@ export default function MarketLayout({
           <div className="flex items-center gap-2">
             <Link
               href="/"
-              className="text-lg font-semibold tracking-tight text-gray-900 hover:text-blue-600 transition-colors"
+              className="text-lg font-semibold tracking-tight text-gray-900 hover:text-[#533afd] transition-colors"
             >
               UNILUME
             </Link>

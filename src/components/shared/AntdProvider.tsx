@@ -4,6 +4,15 @@ import { ConfigProvider, theme } from "antd";
 import zhCN from "antd/locale/zh_CN";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 
+const FONT_FAMILY = [
+  "var(--font-inter)",
+  "var(--font-noto-arabic)",
+  '"PingFang SC"',
+  '"Microsoft YaHei"',
+  '"Noto Sans SC"',
+  "sans-serif",
+].join(", ");
+
 export default function AntdProvider({
   children,
 }: {
@@ -22,8 +31,7 @@ export default function AntdProvider({
             colorError: "#ef4444",
             colorInfo: "#533afd",
             borderRadius: 8,
-            fontFamily:
-              'system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+            fontFamily: FONT_FAMILY,
           },
         }}
       >

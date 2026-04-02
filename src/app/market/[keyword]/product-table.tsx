@@ -51,7 +51,7 @@ export default function ProductTable({
             onClick={() => handleSort(opt.key)}
             className={`px-3 py-1 text-xs rounded-md transition-colors ${
               sortBy === opt.key
-                ? "bg-blue-600 text-white"
+                ? "bg-[#533afd] text-white"
                 : "bg-gray-100 text-gray-600 hover:bg-gray-200"
             }`}
           >
@@ -84,7 +84,7 @@ export default function ProductTable({
                 <td className="py-2 pr-2">
                   <div className="flex items-center gap-1.5">
                     {p.is_sponsored && (
-                      <span className="shrink-0 rounded bg-amber-100 px-1 py-0.5 text-[10px] font-medium text-amber-700">
+                      <span className="shrink-0 rounded bg-[#fffae6] px-1 py-0.5 text-[10px] font-medium text-[#cf7c00]">
                         Ad
                       </span>
                     )}

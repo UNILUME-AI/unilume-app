@@ -14,7 +14,7 @@ interface CategoryGroup {
 }
 
 const selectClass =
-  "rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-colors";
+  "rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 focus:border-[#7d63ff] focus:outline-none focus:ring-1 focus:ring-[#7d63ff] transition-colors";
 
 export default function CategoryBrowser({ categories }: { categories: CategoryGroup[] }) {
   const [selectedParent, setSelectedParent] = useState("");
@@ -82,7 +82,7 @@ export default function CategoryBrowser({ categories }: { categories: CategoryGr
             <Link
               key={kw}
               href={`/market/${encodeURIComponent(kw)}`}
-              className="px-3 py-1.5 rounded-full bg-white border border-gray-200 text-sm text-blue-600 hover:border-blue-300 hover:bg-blue-50 transition-colors"
+              className="px-3 py-1.5 rounded-full bg-white border border-gray-200 text-sm text-[#533afd] hover:border-[#c6b5ff] hover:bg-[#f4f0ff] transition-colors"
             >
               {kw}
             </Link>
