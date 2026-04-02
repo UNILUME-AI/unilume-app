@@ -31,6 +31,7 @@ export default function ToolThoughtChain({ extra }: Props) {
   // Track expanded keys — open during streaming, collapse when done
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
   const wasStreamingRef = useRef(false);
+  const [showFullThinking, setShowFullThinking] = useState(false);
 
   useEffect(() => {
     if (isStreaming && hasReasoning) {
@@ -41,6 +42,7 @@ export default function ToolThoughtChain({ extra }: Props) {
       // Auto-collapse when streaming ends
       setExpandedKeys([]);
       wasStreamingRef.current = false;
+      setShowFullThinking(false);
     }
   }, [isStreaming, hasReasoning]);
 
@@ -49,14 +51,34 @@ export default function ToolThoughtChain({ extra }: Props) {
   const items: ThoughtChainItemType[] = [];
 
   if (hasReasoning) {
+    const thinkingText = reasoningParts.map((p) => p.text).join("\n\n");
+    const isLong = thinkingText.length > 500;
+
     items.push({
       key: "thinking",
       title: isStreaming ? "思考中..." : "思考过程",
       status: isStreaming ? "loading" : "success",
       collapsible: true,
+      blink: isStreaming,
       content: (
-        <div className="text-xs text-gray-500 whitespace-pre-wrap leading-relaxed max-h-60 overflow-auto">
-          {reasoningParts.map((p) => p.text).join("\n\n")}
+        <div className="text-xs text-gray-500 whitespace-pre-wrap leading-relaxed">
+          <div
+            className={
+              !showFullThinking && isLong && !isStreaming
+                ? "max-h-40 overflow-hidden"
+                : undefined
+            }
+          >
+            {thinkingText}
+          </div>
+          {isLong && !showFullThinking && !isStreaming && (
+            <button
+              onClick={() => setShowFullThinking(true)}
+              className="text-xs text-blue-500 mt-1 hover:underline"
+            >
+              显示更多
+            </button>
+          )}
         </div>
       ),
     });
@@ -69,6 +91,7 @@ export default function ToolThoughtChain({ extra }: Props) {
       key: `tool-${i}-${part.toolName}`,
       title: getToolLabel(part.toolName),
       status: isDone ? "success" : "loading",
+      blink: !isDone,
       collapsible: false,
     });
   }
@@ -77,6 +100,7 @@ export default function ToolThoughtChain({ extra }: Props) {
     <div className="mb-3">
       <ThoughtChain
         items={items}
+        line="dashed"
         expandedKeys={expandedKeys}
         onExpand={(keys) => setExpandedKeys(keys)}
         styles={{

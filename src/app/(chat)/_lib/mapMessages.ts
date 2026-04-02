@@ -1,6 +1,6 @@
 import type { BubbleItemType } from "@ant-design/x";
-import type { ChatMessage, ToolPart, ReasoningPart } from "./types";
-import { getMessageText, getMessageSources, hasToolCall, injectCitationMarkers } from "./helpers";
+import type { ChatMessage, ToolPart, ReasoningPart, MarketDataLink } from "./types";
+import { getMessageText, getMessageSources, hasToolCall, injectCitationMarkers, getMarketDataLink, getFirstToolName } from "./helpers";
 
 export interface BubbleExtra {
   messageId: string;
@@ -11,6 +11,14 @@ export interface BubbleExtra {
   toolParts: ToolPart[];
   reasoningParts: ReasoningPart[];
   isStreaming: boolean;
+  /** Edit callback for user messages */
+  onEdit?: (messageId: string, newText: string) => void;
+  /** Regenerate callback for assistant messages */
+  onRegenerate?: (messageId: string) => void;
+  /** Market data link for bottom card */
+  marketDataLink?: MarketDataLink | null;
+  /** First tool name used in this message */
+  firstToolName?: string | null;
 }
 
 export function extractToolParts(msg: ChatMessage): ToolPart[] {
@@ -30,6 +38,11 @@ export function extractReasoningParts(msg: ChatMessage): ReasoningPart[] {
     .map((p) => ({ text: p.text! }));
 }
 
+interface ActionCallbacks {
+  onEdit?: (messageId: string, newText: string) => void;
+  onRegenerate?: (messageId: string) => void;
+}
+
 /**
  * Convert AI-SDK messages into Bubble.List items.
  * Each item carries `extraInfo` so contentRender / footer can access metadata.
@@ -39,6 +52,7 @@ export function mapMessagesToBubbles(
   status: string,
   feedbackMap: Record<string, "up" | "down">,
   onFeedback: (messageId: string, rating: "up" | "down") => void,
+  actions?: ActionCallbacks,
 ): BubbleItemType[] {
   const items: BubbleItemType[] = [];
   const isActive = status === "submitted" || status === "streaming";
@@ -59,6 +73,10 @@ export function mapMessagesToBubbles(
       toolParts: extractToolParts(msg),
       reasoningParts: extractReasoningParts(msg),
       isStreaming: isLastAssistant,
+      onEdit: msg.role === "user" ? actions?.onEdit : undefined,
+      onRegenerate: msg.role === "assistant" && !isLastAssistant ? actions?.onRegenerate : undefined,
+      marketDataLink: msg.role === "assistant" ? getMarketDataLink(msg) : null,
+      firstToolName: getFirstToolName(msg),
     };
 
     if (msg.role === "user") {
@@ -79,9 +97,8 @@ export function mapMessagesToBubbles(
   }
 
   // Add loading indicator when waiting for assistant response
-  const isLoading = status === "submitted" || status === "streaming";
   if (
-    isLoading &&
+    isActive &&
     messages.length > 0 &&
     messages[messages.length - 1]?.role === "user"
   ) {

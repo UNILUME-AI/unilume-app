@@ -166,6 +166,7 @@ export const marketTools = {
         entry_barrier: competition?.entry_barrier ?? "unknown",
 
         instruction:
+          "不要使用【N】引用角标。" +
           "Analyze this market data and provide a clear recommendation in the user's language. " +
           "Structure your response as: 1) Market Overview (demand + price range), " +
           "2) Competition Analysis (barriers, top sellers), " +
@@ -190,6 +191,7 @@ export const marketTools = {
       return {
         ...result,
         instruction:
+          "不要使用【N】引用角标。" +
           "Present a side-by-side comparison table of UAE vs KSA for this keyword. " +
           "Include columns for: price median, total results, avg rating, sponsored %, and any other available metrics. " +
           "Highlight the key differences using the deltas provided. " +
@@ -236,6 +238,7 @@ export const marketTools = {
         count: products.length,
         products,
         instruction:
+          "不要使用【N】引用角标。" +
           "Present the product list in a clear table format. " +
           "Include columns for: position/rank, title (truncated if long), brand, price, rating, review count, and whether it's sponsored/fulfilled. " +
           "If the list is empty, inform the user that no products were found for this keyword.",
@@ -276,6 +279,7 @@ export const marketTools = {
         status: "ok",
         ...result,
         instruction:
+          "不要使用【N】引用角标。" +
           "Present the brand distribution as a ranked list or table. " +
           "Show each brand's product count, market share %, and average price. " +
           "Highlight if there are many 'Unbranded' products (white-label opportunity). " +
@@ -305,6 +309,7 @@ export const marketTools = {
           })),
         })),
         instruction:
+          "不要使用【N】引用角标。" +
           "Present the available keywords grouped by parent category and subcategory. " +
           "Show the hierarchy: Parent Category → Subcategory → Keywords. " +
           "Show each keyword with its available markets and last updated date. " +

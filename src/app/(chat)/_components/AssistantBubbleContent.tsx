@@ -19,7 +19,19 @@ export default function AssistantBubbleContent({
   content: string;
   extra: BubbleExtra;
 }) {
-  const { sources, isToolCall } = extra;
+  const { sources, isToolCall, firstToolName } = extra;
+
+  const loadingText = (() => {
+    switch (firstToolName) {
+      case "search_policy": return "正在搜索知识库...";
+      case "analyze_market": return "正在分析市场数据...";
+      case "compare_markets": return "正在对比市场...";
+      case "list_products": return "正在查询商品列表...";
+      case "analyze_brands": return "正在分析品牌分布...";
+      case "browse_keywords": return "正在查询关键词...";
+      default: return "正在查询数据...";
+    }
+  })();
 
   const markdownComponents = useMemo(
     () => ({
@@ -59,7 +71,7 @@ export default function AssistantBubbleContent({
       {isToolCall && !content && (
         <div className="mb-2 flex items-center gap-2 text-xs text-gray-400">
           <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#57d4a2] animate-pulse" />
-          正在搜索知识库...
+          {loadingText}
         </div>
       )}
       {content && (

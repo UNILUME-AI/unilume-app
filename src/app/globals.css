@@ -2,8 +2,22 @@
 @plugin "@tailwindcss/typography";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f6f4f0;
+  --foreground: #1c1917;
+  --bg2: #edeae4;
+  --card: #fff;
+  --card-hover: #fafaf9;
+  --border: rgba(0,0,0,.06);
+  --border-hover: rgba(0,0,0,.12);
+  --ink: #1c1917;
+  --ink2: #57534e;
+  --ink3: #a8a29e;
+  --ink4: #d6d3d1;
+  --brand: #e2740e;
+  --brand2: #c55a00;
+  --brand-soft: rgba(226,116,14,.08);
+  --brand-glow: rgba(226,116,14,.15);
+  --radius: 14px;
 }
 
 @theme inline {
@@ -11,20 +25,78 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-inter), var(--font-noto-arabic), "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
-  --color-brand-50: #f4f0ff;
-  --color-brand-100: #e8e0ff;
-  --color-brand-200: #c6b5ff;
-  --color-brand-300: #a48bff;
-  --color-brand-400: #7d63ff;
-  --color-brand-500: #533afd;
-  --color-brand-600: #3827d6;
-  --color-brand-700: #2a1dab;
-  --color-brand-800: #1e1580;
-  --color-brand-900: #140e55;
+  --color-brand-50: #fff7ed;
+  --color-brand-100: #ffedd5;
+  --color-brand-200: #fed7aa;
+  --color-brand-300: #fdba74;
+  --color-brand-400: #fb923c;
+  --color-brand-500: #e2740e;
+  --color-brand-600: #c55a00;
+  --color-brand-700: #9a3412;
+  --color-brand-800: #7c2d12;
+  --color-brand-900: #431407;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Bento card glow effect */
+.bento-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+  opacity: 0;
+  transition: opacity 0.3s;
+  background: radial-gradient(400px circle at var(--mx, 50%) var(--my, 50%), var(--glow-color, var(--brand-glow)), transparent 60%);
+  z-index: 0;
+  pointer-events: none;
+}
+.bento-card:hover::before {
+  opacity: 1;
+}
+.bento-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Orb floating animations */
+@keyframes orbFloat1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-40px, 50px) scale(1.06); }
+  66% { transform: translate(20px, -20px) scale(0.97); }
+}
+@keyframes orbFloat2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(40px, -40px) scale(1.08); }
+  66% { transform: translate(-30px, 30px) scale(0.95); }
+}
+@keyframes orbFloat3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(60px, 30px) scale(1.04); }
+}
+
+/* AI dot pulse */
+@keyframes pulseRing {
+  0%, 100% { transform: scale(1); opacity: 0.4; }
+  50% { transform: scale(2.5); opacity: 0; }
+}
+
+/* Hero highlight shimmer */
+@keyframes shimmerHL {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: transparent; border-radius: 4px; }
+*:hover > ::-webkit-scrollbar-thumb,
+::-webkit-scrollbar-thumb:active {
+  background: color-mix(in srgb, var(--ink) 15%, transparent);
 }

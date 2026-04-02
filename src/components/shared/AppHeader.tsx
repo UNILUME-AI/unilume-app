@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const NAV_ITEMS = [
-  { href: "/chat", label: "AI 助手" },
+  { href: "/new", label: "AI 助手" },
   { href: "/market", label: "市场数据" },
   { href: "/policy-updates", label: "变更日报" },
   { href: "/erp", label: "ERP" },
@@ -22,11 +22,11 @@ export default function AppHeader({
   const pathname = usePathname();
 
   return (
-    <header className="flex-none border-b border-gray-200 bg-white px-4 py-3">
+    <header className="flex-none border-b border-[var(--border)] bg-white px-4 py-3">
       <div className={`mx-auto flex ${maxWidth} items-center justify-between`}>
         <Link
           href="/"
-          className="text-lg font-semibold tracking-tight text-gray-900 hover:text-gray-700 transition-colors"
+          className="text-lg font-semibold tracking-tight text-[var(--ink)] hover:text-[var(--ink2)] transition-colors"
         >
           UNILUME
         </Link>
@@ -43,8 +43,8 @@ export default function AppHeader({
                     item.label === "ERP" ? "hidden sm:inline" : ""
                   } ${
                     isActive
-                      ? "text-gray-900 font-medium"
-                      : "text-gray-500 hover:text-gray-700"
+                      ? "text-[var(--ink)] font-medium"
+                      : "text-[var(--ink3)] hover:text-[var(--ink)]"
                   }`}
                 >
                   {item.label}

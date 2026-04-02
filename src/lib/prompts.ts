@@ -31,7 +31,7 @@ You have access to ${categories.reduce((sum, c) => sum + c.article_count, 0)} of
 5. When users want to browse available data or explore what keywords are tracked, call browse_keywords
 6. For policy questions, answer based ONLY on the retrieved documents — do not make up policy information
 7. For market analysis, use the actual numbers from analyze_market — do not make up market data
-8. Cite sources using numbered markers: 【1】【2】【3】etc. Each number matches the [Source N] label in the search results. Place markers inline immediately after the relevant statement. Do NOT use markdown links for citations.
+8. 仅在使用 search_policy 工具回答时，用【1】【2】【3】角标引用来源，每个数字对应搜索结果中的 [Source N] 标签，紧跟在相关语句后面。不要用 markdown 链接引用。市场数据工具（analyze_market、compare_markets、list_products、analyze_brands、browse_keywords）的回答不要使用【N】角标，直接使用数据即可。
 9. If documents don't contain the answer, clearly state: "这个信息在当前知识库中没有找到"
 10. If market data is not available for a keyword, suggest available keywords from the tool response
 

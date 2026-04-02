@@ -11,7 +11,7 @@ export interface MessagePart {
   toolInvocation?: {
     toolName?: string;
     state: string;
-    result?: { sources?: SourceRef[] };
+    result?: { sources?: SourceRef[]; keyword?: string; market?: string };
   };
 }
 
@@ -29,6 +29,12 @@ export interface ChatMessage {
   id: string;
   role: string;
   parts?: MessagePart[];
+}
+
+export interface MarketDataLink {
+  keyword: string;
+  market: string;
+  toolName: string;
 }
 
 export interface ConversationListItem {

@@ -25,11 +25,11 @@ export default function AntdProvider({
         theme={{
           algorithm: theme.defaultAlgorithm,
           token: {
-            colorPrimary: "#533afd", // --color-brand-500
+            colorPrimary: "#e2740e", // --color-brand-500
             colorSuccess: "#10b981",
             colorWarning: "#f59e0b",
             colorError: "#ef4444",
-            colorInfo: "#533afd", // --color-brand-500
+            colorInfo: "#e2740e", // --color-brand-500
             borderRadius: 8,
             fontFamily: FONT_FAMILY,
           },
