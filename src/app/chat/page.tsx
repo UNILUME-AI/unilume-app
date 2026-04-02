@@ -2,36 +2,42 @@
 
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
-import { useRef, useEffect, useState, useMemo, useCallback } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import { useUser, UserButton } from "@clerk/nextjs";
+import { Bubble, Sender } from "@ant-design/x";
 import AppHeader from "@/components/shared/AppHeader";
 
 import { generateId, getMessageText } from "./_lib/helpers";
+import { mapMessagesToBubbles } from "./_lib/mapMessages";
+import type { BubbleExtra } from "./_lib/mapMessages";
 import WelcomePanel from "./_components/WelcomePanel";
 import LoginOverlay from "./_components/LoginOverlay";
-import MessageBubble from "./_components/MessageBubble";
-import ChatInput from "./_components/ChatInput";
+import AssistantBubbleContent from "./_components/AssistantBubbleContent";
+import AssistantBubbleFooter from "./_components/AssistantBubbleFooter";
 
 export default function ChatPage() {
   const { isSignedIn, isLoaded } = useUser();
 
   const transport = useMemo(
     () => new DefaultChatTransport({ api: "/api/chat" }),
-    []
+    [],
   );
 
   const { messages, sendMessage, status, error, setMessages } = useChat({
     transport,
   });
 
-  const messagesEndRef = useRef<HTMLDivElement>(null);
   const [input, setInput] = useState("");
   const [showQuickActions, setShowQuickActions] = useState(true);
   const [lastFailedText, setLastFailedText] = useState<string | null>(null);
-  const [feedbackMap, setFeedbackMap] = useState<Record<string, "up" | "down">>({});
+  const [feedbackMap, setFeedbackMap] = useState<
+    Record<string, "up" | "down">
+  >({});
   const [showSignIn, setShowSignIn] = useState(false);
   const [pendingText, setPendingText] = useState<string | null>(null);
-  const [conversationId, setConversationId] = useState<string>(() => generateId());
+  const [conversationId, setConversationId] = useState<string>(() =>
+    generateId(),
+  );
 
   const isLoading = status === "submitted" || status === "streaming";
 
@@ -52,7 +58,9 @@ export default function ChatPage() {
         // Silently fall back to empty state
       }
     })();
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, [isLoaded, isSignedIn, setMessages]);
 
   // ── Cloud sync: save conversation when AI finishes responding ──
@@ -77,11 +85,6 @@ export default function ChatPage() {
     }
   }, [isSignedIn, pendingText, sendMessage]);
 
-  // ── Auto-scroll ──
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
-
   // ── Hide quick actions once conversation starts ──
   useEffect(() => {
     if (messages.length > 0) setShowQuickActions(false);
@@ -90,38 +93,43 @@ export default function ChatPage() {
   // ── Track last failed message for retry ──
   useEffect(() => {
     if (error && messages.length > 0) {
-      const lastUserMsg = [...messages].reverse().find((m) => m.role === "user");
+      const lastUserMsg = [...messages]
+        .reverse()
+        .find((m) => m.role === "user");
       if (lastUserMsg) {
         setLastFailedText(getMessageText(lastUserMsg));
       }
     }
   }, [error, messages]);
 
-  const submitFeedback = async (messageId: string, rating: "up" | "down") => {
-    if (feedbackMap[messageId]) return;
-    setFeedbackMap((prev) => ({ ...prev, [messageId]: rating }));
+  const submitFeedback = useCallback(
+    async (messageId: string, rating: "up" | "down") => {
+      if (feedbackMap[messageId]) return;
+      setFeedbackMap((prev) => ({ ...prev, [messageId]: rating }));
 
-    const msgIndex = messages.findIndex((m) => m.id === messageId);
-    const userMsg = messages
-      .slice(0, msgIndex)
-      .reverse()
-      .find((m) => m.role === "user");
+      const msgIndex = messages.findIndex((m) => m.id === messageId);
+      const userMsg = messages
+        .slice(0, msgIndex)
+        .reverse()
+        .find((m) => m.role === "user");
 
-    const assistantMsg = messages[msgIndex];
-    try {
-      await fetch("/api/feedback", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          rating,
-          userQuery: userMsg ? getMessageText(userMsg) : "",
-          assistantResponse: getMessageText(assistantMsg),
-        }),
-      });
-    } catch {
-      // Silently fail
-    }
-  };
+      const assistantMsg = messages[msgIndex];
+      try {
+        await fetch("/api/feedback", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            rating,
+            userQuery: userMsg ? getMessageText(userMsg) : "",
+            assistantResponse: getMessageText(assistantMsg),
+          }),
+        });
+      } catch {
+        // Silently fail
+      }
+    },
+    [feedbackMap, messages],
+  );
 
   const send = useCallback(
     (text: string) => {
@@ -138,7 +146,7 @@ export default function ChatPage() {
       sendMessage({ text: text.trim() });
       setInput("");
     },
-    [isLoading, isSignedIn, sendMessage]
+    [isLoading, isSignedIn, sendMessage],
   );
 
   const retry = () => {
@@ -146,6 +154,50 @@ export default function ChatPage() {
       send(lastFailedText);
     }
   };
+
+  // ── Bubble.List items ──
+  const bubbleItems = useMemo(
+    () => mapMessagesToBubbles(messages, status, feedbackMap, submitFeedback),
+    [messages, status, feedbackMap, submitFeedback],
+  );
+
+  // ── Role config for Bubble.List ──
+  const roles = useMemo(
+    () => ({
+      user: {
+        placement: "end" as const,
+        variant: "filled" as const,
+        styles: {
+          content: {
+            borderRadius: 16,
+            fontSize: 14,
+            whiteSpace: "pre-wrap" as const,
+          },
+        },
+      },
+      ai: {
+        placement: "start" as const,
+        variant: "outlined" as const,
+        styles: {
+          content: {
+            borderRadius: 16,
+            fontSize: 14,
+          },
+        },
+        contentRender: (content: string, info: { extraInfo?: Record<string, unknown> }) => {
+          const extra = info.extraInfo as BubbleExtra | undefined;
+          if (!extra) return content;
+          return <AssistantBubbleContent content={content as string} extra={extra} />;
+        },
+        footer: (_content: string, info: { extraInfo?: Record<string, unknown> }) => {
+          const extra = info.extraInfo as BubbleExtra | undefined;
+          if (!extra) return null;
+          return <AssistantBubbleFooter extra={extra} />;
+        },
+      },
+    }),
+    [],
+  );
 
   return (
     <div className="flex flex-col h-dvh bg-gray-50">
@@ -178,34 +230,24 @@ export default function ChatPage() {
         }
       />
 
-      <main className="flex-1 overflow-y-auto">
-        <div className="mx-auto max-w-3xl px-4 py-6">
+      <main className="flex-1 overflow-hidden">
+        <div className="mx-auto max-w-3xl h-full flex flex-col px-4 py-6">
           {showQuickActions && messages.length === 0 && (
             <WelcomePanel onSend={send} />
           )}
 
-          {messages.map((message) => (
-            <MessageBubble
-              key={message.id}
-              message={message}
-              feedbackState={feedbackMap[message.id]}
-              onFeedback={submitFeedback}
+          {messages.length > 0 && (
+            <Bubble.List
+              items={bubbleItems}
+              role={roles}
+              autoScroll
+              className="flex-1"
+              style={{ overflow: "auto" }}
             />
-          ))}
-
-          {isLoading &&
-            messages.length > 0 &&
-            messages[messages.length - 1]?.role === "user" && (
-              <div className="mb-6">
-                <div className="flex items-center gap-2 text-xs text-gray-400">
-                  <span className="inline-block h-1.5 w-1.5 rounded-full bg-brand-400 animate-pulse" />
-                  思考中...
-                </div>
-              </div>
-            )}
+          )}
 
           {error && (
-            <div className="mb-6 rounded-xl border border-[#ffc8c2] bg-[#fff2f0] px-4 py-3 text-sm text-[#c92e34]">
+            <div className="mb-4 rounded-xl border border-[#ffc8c2] bg-[#fff2f0] px-4 py-3 text-sm text-[#c92e34]">
               <div className="flex items-center justify-between">
                 <span>请求失败，请稍后重试。</span>
                 {lastFailedText && (
@@ -219,17 +261,26 @@ export default function ChatPage() {
               </div>
             </div>
           )}
-
-          <div ref={messagesEndRef} />
         </div>
       </main>
 
-      <ChatInput
-        value={input}
-        onChange={setInput}
-        onSend={send}
-        isLoading={isLoading}
-      />
+      <div className="flex-none border-t border-gray-200 bg-white px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+        <div className="mx-auto max-w-3xl">
+          <Sender
+            value={input}
+            onChange={(val: string) => setInput(val)}
+            onSubmit={(msg: string) => send(msg)}
+            loading={isLoading}
+            onCancel={() => {}}
+            placeholder="输入你的 Noon 卖家问题..."
+            submitType="enter"
+            autoSize={{ minRows: 1, maxRows: 4 }}
+          />
+          <p className="mt-2 text-center text-xs text-gray-400">
+            基于 Noon 官方文档。引用来源标签显示文章最后更新日期，请留意时效性。
+          </p>
+        </div>
+      </div>
     </div>
   );
 }
