@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import Link from "next/link";
+import AppHeader from "@/components/shared/AppHeader";
 import DiffDetails from "./diff-details";
 import DatePicker from "./date-picker";
 import PlatformTabs from "./platform-tabs";
@@ -511,36 +512,7 @@ export default async function PolicyUpdatesPage({
 
   return (
     <div className="flex flex-col min-h-dvh bg-gray-50">
-      {/* Header */}
-      <header className="flex-none border-b border-gray-200 bg-white px-4 py-3">
-        <div className="mx-auto flex max-w-3xl items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Link
-              href="/"
-              className="text-lg font-semibold tracking-tight text-gray-900 hover:text-brand-500 transition-colors"
-            >
-              UNILUME
-            </Link>
-            <span className="text-xs text-gray-400 border-l border-gray-200 pl-2 ml-1">
-              政策变更日报
-            </span>
-          </div>
-          <div className="flex items-center gap-3">
-            <Link
-              href="/market"
-              className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
-            >
-              市场数据
-            </Link>
-            <Link
-              href="/chat"
-              className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
-            >
-              &larr; 返回助手
-            </Link>
-          </div>
-        </div>
-      </header>
+      <AppHeader maxWidth="max-w-3xl" />
 
       {/* Content */}
       <main className="flex-1 overflow-y-auto">

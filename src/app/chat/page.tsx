@@ -8,6 +8,7 @@ import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import { useUser, SignIn, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
+import AppHeader from "@/components/shared/AppHeader";
 
 import { QUICK_ACTIONS } from "@/config/quick-actions";
 
@@ -336,30 +337,10 @@ export default function ChatPage() {
         </div>
       )}
 
-      {/* Header */}
-      <header className="flex-none border-b border-gray-200 bg-white px-4 py-3">
-        <div className="mx-auto flex max-w-3xl items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="text-lg font-semibold tracking-tight text-gray-900">
-              UNILUME
-            </span>
-            <span className="hidden sm:inline text-xs text-gray-400 border-l border-gray-200 pl-2 ml-1">
-              Noon 卖家运营助手
-            </span>
-          </div>
-          <div className="flex items-center gap-3">
-            <Link
-              href="/market"
-              className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
-            >
-              市场数据
-            </Link>
-            <Link
-              href="/policy-updates"
-              className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
-            >
-              变更日报
-            </Link>
+      <AppHeader
+        maxWidth="max-w-3xl"
+        actions={
+          <>
             <button
               onClick={() => {
                 setMessages([]);
@@ -371,12 +352,10 @@ export default function ChatPage() {
             >
               新对话
             </button>
-            {isLoaded && isSignedIn && (
-              <UserButton />
-            )}
-          </div>
-        </div>
-      </header>
+            {isLoaded && isSignedIn && <UserButton />}
+          </>
+        }
+      />
 
       {/* Chat Area */}
       <main className="flex-1 overflow-y-auto">
