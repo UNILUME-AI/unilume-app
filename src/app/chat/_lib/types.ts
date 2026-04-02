@@ -31,3 +31,9 @@ export interface ChatMessage {
   role: string;
   parts?: MessagePart[];
 }
+
+export interface ConversationListItem {
+  id: string;
+  label: string;
+  updated_at: string;
+}

@@ -2,12 +2,7 @@
 
 import { Conversations } from "@ant-design/x";
 import type { ConversationItemType } from "@ant-design/x";
-
-interface ConversationListItem {
-  id: string;
-  label: string;
-  updated_at: string;
-}
+import type { ConversationListItem } from "../_lib/types";
 
 interface Props {
   conversations: ConversationListItem[];

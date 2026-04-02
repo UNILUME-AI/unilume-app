@@ -64,16 +64,12 @@ export function mapMessagesToBubbles(
         extraInfo: extra,
       });
     } else {
-      // For assistant messages, only show if there is text content
-      // (tool-call-only messages with no text will show loading via the loading bubble below)
-      if (text) {
-        items.push({
-          key: msg.id,
-          role: "ai",
-          content: processedText,
-          extraInfo: extra,
-        });
-      }
+      items.push({
+        key: msg.id,
+        role: "ai",
+        content: processedText,
+        extraInfo: extra,
+      });
     }
   }
 

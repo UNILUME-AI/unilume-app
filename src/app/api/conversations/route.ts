@@ -6,6 +6,8 @@ import {
   deleteConversation,
 } from "@/lib/db";
 
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
 export async function GET(req: Request) {
   const { userId } = await auth();
   if (!userId) {
@@ -17,6 +19,9 @@ export async function GET(req: Request) {
 
   try {
     if (id) {
+      if (!UUID_RE.test(id)) {
+        return Response.json({ error: "Invalid id format" }, { status: 400 });
+      }
       const conversation = await getConversation(id, userId);
       return Response.json({ conversation });
     }
@@ -42,8 +47,11 @@ export async function POST(req: Request) {
   }
 
   const { id, messages } = body;
-  if (typeof id !== "string" || !Array.isArray(messages)) {
+  if (typeof id !== "string" || !UUID_RE.test(id) || !Array.isArray(messages)) {
     return Response.json({ error: "Invalid request" }, { status: 400 });
+  }
+  if (messages.length > 200) {
+    return Response.json({ error: "Too many messages" }, { status: 400 });
   }
 
   try {
@@ -63,8 +71,8 @@ export async function DELETE(req: Request) {
 
   const url = new URL(req.url);
   const id = url.searchParams.get("id");
-  if (!id) {
-    return Response.json({ error: "Missing id" }, { status: 400 });
+  if (!id || !UUID_RE.test(id)) {
+    return Response.json({ error: "Missing or invalid id" }, { status: 400 });
   }
 
   try {

@@ -2,7 +2,7 @@
 
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
-import { useEffect, useState, useMemo, useCallback } from "react";
+import { useEffect, useState, useMemo, useCallback, useRef } from "react";
 import { useUser, UserButton } from "@clerk/nextjs";
 import { Bubble, Sender } from "@ant-design/x";
 import AppHeader from "@/components/shared/AppHeader";
@@ -10,18 +10,13 @@ import AppHeader from "@/components/shared/AppHeader";
 import { generateId, getMessageText } from "./_lib/helpers";
 import { mapMessagesToBubbles } from "./_lib/mapMessages";
 import type { BubbleExtra } from "./_lib/mapMessages";
+import type { ConversationListItem } from "./_lib/types";
 import WelcomePanel from "./_components/WelcomePanel";
 import LoginOverlay from "./_components/LoginOverlay";
 import AssistantBubbleContent from "./_components/AssistantBubbleContent";
 import AssistantBubbleFooter from "./_components/AssistantBubbleFooter";
 import ToolThoughtChain from "./_components/ToolThoughtChain";
 import ChatSidebar from "./_components/ChatSidebar";
-
-interface ConversationListItem {
-  id: string;
-  label: string;
-  updated_at: string;
-}
 
 export default function ChatPage() {
   const { isSignedIn, isLoaded } = useUser();
@@ -54,6 +49,7 @@ export default function ChatPage() {
   >([]);
 
   const isLoading = status === "submitted" || status === "streaming";
+  const isLoadingConversationRef = useRef(false);
 
   // Set initial sidebar state after mount (open on desktop)
   useEffect(() => {
@@ -90,9 +86,14 @@ export default function ChatPage() {
           if (!detailRes.ok || cancelled) return;
           const { conversation } = await detailRes.json();
           if (cancelled || !conversation) return;
+          isLoadingConversationRef.current = true;
           setConversationId(conversation.id);
           setMessages(conversation.messages);
           setShowQuickActions(false);
+          // Allow the save effect to skip one cycle
+          requestAnimationFrame(() => {
+            isLoadingConversationRef.current = false;
+          });
         }
       } catch {
         // Silently fall back to empty state
@@ -105,7 +106,7 @@ export default function ChatPage() {
 
   // ── Cloud sync: save conversation when AI finishes responding ──
   useEffect(() => {
-    if (status !== "ready" || messages.length === 0 || !isSignedIn) return;
+    if (status !== "ready" || messages.length === 0 || !isSignedIn || isLoadingConversationRef.current) return;
     fetch("/api/conversations", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -214,10 +215,14 @@ export default function ChatPage() {
         if (!res.ok) return;
         const { conversation } = await res.json();
         if (!conversation) return;
+        isLoadingConversationRef.current = true;
         setConversationId(conversation.id);
         setMessages(conversation.messages);
         setShowQuickActions(false);
         setLastFailedText(null);
+        requestAnimationFrame(() => {
+          isLoadingConversationRef.current = false;
+        });
         // Close sidebar on mobile after selection
         if (window.innerWidth < 768) setSidebarOpen(false);
       } catch {
