@@ -48,6 +48,14 @@ export async function POST(req: Request) {
       messages: await convertToModelMessages(messages),
       tools: { ...policyTools, ...marketTools },
       stopWhen: stepCountIs(3),
+      providerOptions: {
+        google: {
+          thinkingConfig: {
+            thinkingBudget: 8192,
+            includeThoughts: true,
+          },
+        },
+      },
     });
 
     return result.toUIMessageStreamResponse();

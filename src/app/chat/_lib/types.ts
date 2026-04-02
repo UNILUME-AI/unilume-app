@@ -8,10 +8,21 @@ export interface SourceRef {
 export interface MessagePart {
   type: string;
   text?: string;
+  reasoning?: string;
   toolInvocation?: {
+    toolName?: string;
     state: string;
     result?: { sources?: SourceRef[] };
   };
+}
+
+export interface ToolPart {
+  toolName: string;
+  state: "call" | "result" | "partial-call";
+}
+
+export interface ReasoningPart {
+  text: string;
 }
 
 /** Subset of AI SDK's UIMessage used by chat components */

@@ -1,5 +1,5 @@
 import type { BubbleItemType } from "@ant-design/x";
-import type { ChatMessage } from "./types";
+import type { ChatMessage, ToolPart, ReasoningPart } from "./types";
 import { getMessageText, getMessageSources, hasToolCall, injectCitationMarkers } from "./helpers";
 
 export interface BubbleExtra {
@@ -8,6 +8,25 @@ export interface BubbleExtra {
   feedbackState: "up" | "down" | undefined;
   onFeedback: (messageId: string, rating: "up" | "down") => void;
   isToolCall: boolean;
+  toolParts: ToolPart[];
+  reasoningParts: ReasoningPart[];
+}
+
+export function extractToolParts(msg: ChatMessage): ToolPart[] {
+  if (!msg.parts) return [];
+  return msg.parts
+    .filter((p) => p.type.startsWith("tool-") && p.toolInvocation)
+    .map((p) => ({
+      toolName: p.toolInvocation!.toolName ?? p.type,
+      state: p.toolInvocation!.state as ToolPart["state"],
+    }));
+}
+
+export function extractReasoningParts(msg: ChatMessage): ReasoningPart[] {
+  if (!msg.parts) return [];
+  return msg.parts
+    .filter((p) => p.type === "reasoning" && p.reasoning)
+    .map((p) => ({ text: p.reasoning! }));
 }
 
 /**
@@ -33,6 +52,8 @@ export function mapMessagesToBubbles(
       feedbackState: feedbackMap[msg.id],
       onFeedback,
       isToolCall: hasToolCall(msg),
+      toolParts: extractToolParts(msg),
+      reasoningParts: extractReasoningParts(msg),
     };
 
     if (msg.role === "user") {

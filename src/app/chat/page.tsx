@@ -14,6 +14,7 @@ import WelcomePanel from "./_components/WelcomePanel";
 import LoginOverlay from "./_components/LoginOverlay";
 import AssistantBubbleContent from "./_components/AssistantBubbleContent";
 import AssistantBubbleFooter from "./_components/AssistantBubbleFooter";
+import ToolThoughtChain from "./_components/ToolThoughtChain";
 
 export default function ChatPage() {
   const { isSignedIn, isLoaded } = useUser();
@@ -183,6 +184,11 @@ export default function ChatPage() {
             borderRadius: 16,
             fontSize: 14,
           },
+        },
+        header: (_content: string, info: { extraInfo?: Record<string, unknown> }) => {
+          const extra = info.extraInfo as BubbleExtra | undefined;
+          if (!extra) return null;
+          return <ToolThoughtChain extra={extra} />;
         },
         contentRender: (content: string, info: { extraInfo?: Record<string, unknown> }) => {
           const extra = info.extraInfo as BubbleExtra | undefined;
