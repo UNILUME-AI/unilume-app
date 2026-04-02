@@ -1,15 +1,7 @@
 "use client";
 
-import { useMemo } from "react";
-import {
-  ComposedChart,
-  Area,
-  Line,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
+import { Area } from "@ant-design/charts";
+import { CHART_COLORS } from "@/config/colors";
 
 interface PriceTrendDataPoint {
   date: string;
@@ -23,15 +15,6 @@ interface PriceTrendChartProps {
 }
 
 export default function PriceTrendChart({ data }: PriceTrendChartProps) {
-  const chartData = useMemo(
-    () =>
-      data.map((d) => ({
-        ...d,
-        range: d.p25 != null && d.p75 != null ? [d.p25, d.p75] : undefined,
-      })),
-    [data],
-  );
-
   if (!data || data.length === 0) {
     return (
       <div className="flex h-64 items-center justify-center text-sm text-gray-500">
@@ -40,52 +23,33 @@ export default function PriceTrendChart({ data }: PriceTrendChartProps) {
     );
   }
 
+  // Transform into long-form for area range + line overlay
+  const chartData = data.flatMap((d) => {
+    const date = d.date.length > 5 ? d.date.slice(5) : d.date;
+    const items: { date: string; value: number; type: string }[] = [
+      { date, value: d.median, type: "中位价" },
+    ];
+    if (d.p25 != null) items.push({ date, value: d.p25, type: "P25" });
+    if (d.p75 != null) items.push({ date, value: d.p75, type: "P75" });
+    return items;
+  });
+
   return (
-    <ResponsiveContainer width="100%" height={256}>
-      <ComposedChart data={chartData}>
-        <XAxis
-          dataKey="date"
-          tickFormatter={(value: string) => {
-            const d = new Date(value);
-            const mm = String(d.getMonth() + 1).padStart(2, "0");
-            const dd = String(d.getDate()).padStart(2, "0");
-            return `${mm}-${dd}`;
-          }}
-          tick={{ fontSize: 12 }}
-        />
-        <YAxis tick={{ fontSize: 12 }} />
-        <Tooltip
-          labelFormatter={(label) => String(label)}
-          formatter={(value, name) => {
-            const labels: Record<string, string> = {
-              median: "中位价",
-              range: "P25–P75",
-              p25: "P25",
-              p75: "P75",
-            };
-            const key = String(name);
-            if (Array.isArray(value)) {
-              return [`${value[0]} – ${value[1]}`, labels[key] ?? key];
-            }
-            return [value, labels[key] ?? key];
-          }}
-        />
-        <Area
-          type="monotone"
-          dataKey="range"
-          stroke="none"
-          fill="#bfdbfe"
-          fillOpacity={0.5}
-          connectNulls
-        />
-        <Line
-          type="monotone"
-          dataKey="median"
-          stroke="#3b82f6"
-          strokeWidth={2}
-          dot={false}
-        />
-      </ComposedChart>
-    </ResponsiveContainer>
+    <Area
+      data={chartData}
+      xField="date"
+      yField="value"
+      seriesField="type"
+      height={256}
+      shapeField="smooth"
+      style={{ opacity: 0.6 }}
+      scale={{ color: { range: [CHART_COLORS[0], "#c6b5ff", "#c6b5ff"] } }}
+      legend={{ position: "top-right", size: 10 }}
+      tooltip={{ title: "date" }}
+      axis={{
+        y: { title: false, labelFormatter: (v: number) => `${v}` },
+        x: { title: false },
+      }}
+    />
   );
 }
