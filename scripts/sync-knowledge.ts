@@ -36,7 +36,7 @@ if (fs.existsSync(envPath)) {
     if (match) {
       const [, key, value] = match;
       if (!process.env[key.trim()]) {
-        process.env[key.trim()] = value.trim();
+        process.env[key.trim()] = value.trim().replace(/^["']|["']$/g, "");
       }
     }
   }
@@ -639,6 +639,11 @@ async function main() {
   }
 
   console.log(`\nTotal: ${allArticles.length} articles, ${allCategories.length} categories`);
+
+  if (allArticles.length === 0) {
+    console.log("No articles found. Nothing to sync.");
+    return;
+  }
 
   // Step 3: Generate embeddings (unless --skip-embeddings)
   if (!SKIP_EMBEDDINGS) {
