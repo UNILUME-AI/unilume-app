@@ -385,9 +385,11 @@ function parseArticles(outputDir: string, platform: string): {
       const content = fs.readFileSync(filePath, "utf-8");
       const title = extractTitle(content);
 
+      const mapped = fileCategories[file];
       const categoryName =
-        fileCategories[file] ||
-        dirName.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+        mapped && mapped !== "Unknown"
+          ? mapped
+          : dirName.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
       const categoryId = slugify(categoryName);
 
       const sourceUrl = extractSourceUrl(content);
