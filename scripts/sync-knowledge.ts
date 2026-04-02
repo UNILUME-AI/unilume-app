@@ -28,17 +28,26 @@ import { neon } from "@neondatabase/serverless";
 import { GoogleAuth } from "google-auth-library";
 
 // ─── Load .env.local ────────────────────────────────────────────────────────
+// Use Node's built-in --env-file if available, otherwise parse manually.
+// Manual parsing handles: comments, quotes stripping, \n → newline in quoted values.
 const envPath = path.resolve(__dirname, "../.env.local");
 if (fs.existsSync(envPath)) {
   const envContent = fs.readFileSync(envPath, "utf-8");
   for (const line of envContent.split("\n")) {
-    const match = line.match(/^([^#=]+)=(.*)$/);
-    if (match) {
-      const [, key, value] = match;
-      if (!process.env[key.trim()]) {
-        process.env[key.trim()] = value.trim().replace(/^["']|["']$/g, "");
+    const match = line.match(/^([^#=]+)=(.*)/);
+    if (!match) continue;
+    const key = match[1].trim();
+    let value = match[2].trim();
+    if (process.env[key]) continue; // don't override existing env
+    // Strip surrounding quotes and interpret escape sequences (like dotenv)
+    if ((value.startsWith('"') && value.endsWith('"')) ||
+        (value.startsWith("'") && value.endsWith("'"))) {
+      value = value.slice(1, -1);
+      if (value.includes("\\n")) {
+        value = value.replace(/\\n/g, "\n");
       }
     }
+    process.env[key] = value;
   }
 }
 
@@ -423,7 +432,14 @@ function parseArticles(outputDir: string, platform: string): {
 // ─── Embedding helpers (from build-embeddings.ts) ────────────────────────────
 
 async function getAccessToken(): Promise<string> {
-  const credentials = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_KEY || "{}");
+  // After .env.local parsing, the value has real newlines (from \n replacement).
+  // private_key's PEM newlines are also real newlines now, which breaks JSON.parse.
+  // Fix: re-escape newlines that are inside JSON string values.
+  const raw = process.env.GOOGLE_SERVICE_ACCOUNT_KEY || "{}";
+  const fixed = raw.replace(/"-----BEGIN[\s\S]*?-----END PRIVATE KEY-----\\?\n?"/g, (match) =>
+    match.replace(/\n/g, "\\n"),
+  );
+  const credentials = JSON.parse(fixed);
   const auth = new GoogleAuth({
     credentials,
     scopes: ["https://www.googleapis.com/auth/cloud-platform"],
