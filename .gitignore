@@ -39,7 +39,11 @@ gcp-credentials.json
 
 # fetched docs (downloaded at build time via GitHub API)
 src/data/noon-docs/
+src/data/noon-ads-docs/
 .tmp-docs/
+
+# temporary credentials
+.tmp-*.json
 
 # vercel
 .vercel

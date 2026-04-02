@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import Link from "next/link";
+import AppHeader from "@/components/shared/AppHeader";
 import DiffDetails from "./diff-details";
 import DatePicker from "./date-picker";
 import PlatformTabs from "./platform-tabs";
@@ -235,7 +236,7 @@ function StatCard({
     green: "bg-[#e1faed] text-[#069469] border-[#80e0b7]",
     amber: "bg-[#fffae6] text-[#cf7c00] border-[#ffde85]",
     red: "bg-[#fff2f0] text-[#c92e34] border-[#ffc8c2]",
-    blue: "bg-[#f4f0ff] text-[#533afd] border-[#c6b5ff]",
+    blue: "bg-brand-50 text-brand-500 border-brand-200",
     gray: "bg-gray-50 text-gray-700 border-gray-200",
   };
   const inner = (
@@ -276,7 +277,7 @@ function ArticleTitle({
         href={webUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-sm text-[#533afd] hover:text-[#3827d6] hover:underline"
+        className="text-sm text-brand-500 hover:text-brand-600 hover:underline"
       >
         {title}
         <span className="inline-block ml-1 text-gray-400 text-xs">↗</span>
@@ -511,36 +512,7 @@ export default async function PolicyUpdatesPage({
 
   return (
     <div className="flex flex-col min-h-dvh bg-gray-50">
-      {/* Header */}
-      <header className="flex-none border-b border-gray-200 bg-white px-4 py-3">
-        <div className="mx-auto flex max-w-3xl items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Link
-              href="/"
-              className="text-lg font-semibold tracking-tight text-gray-900 hover:text-[#533afd] transition-colors"
-            >
-              UNILUME
-            </Link>
-            <span className="text-xs text-gray-400 border-l border-gray-200 pl-2 ml-1">
-              政策变更日报
-            </span>
-          </div>
-          <div className="flex items-center gap-3">
-            <Link
-              href="/market"
-              className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
-            >
-              市场数据
-            </Link>
-            <Link
-              href="/"
-              className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
-            >
-              &larr; 返回助手
-            </Link>
-          </div>
-        </div>
-      </header>
+      <AppHeader maxWidth="max-w-3xl" />
 
       {/* Content */}
       <main className="flex-1 overflow-y-auto">
@@ -641,7 +613,7 @@ export default async function PolicyUpdatesPage({
                   {renamed.length > 0 && (
                     <section id="section-renamed">
                       <details open>
-                        <summary className="cursor-pointer text-sm font-semibold text-[#533afd] mb-3 select-none">
+                        <summary className="cursor-pointer text-sm font-semibold text-brand-500 mb-3 select-none">
                           重命名文章（{renamed.length}）
                         </summary>
                         <RenamedList articles={renamed} contentDiffs={report.content_diffs} />

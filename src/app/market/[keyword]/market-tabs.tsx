@@ -32,7 +32,7 @@ export default function MarketTabs({
           onClick={() => navigate(m.key)}
           className={`px-4 py-1.5 text-sm font-medium rounded-md transition-colors ${
             current === m.key
-              ? "bg-[#533afd] text-white"
+              ? "bg-brand-500 text-white"
               : "bg-gray-100 text-gray-600 hover:bg-gray-200"
           }`}
         >

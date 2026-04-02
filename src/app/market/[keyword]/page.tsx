@@ -98,7 +98,7 @@ export default async function KeywordDetailPage({
         </p>
         <Link
           href="/market"
-          className="text-[#533afd] hover:underline text-sm"
+          className="text-brand-500 hover:underline text-sm"
         >
           返回市场数据首页
         </Link>
@@ -115,7 +115,7 @@ export default async function KeywordDetailPage({
       {/* ── Header ─────────────────────────────── */}
       <div>
         <div className="flex items-center gap-2 text-sm text-gray-500 mb-3">
-          <Link href="/market" className="hover:text-[#533afd] transition-colors">
+          <Link href="/market" className="hover:text-brand-500 transition-colors">
             市场数据
           </Link>
           <span>/</span>

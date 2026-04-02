@@ -11,6 +11,16 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-inter), var(--font-noto-arabic), "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  --color-brand-50: #f4f0ff;
+  --color-brand-100: #e8e0ff;
+  --color-brand-200: #c6b5ff;
+  --color-brand-300: #a48bff;
+  --color-brand-400: #7d63ff;
+  --color-brand-500: #533afd;
+  --color-brand-600: #3827d6;
+  --color-brand-700: #2a1dab;
+  --color-brand-800: #1e1580;
+  --color-brand-900: #140e55;
 }
 
 body {

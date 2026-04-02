@@ -43,7 +43,7 @@ export default function PriceTrendChart({ data }: PriceTrendChartProps) {
       height={256}
       shapeField="smooth"
       style={{ opacity: 0.6 }}
-      scale={{ color: { range: [CHART_COLORS[0], "#c6b5ff", "#c6b5ff"] } }}
+      scale={{ color: { range: [CHART_COLORS[0], "var(--color-brand-200)", "var(--color-brand-200)"] } }}
       legend={{ position: "top-right", size: 10 }}
       tooltip={{ title: "date" }}
       axis={{

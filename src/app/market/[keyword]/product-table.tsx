@@ -51,7 +51,7 @@ export default function ProductTable({
             onClick={() => handleSort(opt.key)}
             className={`px-3 py-1 text-xs rounded-md transition-colors ${
               sortBy === opt.key
-                ? "bg-[#533afd] text-white"
+                ? "bg-brand-500 text-white"
                 : "bg-gray-100 text-gray-600 hover:bg-gray-200"
             }`}
           >

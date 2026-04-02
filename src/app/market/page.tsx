@@ -76,7 +76,7 @@ export default async function MarketPage() {
                     <td className="px-4 py-2.5">
                       <Link
                         href={`/market/${encodeURIComponent(kw.keyword)}`}
-                        className="text-[#533afd] hover:text-[#3827d6] hover:underline"
+                        className="text-brand-500 hover:text-brand-600 hover:underline"
                       >
                         {kw.keyword}
                       </Link>
