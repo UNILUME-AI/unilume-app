@@ -533,7 +533,7 @@ export default async function PolicyUpdatesPage({
               市场数据
             </Link>
             <Link
-              href="/"
+              href="/chat"
               className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
             >
               &larr; 返回助手
