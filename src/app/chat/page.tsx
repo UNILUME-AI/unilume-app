@@ -24,7 +24,7 @@ export default function ChatPage() {
     [],
   );
 
-  const { messages, sendMessage, status, error, setMessages } = useChat({
+  const { messages, sendMessage, status, error, setMessages, stop } = useChat({
     transport,
   });
 
@@ -277,7 +277,7 @@ export default function ChatPage() {
             onChange={(val: string) => setInput(val)}
             onSubmit={(msg: string) => send(msg)}
             loading={isLoading}
-            onCancel={() => {}}
+            onCancel={stop}
             placeholder="输入你的 Noon 卖家问题..."
             submitType="enter"
             autoSize={{ minRows: 1, maxRows: 4 }}
