@@ -15,6 +15,10 @@ import {
   getPriceTrend,
   getCompetitionAnalysis,
   getAvailableKeywords,
+  getCrossMarketComparison,
+  getProductList,
+  getBrandDistribution,
+  getKeywordCategories,
 } from "./market-data";
 
 const vertex = createVertex({
@@ -126,11 +130,12 @@ export const marketTools = {
       ]);
 
       if (!overview) {
+        const keywordStrings = availableKeywords.map((k) => k.keyword);
         return {
           status: "no_data",
           keyword: normalizedKeyword,
-          available_keywords: availableKeywords,
-          message: `No market data found for "${normalizedKeyword}". Available keywords: ${availableKeywords.join(", ")}. The crawler may not have scraped this keyword yet.`,
+          available_keywords: keywordStrings,
+          message: `No market data found for "${normalizedKeyword}". Available keywords: ${keywordStrings.join(", ")}. The crawler may not have scraped this keyword yet.`,
         };
       }
 
@@ -175,6 +180,137 @@ export const marketTools = {
           "3) Price Trend, " +
           "4) Recommendation (是否值得进入 / worth entering). " +
           "Use specific numbers from the data. If price_trend_days < 3, note that trend data is limited.",
+      };
+    },
+  }),
+
+  compare_markets: tool({
+    description:
+      "Compare the same product keyword across UAE and KSA markets. Use when the user asks which market is better, compares two markets, or asks about cross-market differences.",
+    inputSchema: z.object({
+      keyword: z
+        .string()
+        .describe("Product keyword to compare across markets, e.g. 'air fryer'"),
+    }),
+    execute: async ({ keyword }) => {
+      const result = await getCrossMarketComparison(keyword.toLowerCase().trim());
+
+      return {
+        ...result,
+        instruction:
+          "Present a side-by-side comparison table of UAE vs KSA for this keyword. " +
+          "Include columns for: price median, total results, avg rating, sponsored %, and any other available metrics. " +
+          "Highlight the key differences using the deltas provided. " +
+          "End with a clear recommendation on which market looks more favorable and why.",
+      };
+    },
+  }),
+
+  list_products: tool({
+    description:
+      "List individual products for a keyword with details. Use when the user asks to see specific products, top sellers, or wants to browse listings.",
+    inputSchema: z.object({
+      keyword: z
+        .string()
+        .describe("Product keyword to list products for"),
+      market: z
+        .enum(["UAE", "KSA", "Egypt"])
+        .optional()
+        .default("UAE")
+        .describe("Target market (default: UAE)"),
+      sort_by: z
+        .enum(["position", "price_current", "rating", "review_count"])
+        .optional()
+        .default("position")
+        .describe("Sort order for product list (default: position)"),
+      limit: z
+        .number()
+        .optional()
+        .default(10)
+        .describe("Number of products to return (default: 10, max: 20)"),
+    }),
+    execute: async ({ keyword, market, sort_by, limit }) => {
+      const products = await getProductList(
+        keyword.toLowerCase().trim(),
+        market || "UAE",
+        sort_by || "position",
+        Math.min(limit || 10, 20)
+      );
+
+      return {
+        keyword: keyword.toLowerCase().trim(),
+        market: market || "UAE",
+        sort_by: sort_by || "position",
+        count: products.length,
+        products,
+        instruction:
+          "Present the product list in a clear table format. " +
+          "Include columns for: position/rank, title (truncated if long), brand, price, rating, review count, and whether it's sponsored/fulfilled. " +
+          "If the list is empty, inform the user that no products were found for this keyword.",
+      };
+    },
+  }),
+
+  analyze_brands: tool({
+    description:
+      "Analyze brand distribution and market share for a keyword. Use when the user asks about brand competition, white-label opportunities, or brand landscape.",
+    inputSchema: z.object({
+      keyword: z
+        .string()
+        .describe("Product keyword to analyze brand distribution for"),
+      market: z
+        .enum(["UAE", "KSA", "Egypt"])
+        .optional()
+        .default("UAE")
+        .describe("Target market (default: UAE)"),
+    }),
+    execute: async ({ keyword, market }) => {
+      const targetMarket = market || "UAE";
+      const result = await getBrandDistribution(keyword.toLowerCase().trim(), targetMarket);
+
+      if (!result) {
+        const availableKeywords = await getAvailableKeywords();
+        const keywordStrings = availableKeywords.map((k) => k.keyword);
+        return {
+          status: "no_data",
+          keyword: keyword.toLowerCase().trim(),
+          market: targetMarket,
+          available_keywords: keywordStrings,
+          message: `No brand data found for "${keyword.toLowerCase().trim()}" in ${targetMarket}.`,
+        };
+      }
+
+      return {
+        status: "ok",
+        ...result,
+        instruction:
+          "Present the brand distribution as a ranked list or table. " +
+          "Show each brand's product count, market share %, and average price. " +
+          "Highlight if there are many 'Unbranded' products (white-label opportunity). " +
+          "Summarize the competitive landscape: is it dominated by a few brands or fragmented?",
+      };
+    },
+  }),
+
+  browse_keywords: tool({
+    description:
+      "List all available keywords that have market data, optionally grouped by category. Use when the user wants to explore what data is available or browse categories.",
+    inputSchema: z.object({}),
+    execute: async () => {
+      const [keywords, categories] = await Promise.all([
+        getAvailableKeywords(),
+        getKeywordCategories(),
+      ]);
+
+      return {
+        total_keywords: keywords.length,
+        keywords,
+        categories,
+        instruction:
+          "Present the available keywords grouped by category if categories are available. " +
+          "Show each keyword with its available markets and last updated date. " +
+          "This helps users discover what data they can query. " +
+          "Suggest the user pick a keyword to analyze further with analyze_market, compare_markets, or analyze_brands.",
       };
     },
   }),

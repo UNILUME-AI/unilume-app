@@ -11,5 +11,6 @@ export const QUICK_ACTIONS: QuickAction[] = [
   { icon: "🏪", text: "如何在 Noon 开店？" },
   { icon: "📦", text: "DirectShip 和 FBN 有什么区别？" },
   { icon: "⚠️", text: "卖家违规会有什么处罚？" },
-  { icon: "🌍", text: "如何做跨境电商？" },
+  { icon: "🌍", text: "air fryer UAE 和 KSA 哪个更好做？" },
+  { icon: "🏷️", text: "bluetooth earphones 有哪些品牌在做？" },
 ];
