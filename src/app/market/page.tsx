@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getAvailableKeywords, getKeywordCategories } from "@/lib/market-data";
 import SearchBar from "./search-bar";
+import CategoryBrowser from "./category-browser";
 
 function timeAgo(dateStr: string): string {
   const now = Date.now();
@@ -44,39 +45,9 @@ export default async function MarketPage() {
       {categories.length > 0 && (
         <section className="mb-8">
           <h2 className="text-sm font-semibold text-gray-700 mb-3">
-            按分类浏览
+            品类导航
           </h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-            {categories.map((cat) => (
-              <div
-                key={cat.category}
-                className="rounded-xl border border-gray-200 bg-white px-4 py-3"
-              >
-                <div className="text-sm font-medium text-gray-800">
-                  {cat.category}
-                </div>
-                <div className="text-xs text-gray-400 mt-0.5">
-                  {cat.count} 个关键词
-                </div>
-                <div className="flex flex-wrap gap-1 mt-2">
-                  {cat.keywords.slice(0, 3).map((kw) => (
-                    <Link
-                      key={kw}
-                      href={`/market/${encodeURIComponent(kw)}`}
-                      className="inline-block rounded-md border border-gray-100 bg-gray-50 px-2 py-0.5 text-xs text-blue-600 hover:bg-blue-50 hover:border-blue-200 transition-colors"
-                    >
-                      {kw}
-                    </Link>
-                  ))}
-                  {cat.keywords.length > 3 && (
-                    <span className="text-xs text-gray-400 py-0.5">
-                      +{cat.keywords.length - 3}
-                    </span>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
+          <CategoryBrowser categories={categories} />
         </section>
       )}
 

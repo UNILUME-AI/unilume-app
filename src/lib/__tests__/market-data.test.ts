@@ -288,26 +288,48 @@ describe("getPriceDistribution", () => {
 // ── getKeywordCategories ────────────────────────────
 
 describe("getKeywordCategories", () => {
-  it("returns categories with keyword lists", async () => {
+  it("returns hierarchical categories grouped by parent", async () => {
     mockSql.mockResolvedValueOnce([
       {
-        category: "electronics",
-        keywords: ["bluetooth speaker", "wireless earbuds"],
-        count: 2,
+        keyword: "bluetooth speaker",
+        category_code: "electronics-and-mobiles/portable-audio-and-video",
+        category_name: "Portable Audio & Video",
+        parent_code: "electronics-and-mobiles",
+        parent_name: "Electronics & Mobiles",
       },
       {
-        category: "uncategorized",
-        keywords: ["random product"],
-        count: 1,
+        keyword: "wireless earbuds",
+        category_code: "electronics-and-mobiles/portable-audio-and-video",
+        category_name: "Portable Audio & Video",
+        parent_code: "electronics-and-mobiles",
+        parent_name: "Electronics & Mobiles",
+      },
+      {
+        keyword: "yoga mat",
+        category_code: "sports-and-outdoors/exercise-and-fitness",
+        category_name: "Exercise & Fitness",
+        parent_code: "sports-and-outdoors",
+        parent_name: "Sports & Outdoors",
       },
     ]);
 
     const result = await getKeywordCategories();
 
     expect(result).toHaveLength(2);
-    expect(result[0].category).toBe("electronics");
-    expect(result[0].keywords).toContain("bluetooth speaker");
-    expect(result[0].count).toBe(2);
+    // Sorted by parent_name
+    expect(result[0].parent_code).toBe("electronics-and-mobiles");
+    expect(result[0].parent_name).toBe("Electronics & Mobiles");
+    expect(result[0].subcategories).toHaveLength(1);
+    expect(result[0].subcategories[0].code).toBe(
+      "electronics-and-mobiles/portable-audio-and-video"
+    );
+    expect(result[0].subcategories[0].keywords).toEqual([
+      "bluetooth speaker",
+      "wireless earbuds",
+    ]);
+
+    expect(result[1].parent_code).toBe("sports-and-outdoors");
+    expect(result[1].subcategories[0].keywords).toEqual(["yoga mat"]);
   });
 
   it("returns empty array when no data", async () => {

@@ -121,10 +121,14 @@ export interface PriceDistribution {
   max_price: number;
 }
 
-export interface KeywordCategory {
-  category: string;
-  keywords: string[];
-  count: number;
+export interface CategoryGroup {
+  parent_code: string;
+  parent_name: string;
+  subcategories: {
+    code: string;
+    name: string;
+    keywords: string[];
+  }[];
 }
 
 // ── Queries ──────────────────────────────────────
@@ -606,22 +610,38 @@ export async function getPriceDistribution(
   };
 }
 
-export async function getKeywordCategories(): Promise<KeywordCategory[]> {
+export async function getKeywordCategories(): Promise<CategoryGroup[]> {
   const sql = getDb();
 
+  // Get all keyword-category mappings, only rank=1 (primary category)
   const rows = await sql`
-    SELECT COALESCE(NULLIF(mp.category_code, ''), 'uncategorized') as category,
-           array_agg(DISTINCT ms.keyword) as keywords,
-           COUNT(DISTINCT ms.keyword) as count
-    FROM market_products mp
-    JOIN market_snapshots ms ON mp.snapshot_id = ms.id
-    GROUP BY COALESCE(NULLIF(mp.category_code, ''), 'uncategorized')
-    ORDER BY count DESC
+    SELECT keyword, category_code, category_name, parent_code, parent_name
+    FROM keyword_categories
+    WHERE rank = 1
+    ORDER BY parent_name, category_name, keyword
   `;
 
-  return rows.map((r) => ({
-    category: r.category,
-    keywords: r.keywords,
-    count: Number(r.count),
-  }));
+  // Build hierarchy: parent → subcategories → keywords
+  const parentMap = new Map<string, CategoryGroup>();
+
+  for (const r of rows) {
+    if (!parentMap.has(r.parent_code)) {
+      parentMap.set(r.parent_code, {
+        parent_code: r.parent_code,
+        parent_name: r.parent_name,
+        subcategories: [],
+      });
+    }
+    const parent = parentMap.get(r.parent_code)!;
+    let sub = parent.subcategories.find(s => s.code === r.category_code);
+    if (!sub) {
+      sub = { code: r.category_code, name: r.category_name, keywords: [] };
+      parent.subcategories.push(sub);
+    }
+    sub.keywords.push(r.keyword);
+  }
+
+  return Array.from(parentMap.values()).sort((a, b) =>
+    a.parent_name.localeCompare(b.parent_name)
+  );
 }

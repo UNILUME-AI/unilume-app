@@ -305,9 +305,16 @@ export const marketTools = {
       return {
         total_keywords: keywords.length,
         keywords,
-        categories,
+        categories: categories.map(cat => ({
+          parent: cat.parent_name,
+          subcategories: cat.subcategories.map(sub => ({
+            name: sub.name,
+            keywords: sub.keywords,
+          })),
+        })),
         instruction:
-          "Present the available keywords grouped by category if categories are available. " +
+          "Present the available keywords grouped by parent category and subcategory. " +
+          "Show the hierarchy: Parent Category → Subcategory → Keywords. " +
           "Show each keyword with its available markets and last updated date. " +
           "This helps users discover what data they can query. " +
           "Suggest the user pick a keyword to analyze further with analyze_market, compare_markets, or analyze_brands.",
