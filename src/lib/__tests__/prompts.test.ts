@@ -1,8 +1,41 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi, beforeAll } from "vitest";
+
+// Mock @neondatabase/serverless before importing prompts
+vi.mock("@neondatabase/serverless", () => {
+  const mockSql = vi.fn().mockImplementation(() =>
+    Promise.resolve([
+      {
+        category_id: "program_policies",
+        category_name: "Program Policies",
+        description: "Noon seller program policies and rules",
+        keywords: ["policy", "program"],
+        article_count: 50,
+        total_chars: 100000,
+      },
+      {
+        category_id: "fulfilled_by_noon_fbn",
+        category_name: "Fulfilled by Noon (FBN)",
+        description: "FBN fulfillment service documentation",
+        keywords: ["fbn", "fulfillment"],
+        article_count: 173,
+        total_chars: 200000,
+      },
+    ])
+  );
+  // neon() returns a tagged-template sql function
+  return {
+    neon: vi.fn(() => mockSql),
+  };
+});
+
 import { buildSystemPrompt } from "../prompts";
 
 describe("buildSystemPrompt", () => {
-  const prompt = buildSystemPrompt();
+  let prompt: string;
+
+  beforeAll(async () => {
+    prompt = await buildSystemPrompt();
+  });
 
   it("includes article count", () => {
     expect(prompt).toContain("223");
