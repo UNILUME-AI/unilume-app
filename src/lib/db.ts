@@ -28,3 +28,37 @@ export async function getLatestConversation(userId: string) {
   `;
   return rows[0] ?? null;
 }
+
+export async function listConversations(userId: string) {
+  const sql = getDb();
+  const rows = await sql`
+    SELECT id,
+      COALESCE(
+        messages->0->'parts'->0->>'text',
+        '新对话'
+      ) as label,
+      updated_at
+    FROM conversations
+    WHERE user_id = ${userId}
+    ORDER BY updated_at DESC
+    LIMIT 50
+  `;
+  return rows;
+}
+
+export async function getConversation(id: string, userId: string) {
+  const sql = getDb();
+  const rows = await sql`
+    SELECT id, messages FROM conversations
+    WHERE id = ${id} AND user_id = ${userId}
+  `;
+  return rows[0] ?? null;
+}
+
+export async function deleteConversation(id: string, userId: string) {
+  const sql = getDb();
+  await sql`
+    DELETE FROM conversations
+    WHERE id = ${id} AND user_id = ${userId}
+  `;
+}

@@ -1,17 +1,9 @@
 import { streamText, stepCountIs, convertToModelMessages } from "ai";
-import { createVertex } from "@ai-sdk/google-vertex";
 import { buildSystemPrompt } from "@/lib/prompts";
 import { policyTools, marketTools } from "@/lib/tools";
+import { vertex } from "@/lib/vertex";
 import { auth } from "@clerk/nextjs/server";
 export const maxDuration = 60;
-
-const vertex = createVertex({
-  project: process.env.GOOGLE_VERTEX_PROJECT,
-  location: process.env.GOOGLE_VERTEX_LOCATION ?? "us-east5",
-  googleAuthOptions: {
-    credentials: JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_KEY || "{}"),
-  },
-});
 
 export async function POST(req: Request) {
   const { userId } = await auth();
@@ -48,6 +40,14 @@ export async function POST(req: Request) {
       messages: await convertToModelMessages(messages),
       tools: { ...policyTools, ...marketTools },
       stopWhen: stepCountIs(3),
+      providerOptions: {
+        google: {
+          thinkingConfig: {
+            thinkingBudget: 8192,
+            includeThoughts: true,
+          },
+        },
+      },
     });
 
     return result.toUIMessageStreamResponse();

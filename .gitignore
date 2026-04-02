@@ -62,3 +62,4 @@ dist/
 
 # clerk configuration (can include secrets)
 /.clerk/
+service-account.json
