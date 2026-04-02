@@ -16,8 +16,14 @@ export default function AntdProvider({
         theme={{
           algorithm: theme.defaultAlgorithm,
           token: {
-            colorPrimary: "#2563eb",
+            colorPrimary: "#533afd",
+            colorSuccess: "#10b981",
+            colorWarning: "#f59e0b",
+            colorError: "#ef4444",
+            colorInfo: "#533afd",
             borderRadius: 8,
+            fontFamily:
+              'system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
           },
         }}
       >

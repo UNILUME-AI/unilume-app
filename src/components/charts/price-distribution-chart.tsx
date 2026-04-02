@@ -1,13 +1,7 @@
 "use client";
 
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
+import { Column } from "@ant-design/charts";
+import { BRAND } from "@/config/colors";
 
 interface PriceDistributionDataPoint {
   label: string;
@@ -30,19 +24,20 @@ export default function PriceDistributionChart({
   }
 
   return (
-    <ResponsiveContainer width="100%" height={256}>
-      <BarChart data={data}>
-        <XAxis dataKey="label" tick={{ fontSize: 12 }} />
-        <YAxis tick={{ fontSize: 12 }} allowDecimals={false} />
-        <Tooltip
-          formatter={(value) => [`${value} 个产品`, "数量"]}
-        />
-        <Bar
-          dataKey="count"
-          fill="#3b82f6"
-          radius={[4, 4, 0, 0]}
-        />
-      </BarChart>
-    </ResponsiveContainer>
+    <Column
+      data={data}
+      xField="label"
+      yField="count"
+      height={256}
+      style={{ fill: BRAND[6], radiusTopLeft: 4, radiusTopRight: 4 }}
+      axis={{
+        y: { title: false, labelFormatter: (v: number) => `${v}` },
+        x: { title: false },
+      }}
+      tooltip={{
+        title: "label",
+        items: [{ channel: "y", name: "产品数", valueFormatter: (v: number) => `${v} 个` }],
+      }}
+    />
   );
 }
