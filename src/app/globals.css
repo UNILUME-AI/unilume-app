@@ -45,23 +45,25 @@ body {
 }
 
 /* Bento card glow effect */
-.bento-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: var(--radius);
-  opacity: 0;
-  transition: opacity 0.3s;
-  background: radial-gradient(400px circle at var(--mx, 50%) var(--my, 50%), var(--glow-color, var(--brand-glow)), transparent 60%);
-  z-index: 0;
-  pointer-events: none;
-}
-.bento-card:hover::before {
-  opacity: 1;
-}
-.bento-card > * {
-  position: relative;
-  z-index: 1;
+@layer components {
+  .bento-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius);
+    opacity: 0;
+    transition: opacity 0.3s;
+    background: radial-gradient(400px circle at var(--mx, 50%) var(--my, 50%), var(--glow-color, var(--brand-glow)), transparent 60%);
+    z-index: 0;
+    pointer-events: none;
+  }
+  .bento-card:hover::before {
+    opacity: 1;
+  }
+  .bento-card > * {
+    position: relative;
+    z-index: 1;
+  }
 }
 
 /* Orb floating animations */
