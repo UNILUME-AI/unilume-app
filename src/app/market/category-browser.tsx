@@ -13,66 +13,76 @@ interface CategoryGroup {
   }[];
 }
 
-export default function CategoryBrowser({ categories }: { categories: CategoryGroup[] }) {
-  const [selectedParent, setSelectedParent] = useState<string | null>(null);
-  const [selectedSub, setSelectedSub] = useState<string | null>(null);
+const selectClass =
+  "rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-colors";
 
-  const activeParent = categories.find(c => c.parent_code === selectedParent);
-  const activeSub = activeParent?.subcategories.find(s => s.code === selectedSub);
+export default function CategoryBrowser({ categories }: { categories: CategoryGroup[] }) {
+  const [selectedParent, setSelectedParent] = useState("");
+  const [selectedSub, setSelectedSub] = useState("");
+
+  const activeParent = categories.find((c) => c.parent_code === selectedParent);
+  const activeSub = activeParent?.subcategories.find((s) => s.code === selectedSub);
+
+  // Collect keywords to display
+  let displayKeywords: string[] = [];
+  if (activeSub) {
+    displayKeywords = activeSub.keywords;
+  } else if (activeParent) {
+    displayKeywords = activeParent.subcategories.flatMap((s) => s.keywords);
+  }
 
   return (
     <div className="space-y-4">
-      {/* Level 1: Top-level categories */}
-      <div className="flex flex-wrap gap-2">
-        {categories.map(cat => (
-          <button
-            key={cat.parent_code}
-            onClick={() => {
-              setSelectedParent(selectedParent === cat.parent_code ? null : cat.parent_code);
-              setSelectedSub(null);
-            }}
-            className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-              selectedParent === cat.parent_code
-                ? "bg-blue-600 text-white"
-                : "bg-white border border-gray-200 text-gray-700 hover:border-blue-300 hover:text-blue-600"
-            }`}
-          >
-            {cat.parent_name}
-            <span className={`ml-1.5 text-xs ${selectedParent === cat.parent_code ? "text-blue-200" : "text-gray-400"}`}>
-              {cat.subcategories.reduce((sum, s) => sum + s.keywords.length, 0)}
-            </span>
-          </button>
-        ))}
+      {/* Cascading selects */}
+      <div className="flex flex-wrap items-center gap-3">
+        {/* Level 1 */}
+        <select
+          value={selectedParent}
+          onChange={(e) => {
+            setSelectedParent(e.target.value);
+            setSelectedSub("");
+          }}
+          className={selectClass}
+        >
+          <option value="">选择品类</option>
+          {categories.map((cat) => {
+            const kwCount = cat.subcategories.reduce((s, sub) => s + sub.keywords.length, 0);
+            return (
+              <option key={cat.parent_code} value={cat.parent_code}>
+                {cat.parent_name} ({kwCount})
+              </option>
+            );
+          })}
+        </select>
+
+        {/* Level 2 */}
+        {activeParent && (
+          <>
+            <span className="text-gray-300">/</span>
+            <select
+              value={selectedSub}
+              onChange={(e) => setSelectedSub(e.target.value)}
+              className={selectClass}
+            >
+              <option value="">全部子品类</option>
+              {activeParent.subcategories.map((sub) => (
+                <option key={sub.code} value={sub.code}>
+                  {sub.name} ({sub.keywords.length})
+                </option>
+              ))}
+            </select>
+          </>
+        )}
       </div>
 
-      {/* Level 2: Subcategories */}
-      {activeParent && (
-        <div className="flex flex-wrap gap-2 pl-4 border-l-2 border-blue-100">
-          {activeParent.subcategories.map(sub => (
-            <button
-              key={sub.code}
-              onClick={() => setSelectedSub(selectedSub === sub.code ? null : sub.code)}
-              className={`px-2.5 py-1.5 rounded-md text-xs font-medium transition-colors ${
-                selectedSub === sub.code
-                  ? "bg-blue-100 text-blue-700"
-                  : "bg-gray-50 text-gray-600 hover:bg-gray-100"
-              }`}
-            >
-              {sub.name}
-              <span className="ml-1 text-gray-400">{sub.keywords.length}</span>
-            </button>
-          ))}
-        </div>
-      )}
-
-      {/* Level 3: Keywords */}
-      {activeSub && (
-        <div className="flex flex-wrap gap-2 pl-8 border-l-2 border-blue-50">
-          {activeSub.keywords.map(kw => (
+      {/* Keywords result */}
+      {displayKeywords.length > 0 && (
+        <div className="flex flex-wrap gap-2">
+          {displayKeywords.map((kw) => (
             <Link
               key={kw}
               href={`/market/${encodeURIComponent(kw)}`}
-              className="px-2.5 py-1 rounded-full bg-white border border-gray-200 text-sm text-blue-600 hover:border-blue-300 hover:bg-blue-50 transition-colors"
+              className="px-3 py-1.5 rounded-full bg-white border border-gray-200 text-sm text-blue-600 hover:border-blue-300 hover:bg-blue-50 transition-colors"
             >
               {kw}
             </Link>
