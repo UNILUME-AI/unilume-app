@@ -525,12 +525,20 @@ export default async function PolicyUpdatesPage({
               政策变更日报
             </span>
           </div>
-          <Link
-            href="/"
-            className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
-          >
-            &larr; 返回助手
-          </Link>
+          <div className="flex items-center gap-3">
+            <Link
+              href="/market"
+              className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
+            >
+              市场数据
+            </Link>
+            <Link
+              href="/"
+              className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
+            >
+              &larr; 返回助手
+            </Link>
+          </div>
         </div>
       </header>
 

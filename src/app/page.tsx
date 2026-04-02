@@ -349,6 +349,12 @@ export default function ChatPage() {
           </div>
           <div className="flex items-center gap-3">
             <Link
+              href="/market"
+              className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
+            >
+              市场数据
+            </Link>
+            <Link
               href="/policy-updates"
               className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
             >

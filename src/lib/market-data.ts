@@ -56,6 +56,81 @@ export interface CompetitionAnalysis {
   entry_barrier: "low" | "medium" | "high";
 }
 
+export interface KeywordInfo {
+  keyword: string;
+  markets: string[];
+  last_updated: string;
+}
+
+export interface CrossMarketComparison {
+  keyword: string;
+  uae: MarketOverview | null;
+  ksa: MarketOverview | null;
+  deltas: {
+    price_median: number | null;
+    total_results: number | null;
+    avg_rating: number | null;
+    sponsored_pct: number | null;
+  };
+  recommendation: string;
+}
+
+export interface ProductListItem {
+  sku: string;
+  title: string;
+  brand: string;
+  price_current: number;
+  price_original: number | null;
+  discount_pct: number | null;
+  rating: number | null;
+  review_count: number;
+  seller_name: string;
+  is_sponsored: boolean;
+  is_fulfilled: boolean;
+  position: number;
+  image_url: string | null;
+}
+
+export interface BrandShare {
+  brand: string;
+  count: number;
+  share_pct: number;
+  avg_price: number;
+}
+
+export interface BrandDistribution {
+  keyword: string;
+  market: string;
+  total_products: number;
+  brands: BrandShare[];
+}
+
+export interface PriceBucket {
+  range_start: number;
+  range_end: number;
+  label: string;
+  count: number;
+}
+
+export interface PriceDistribution {
+  keyword: string;
+  market: string;
+  total_products: number;
+  buckets: PriceBucket[];
+  min_price: number;
+  max_price: number;
+}
+
+export interface CategoryGroup {
+  parent_code: string;
+  parent_name: string;
+  subcategories: {
+    code: string;
+    name: string;
+    keywords: string[];
+  }[];
+}
+
 // ── Queries ──────────────────────────────────────
 
 export async function getMarketOverview(
@@ -238,14 +313,335 @@ export async function getCompetitionAnalysis(
   };
 }
 
-export async function getAvailableKeywords(): Promise<string[]> {
+export async function getAvailableKeywords(): Promise<KeywordInfo[]> {
   const sql = getDb();
 
   const rows = await sql`
-    SELECT DISTINCT keyword
+    SELECT keyword,
+           array_agg(DISTINCT market) as markets,
+           MAX(timestamp) as last_updated
     FROM market_snapshots
+    GROUP BY keyword
     ORDER BY keyword
   `;
 
-  return rows.map((r) => r.keyword);
+  return rows.map((r) => ({
+    keyword: r.keyword,
+    markets: r.markets,
+    last_updated: r.last_updated,
+  }));
+}
+
+// ── New query functions ─────────────────────────────
+
+export async function getCrossMarketComparison(
+  keyword: string
+): Promise<CrossMarketComparison> {
+  const [uae, ksa] = await Promise.all([
+    getMarketOverview(keyword, "UAE"),
+    getMarketOverview(keyword, "KSA"),
+  ]);
+
+  const deltas = {
+    price_median:
+      uae && ksa
+        ? Math.round((uae.price_median - ksa.price_median) * 100) / 100
+        : null,
+    total_results:
+      uae && ksa ? uae.total_results - ksa.total_results : null,
+    avg_rating:
+      uae && ksa
+        ? Math.round((uae.avg_rating - ksa.avg_rating) * 100) / 100
+        : null,
+    sponsored_pct:
+      uae && ksa
+        ? Math.round((uae.sponsored_pct - ksa.sponsored_pct) * 100) / 100
+        : null,
+  };
+
+  let recommendation: string;
+  if (!uae && !ksa) {
+    recommendation = "No data available for either market.";
+  } else if (!uae) {
+    recommendation = "Only KSA data available. Consider entering the UAE market.";
+  } else if (!ksa) {
+    recommendation = "Only UAE data available. Consider entering the KSA market.";
+  } else {
+    // Prefer the market with lower competition (fewer results, lower sponsored %)
+    const uaeScore = uae.total_results + uae.sponsored_pct * 10;
+    const ksaScore = ksa.total_results + ksa.sponsored_pct * 10;
+    recommendation =
+      uaeScore <= ksaScore
+        ? "UAE appears to have lower competition."
+        : "KSA appears to have lower competition.";
+  }
+
+  return { keyword, uae, ksa, deltas, recommendation };
+}
+
+const VALID_SORT_COLUMNS = [
+  "position",
+  "price_current",
+  "rating",
+  "review_count",
+  "discount_pct",
+] as const;
+
+type SortColumn = (typeof VALID_SORT_COLUMNS)[number];
+
+export async function getProductList(
+  keyword: string,
+  market: string = "UAE",
+  sortBy: string = "position",
+  limit: number = 48
+): Promise<ProductListItem[]> {
+  const sql = getDb();
+
+  // Validate sortBy against allowlist
+  const safeSortBy: SortColumn = VALID_SORT_COLUMNS.includes(
+    sortBy as SortColumn
+  )
+    ? (sortBy as SortColumn)
+    : "position";
+
+  // Clamp limit
+  const safeLimit = Math.min(Math.max(1, limit), 100);
+
+  // Get latest snapshot
+  const snapshots = await sql`
+    SELECT id FROM market_snapshots
+    WHERE keyword = ${keyword} AND market = ${market}
+    ORDER BY timestamp DESC
+    LIMIT 1
+  `;
+
+  if (snapshots.length === 0) return [];
+
+  const snapshotId = snapshots[0].id;
+
+  // Use conditional queries to prevent SQL injection with dynamic column names
+  let rows;
+  if (safeSortBy === "price_current") {
+    rows = await sql`
+      SELECT sku, title, brand, price_current, price_original, discount_pct,
+             rating, review_count, seller_name, is_sponsored, is_fulfilled,
+             position, image_url
+      FROM market_products
+      WHERE snapshot_id = ${snapshotId}
+      ORDER BY price_current ASC
+      LIMIT ${safeLimit}
+    `;
+  } else if (safeSortBy === "rating") {
+    rows = await sql`
+      SELECT sku, title, brand, price_current, price_original, discount_pct,
+             rating, review_count, seller_name, is_sponsored, is_fulfilled,
+             position, image_url
+      FROM market_products
+      WHERE snapshot_id = ${snapshotId}
+      ORDER BY rating DESC NULLS LAST
+      LIMIT ${safeLimit}
+    `;
+  } else if (safeSortBy === "review_count") {
+    rows = await sql`
+      SELECT sku, title, brand, price_current, price_original, discount_pct,
+             rating, review_count, seller_name, is_sponsored, is_fulfilled,
+             position, image_url
+      FROM market_products
+      WHERE snapshot_id = ${snapshotId}
+      ORDER BY review_count DESC
+      LIMIT ${safeLimit}
+    `;
+  } else if (safeSortBy === "discount_pct") {
+    rows = await sql`
+      SELECT sku, title, brand, price_current, price_original, discount_pct,
+             rating, review_count, seller_name, is_sponsored, is_fulfilled,
+             position, image_url
+      FROM market_products
+      WHERE snapshot_id = ${snapshotId}
+      ORDER BY discount_pct DESC NULLS LAST
+      LIMIT ${safeLimit}
+    `;
+  } else {
+    // Default: position
+    rows = await sql`
+      SELECT sku, title, brand, price_current, price_original, discount_pct,
+             rating, review_count, seller_name, is_sponsored, is_fulfilled,
+             position, image_url
+      FROM market_products
+      WHERE snapshot_id = ${snapshotId}
+      ORDER BY position ASC
+      LIMIT ${safeLimit}
+    `;
+  }
+
+  return rows.map((r) => ({
+    sku: r.sku,
+    title: r.title,
+    brand: r.brand || "",
+    price_current: Number(r.price_current),
+    price_original: r.price_original ? Number(r.price_original) : null,
+    discount_pct: r.discount_pct ? Number(r.discount_pct) : null,
+    rating: r.rating ? Number(r.rating) : null,
+    review_count: Number(r.review_count || 0),
+    seller_name: r.seller_name || "",
+    is_sponsored: Boolean(r.is_sponsored),
+    is_fulfilled: Boolean(r.is_fulfilled),
+    position: Number(r.position),
+    image_url: r.image_url || null,
+  }));
+}
+
+export async function getBrandDistribution(
+  keyword: string,
+  market: string = "UAE"
+): Promise<BrandDistribution | null> {
+  const sql = getDb();
+
+  const snapshots = await sql`
+    SELECT id, product_count FROM market_snapshots
+    WHERE keyword = ${keyword} AND market = ${market}
+    ORDER BY timestamp DESC
+    LIMIT 1
+  `;
+
+  if (snapshots.length === 0) return null;
+
+  const snap = snapshots[0];
+
+  const rows = await sql`
+    SELECT COALESCE(NULLIF(brand, ''), 'Unbranded') as brand,
+           COUNT(*) as count,
+           AVG(price_current) as avg_price
+    FROM market_products
+    WHERE snapshot_id = ${snap.id}
+    GROUP BY COALESCE(NULLIF(brand, ''), 'Unbranded')
+    ORDER BY count DESC
+  `;
+
+  const totalProducts = Number(snap.product_count) || rows.reduce((s, r) => s + Number(r.count), 0);
+
+  const brands: BrandShare[] = rows.map((r) => ({
+    brand: r.brand,
+    count: Number(r.count),
+    share_pct:
+      totalProducts > 0
+        ? Math.round((Number(r.count) / totalProducts) * 1000) / 10
+        : 0,
+    avg_price: Math.round(Number(r.avg_price) * 100) / 100,
+  }));
+
+  return {
+    keyword,
+    market,
+    total_products: totalProducts,
+    brands,
+  };
+}
+
+export async function getPriceDistribution(
+  keyword: string,
+  market: string = "UAE",
+  bucketCount: number = 10
+): Promise<PriceDistribution | null> {
+  const sql = getDb();
+
+  const snapshots = await sql`
+    SELECT id FROM market_snapshots
+    WHERE keyword = ${keyword} AND market = ${market}
+    ORDER BY timestamp DESC
+    LIMIT 1
+  `;
+
+  if (snapshots.length === 0) return null;
+
+  const snapshotId = snapshots[0].id;
+
+  const rows = await sql`
+    SELECT price_current
+    FROM market_products
+    WHERE snapshot_id = ${snapshotId} AND price_current > 0
+    ORDER BY price_current ASC
+  `;
+
+  if (rows.length === 0) {
+    return {
+      keyword,
+      market,
+      total_products: 0,
+      buckets: [],
+      min_price: 0,
+      max_price: 0,
+    };
+  }
+
+  const prices = rows.map((r) => Number(r.price_current));
+  const minPrice = prices[0];
+  const maxPrice = prices[prices.length - 1];
+  const safeBucketCount = Math.max(1, Math.min(bucketCount, 50));
+  const bucketSize = (maxPrice - minPrice) / safeBucketCount || 1;
+
+  const buckets: PriceBucket[] = [];
+  for (let i = 0; i < safeBucketCount; i++) {
+    const rangeStart = Math.round((minPrice + i * bucketSize) * 100) / 100;
+    const rangeEnd =
+      i === safeBucketCount - 1
+        ? maxPrice
+        : Math.round((minPrice + (i + 1) * bucketSize) * 100) / 100;
+    const count = prices.filter((p) =>
+      i === safeBucketCount - 1
+        ? p >= rangeStart && p <= rangeEnd
+        : p >= rangeStart && p < rangeEnd
+    ).length;
+    buckets.push({
+      range_start: rangeStart,
+      range_end: rangeEnd,
+      label: `${rangeStart.toFixed(0)}–${rangeEnd.toFixed(0)}`,
+      count,
+    });
+  }
+
+  return {
+    keyword,
+    market,
+    total_products: prices.length,
+    buckets,
+    min_price: minPrice,
+    max_price: maxPrice,
+  };
+}
+
+export async function getKeywordCategories(): Promise<CategoryGroup[]> {
+  const sql = getDb();
+
+  // Get all keyword-category mappings, only rank=1 (primary category)
+  const rows = await sql`
+    SELECT keyword, category_code, category_name, parent_code, parent_name
+    FROM keyword_categories
+    WHERE rank = 1
+    ORDER BY parent_name, category_name, keyword
+  `;
+
+  // Build hierarchy: parent → subcategories → keywords
+  const parentMap = new Map<string, CategoryGroup>();
+
+  for (const r of rows) {
+    if (!parentMap.has(r.parent_code)) {
+      parentMap.set(r.parent_code, {
+        parent_code: r.parent_code,
+        parent_name: r.parent_name,
+        subcategories: [],
+      });
+    }
+    const parent = parentMap.get(r.parent_code)!;
+    let sub = parent.subcategories.find(s => s.code === r.category_code);
+    if (!sub) {
+      sub = { code: r.category_code, name: r.category_name, keywords: [] };
+      parent.subcategories.push(sub);
+    }
+    sub.keywords.push(r.keyword);
+  }
+
+  return Array.from(parentMap.values()).sort((a, b) =>
+    a.parent_name.localeCompare(b.parent_name)
+  );
 }
