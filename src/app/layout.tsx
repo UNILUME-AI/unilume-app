@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
+import AntdProvider from "@/components/shared/AntdProvider";
 import "./globals.css";
 
 export const viewport: Viewport = {
@@ -22,7 +23,9 @@ export default function RootLayout({
   return (
     <ClerkProvider afterSignOutUrl="/">
       <html lang="zh-CN" className="h-full antialiased">
-        <body className="min-h-full flex flex-col">{children}</body>
+        <body className="min-h-full flex flex-col">
+          <AntdProvider>{children}</AntdProvider>
+        </body>
       </html>
     </ClerkProvider>
   );
