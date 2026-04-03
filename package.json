@@ -9,9 +9,6 @@
     "lint": "eslint",
     "enrich-report": "tsx scripts/enrich-change-report.ts",
     "store-report": "tsx scripts/store-change-report.ts",
-    "sync-knowledge": "tsx scripts/sync-knowledge.ts",
-    "sync-knowledge:skip-embed": "tsx scripts/sync-knowledge.ts --skip-embeddings",
-    "sync-knowledge:dry-run": "tsx scripts/sync-knowledge.ts --dry-run",
     "test": "vitest run",
     "test:watch": "vitest"
   },
@@ -28,7 +25,6 @@
     "@tailwindcss/typography": "^0.5.19",
     "ai": "^6.0.138",
     "antd": "^6.3.5",
-    "google-auth-library": "^10.6.2",
     "next": "16.2.1",
     "react": "19.2.4",
     "react-dom": "19.2.4",
