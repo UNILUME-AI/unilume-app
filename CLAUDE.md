@@ -58,6 +58,6 @@ npm run test         # Vitest
 
 ## Environment
 
-- Development: Preview URL (Clerk Dev + Neon Dev)
+- Development: Preview URL (Clerk Dev + Neon Staging)
 - Staging: staging.unilume.com (Clerk Dev + Neon Staging)
 - Production: unilume.com (Clerk Prod + Neon Prod)
