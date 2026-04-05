@@ -1,7 +1,7 @@
 /**
  * E2E test: on-demand crawl → Neon write → dedup verification
  *
- * Usage: npx tsx scripts/test-crawl-e2e.ts
+ * Usage: npx tsx scripts/crawl/test-crawl-e2e.ts
  */
 
 import { config } from "dotenv";
