@@ -39,7 +39,6 @@
     "rehype-raw": "^7.0.0",
     "remark-gfm": "^4.0.1",
     "undici": "^8.0.2",
-    "ws": "^8.20.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {
