@@ -4,7 +4,7 @@
  * Reads change_report.json and generates one-line Chinese summaries
  * for each modified article using Vertex AI (gemini-2.5-flash).
  *
- * Usage: npx tsx scripts/enrich-change-report.ts
+ * Usage: npx tsx scripts/market/enrich-change-report.ts
  * Requires: GOOGLE_VERTEX_PROJECT, GOOGLE_SERVICE_ACCOUNT_KEY env vars
  */
 

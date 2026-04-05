@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "enrich-report": "tsx scripts/enrich-change-report.ts",
-    "store-report": "tsx scripts/store-change-report.ts",
+    "enrich-report": "tsx scripts/market/enrich-change-report.ts",
+    "store-report": "tsx scripts/market/store-change-report.ts",
     "test": "vitest run",
     "test:watch": "vitest"
   },

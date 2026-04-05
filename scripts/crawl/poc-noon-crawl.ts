@@ -5,7 +5,7 @@
  * through IPRoyal residential proxy.
  *
  * Usage:
- *   npx tsx scripts/poc-noon-crawl.ts
+ *   npx tsx scripts/crawl/poc-noon-crawl.ts
  *
  * Expected: >90% success rate across 10 keywords
  */

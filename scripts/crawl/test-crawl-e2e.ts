@@ -1,15 +1,15 @@
 /**
  * E2E test: on-demand crawl → Neon write → dedup verification
  *
- * Usage: npx tsx scripts/test-crawl-e2e.ts
+ * Usage: npx tsx scripts/crawl/test-crawl-e2e.ts
  */
 
 import { config } from "dotenv";
 config({ path: ".env.local" });
 
 import { neon } from "@neondatabase/serverless";
-import { onDemandCrawl } from "../src/lib/selection/crawl";
-import { deduplicateVariants, getUniqueProducts } from "../src/lib/selection/dedup";
+import { onDemandCrawl } from "../../src/lib/selection/crawl";
+import { deduplicateVariants, getUniqueProducts } from "../../src/lib/selection/dedup";
 
 const TEST_KEYWORDS = [
   "portable fan",

@@ -4,7 +4,7 @@
  * Fetches modifiedTime from Noon's Zoho Desk API and patches existing
  * markdown articles with a `> Modified: <ISO8601>` header line.
  *
- * Usage: npx tsx scripts/patch-modified-dates.ts
+ * Usage: npx tsx scripts/market/patch-modified-dates.ts
  */
 
 import * as fs from "fs";
