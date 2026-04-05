@@ -10,7 +10,11 @@
     "enrich-report": "tsx scripts/market/enrich-change-report.ts",
     "store-report": "tsx scripts/market/store-change-report.ts",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:pull": "drizzle-kit pull",
+    "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
     "@ai-sdk/google-vertex": "^4.0.95",
@@ -26,13 +30,16 @@
     "ai": "^6.0.138",
     "antd": "^6.3.5",
     "dotenv": "^17.4.0",
+    "drizzle-orm": "^0.45.2",
     "next": "16.2.1",
+    "postgres": "^3.4.8",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "react-markdown": "^10.1.0",
     "rehype-raw": "^7.0.0",
     "remark-gfm": "^4.0.1",
     "undici": "^8.0.2",
+    "ws": "^8.20.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {
@@ -40,6 +47,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "drizzle-kit": "^0.31.10",
     "eslint": "^9",
     "eslint-config-next": "16.2.1",
     "tailwindcss": "^4",

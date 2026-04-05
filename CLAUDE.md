@@ -45,6 +45,10 @@ npm run dev          # 本地开发
 npm run build        # 生产构建
 npm run lint         # ESLint
 npm run test         # Vitest
+npm run db:generate  # Schema 变更后生成迁移 SQL
+npm run db:migrate   # 执行未应用的迁移
+npm run db:pull      # 从数据库反向生成 schema
+npm run db:studio    # 打开 Drizzle Studio 浏览数据
 ```
 
 ## Conventions
@@ -55,6 +59,10 @@ npm run test         # Vitest
 - 品牌色 `#533afd`，通过 antd ConfigProvider token 配置
 - 图表用 @ant-design/charts + `dynamic({ ssr: false })` 懒加载
 - SQL 用 Neon tagged template（自动参数化），禁止拼接
+- 数据库 schema 定义在 `src/db/schema.ts`（Drizzle ORM，单一事实来源）
+- 迁移文件在 `drizzle/`（提交到 git）
+- 迁移工作流：改 schema → `db:generate` → 检查 SQL → `db:migrate`
+- 迁移在部署前手动执行，不在 Vercel build 中自动执行
 
 ## Environment
 
