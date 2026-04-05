@@ -4,7 +4,7 @@
  * Reads enriched change_report.json for each platform and upserts
  * into the change_reports table for historical browsing.
  *
- * Usage: npx tsx scripts/store-change-report.ts
+ * Usage: npx tsx scripts/market/store-change-report.ts
  */
 
 import * as fs from "fs";

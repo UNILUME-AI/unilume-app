@@ -3,7 +3,7 @@
  *
  * Creates the change_reports table for storing daily policy change reports.
  *
- * Usage: npx tsx scripts/init-change-reports-db.ts
+ * Usage: npx tsx scripts/db/init-change-reports-db.ts
  */
 
 import { config } from "dotenv";
