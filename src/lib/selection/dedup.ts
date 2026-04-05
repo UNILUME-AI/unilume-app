@@ -1,10 +1,14 @@
 /**
  * Variant deduplication for market products.
  *
- * Products are considered variants of the same base product when ALL 3 match:
+ * Products are considered variants of the same base product when ALL 4 match:
  *   1. Same brand (case-insensitive)
- *   2. Price within ±5%
- *   3. Normalized title matches (strip color/size/quantity words)
+ *   2. Same seller
+ *   3. Price within ±5%
+ *   4. Normalized title matches (strip color/size/quantity words)
+ *
+ * Seller check ensures that different sellers competing on the same product
+ * are counted as separate competitors, not collapsed as variants.
  *
  * Original product data is preserved — dedup only adds metadata fields.
  * Competition metrics should use deduped (is_variant=false) products only.
@@ -92,6 +96,7 @@ export function deduplicateVariants(
         const candidate = group[j];
 
         if (
+          leader.seller_name === candidate.seller_name &&
           isPriceSimilar(leader.price_current, candidate.price_current) &&
           normalizeTitle(candidate.title) === normalizedLeader
         ) {
