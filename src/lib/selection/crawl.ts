@@ -315,6 +315,10 @@ async function executeCrawl(
 
 // ── Concurrent dedup ──────────���─────────────────
 
+// Deduplicates concurrent crawl requests within the same Vercel Function instance.
+// With Fluid Compute, instances are reused across concurrent requests, so this
+// prevents duplicate crawls from parallel tool calls in the same or nearby sessions.
+// Requests hitting different instances will still start separate crawls — acceptable for v1.
 const pendingCrawls = new Map<string, Promise<CrawlResult | null>>();
 
 /**
