@@ -8,8 +8,8 @@ import { config } from "dotenv";
 config({ path: ".env.local" });
 
 import { neon } from "@neondatabase/serverless";
-import { onDemandCrawl } from "../src/lib/selection/crawl";
-import { deduplicateVariants, getUniqueProducts } from "../src/lib/selection/dedup";
+import { onDemandCrawl } from "../../src/lib/selection/crawl";
+import { deduplicateVariants, getUniqueProducts } from "../../src/lib/selection/dedup";
 
 const TEST_KEYWORDS = [
   "portable fan",
