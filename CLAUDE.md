@@ -55,6 +55,7 @@ npm run test         # Vitest
 - 品牌色 `#533afd`，通过 antd ConfigProvider token 配置
 - 图表用 @ant-design/charts + `dynamic({ ssr: false })` 懒加载
 - SQL 用 Neon tagged template（自动参数化），禁止拼接
+- 数据库 schema 和迁移统一在 `unilume-db` 仓库管理（Drizzle ORM）
 
 ## Environment
 
