@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useUser, UserButton } from "@clerk/nextjs";
 
@@ -32,6 +32,13 @@ function ChatShell({ children }: { children: React.ReactNode }) {
     showSignIn,
     setShowSignIn,
   } = useChatContext();
+
+  // Auto-dismiss login overlay after successful auth
+  useEffect(() => {
+    if (isLoaded && isSignedIn && showSignIn) {
+      setShowSignIn(false);
+    }
+  }, [isLoaded, isSignedIn, showSignIn, setShowSignIn]);
 
   // Derive active conversation id from URL (/chat/[id])
   const activeKey = pathname.startsWith("/chat/")
@@ -79,7 +86,7 @@ function ChatShell({ children }: { children: React.ReactNode }) {
       />
 
       <div className="relative z-10 flex flex-col flex-1 min-w-0 overflow-hidden">
-        {showSignIn && (
+        {showSignIn && isLoaded && !isSignedIn && (
           <LoginOverlay onClose={() => setShowSignIn(false)} />
         )}
         {children}
