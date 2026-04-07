@@ -19,7 +19,7 @@ import ToolThoughtChain from "../../_components/ToolThoughtChain";
 
 export default function ConversationPage() {
   const { id } = useParams<{ id: string }>();
-  const { isSignedIn } = useUser();
+  const { isSignedIn, isLoaded } = useUser();
   const {
     refreshConversationList,
     pendingFirstMessage,
@@ -162,6 +162,7 @@ export default function ConversationPage() {
   const send = useCallback(
     (text: string) => {
       if (!text.trim() || isLoading) return;
+      if (!isLoaded) return;
       if (!isSignedIn) {
         setShowSignIn(true);
         return;
@@ -170,7 +171,7 @@ export default function ConversationPage() {
       sendMessage({ text: text.trim() });
       setInput("");
     },
-    [isLoading, isSignedIn, sendMessage, setShowSignIn],
+    [isLoading, isLoaded, isSignedIn, sendMessage, setShowSignIn],
   );
 
   // ── Edit: resend from a specific message position ──

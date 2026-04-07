@@ -20,7 +20,7 @@ export default function LoginOverlay({ onClose }: LoginOverlayProps) {
         </button>
         <SignIn
           routing="hash"
-          fallbackRedirectUrl="/"
+          fallbackRedirectUrl="/new"
           appearance={{
             elements: {
               card: "shadow-2xl",
