@@ -22,10 +22,7 @@ export default function CostTrack({ cost }: CostTrackProps) {
   ];
 
   return (
-    <dl
-      className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-dashed border-[var(--border)] pt-2 text-[11px] tabular-nums text-[var(--ink3)]"
-      aria-label="本次查询成本"
-    >
+    <dl className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-dashed border-[var(--border)] pt-2 text-[11px] tabular-nums text-[var(--ink3)]">
       {items.map(([label, value]) => (
         <div key={label} className="flex items-center gap-1">
           <dt className="font-semibold text-[var(--ink2)]">{label}</dt>

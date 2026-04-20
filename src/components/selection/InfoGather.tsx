@@ -61,7 +61,7 @@ export default function InfoGather({
   return (
     <div className="my-3 rounded-xl border border-dashed border-[var(--border-hover)] bg-[color-mix(in_srgb,var(--brand)_3%,var(--card))] p-4">
       <h4 className="mb-3 flex items-center gap-1.5 text-[14px] font-semibold text-[var(--ink)]">
-        <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--brand)]" aria-hidden />
+        <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--brand)]" />
         {title}
       </h4>
 
@@ -76,7 +76,6 @@ export default function InfoGather({
             value={market ?? undefined}
             onChange={(v) => setMarket(v)}
             size="small"
-            aria-label="选择目标市场"
           />
         </Row>
       )}
@@ -91,7 +90,6 @@ export default function InfoGather({
           value={costMin}
           onChange={(v) => setCostMin(v ?? null)}
           style={{ width: 72 }}
-          aria-label="采购成本最小值"
         />
         <span className="text-[13px] text-[var(--ink3)]">–</span>
         <InputNumber
@@ -102,7 +100,6 @@ export default function InfoGather({
           value={costMax}
           onChange={(v) => setCostMax(v ?? null)}
           style={{ width: 72 }}
-          aria-label="采购成本最大值"
         />
         <span className="text-[13px] text-[var(--ink3)]">元/件 (RMB)</span>
         <span className="ml-1 text-[11px] text-[var(--ink4)]">
@@ -120,7 +117,6 @@ export default function InfoGather({
           value={fulfillment ?? undefined}
           onChange={(v) => setFulfillment(v)}
           size="small"
-          aria-label="选择发货方式"
         />
       </Row>
 

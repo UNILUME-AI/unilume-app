@@ -17,7 +17,7 @@ export default function FollowUpPills({ suggestions, onPick }: FollowUpPillsProp
   if (suggestions.length === 0) return null;
 
   return (
-    <section className="mt-4" aria-label="继续探索建议">
+    <section className="mt-4">
       <h4 className="mb-2 text-[11px] font-semibold uppercase tracking-widest text-[var(--ink3)]">
         继续探索
       </h4>

@@ -24,8 +24,7 @@ export default function TimingAnalysisCard({
     return (
       <section
         className="rounded-xl border border-[var(--border)] bg-white p-4 shadow-sm"
-        aria-label="时机判断"
-      >
+        >
         <CardHeader title="时机判断" />
         <p className="mt-2 text-[13px] leading-relaxed text-[var(--ink3)]">
           {response.metadata.degradation_reason ?? "未能取回时机数据。"}
@@ -48,7 +47,6 @@ export default function TimingAnalysisCard({
         "group w-full rounded-xl border border-[var(--border)] bg-white p-4 text-left shadow-sm transition-all",
         isInteractive ? "cursor-pointer hover:-translate-y-px hover:shadow-md hover:border-[var(--border-hover)]" : "cursor-default",
       ].join(" ")}
-      aria-label="时机判断 · 点击查看完整事件日历"
     >
       <CardHeader title="时机判断" />
 

@@ -27,8 +27,8 @@ describe("InfoGather", () => {
     render(<InfoGather onSubmit={onSubmit} />);
 
     await user.click(screen.getByRole("radio", { name: "KSA" }));
-    setInputNumber(screen.getByLabelText("采购成本最小值"), "50");
-    setInputNumber(screen.getByLabelText("采购成本最大值"), "70");
+    setInputNumber(screen.getByPlaceholderText("30"), "50");
+    setInputNumber(screen.getByPlaceholderText("40"), "70");
     await user.click(screen.getByRole("radio", { name: "自发货 (DirectShip)" }));
 
     await waitFor(() =>
@@ -54,8 +54,8 @@ describe("InfoGather", () => {
     const user = userEvent.setup({ pointerEventsCheck: 0 });
     render(<InfoGather market="UAE" onSubmit={() => {}} />);
 
-    setInputNumber(screen.getByLabelText("采购成本最小值"), "50");
-    setInputNumber(screen.getByLabelText("采购成本最大值"), "30"); // invalid
+    setInputNumber(screen.getByPlaceholderText("30"), "50");
+    setInputNumber(screen.getByPlaceholderText("40"), "30"); // invalid
     await user.click(screen.getByRole("radio", { name: "FBN (仓配)" }));
 
     expect(screen.getByRole("button", { name: "继续分析" })).toBeDisabled();

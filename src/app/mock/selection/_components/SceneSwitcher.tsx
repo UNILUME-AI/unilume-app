@@ -49,7 +49,7 @@ export default function SceneSwitcher({
           <h1 className="truncate text-[13px] font-semibold text-[var(--ink)]">
             Selection Agent 原型预览
           </h1>
-          <span className="shrink-0 text-[11px] text-[var(--ink3)]" aria-hidden>
+          <span className="shrink-0 text-[11px] text-[var(--ink3)]">
             {SCENE_META[activeScene].description}
           </span>
         </div>
@@ -58,7 +58,6 @@ export default function SceneSwitcher({
           value={activeScene}
           onChange={handleChange}
           size="small"
-          aria-label="切换演示场景"
         />
       </div>
     </div>

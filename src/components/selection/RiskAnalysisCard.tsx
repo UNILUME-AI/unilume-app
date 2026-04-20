@@ -17,10 +17,7 @@ export default function RiskAnalysisCard({ risks }: RiskAnalysisCardProps) {
   }
 
   return (
-    <section
-      className="rounded-xl border border-[var(--border)] bg-white p-4 shadow-sm"
-      aria-label="风险提示"
-    >
+    <section className="rounded-xl border border-[var(--border)] bg-white p-4 shadow-sm">
       <h3 className="text-[15px] font-bold tracking-tight text-[var(--ink)]">
         风险提示
       </h3>
@@ -30,7 +27,7 @@ export default function RiskAnalysisCard({ risks }: RiskAnalysisCardProps) {
             key={i}
             className="flex items-start gap-2 text-[13px] leading-relaxed text-[var(--ink2)]"
           >
-            <span className={`mt-[2px] flex-shrink-0 ${BULLET_CLASS[r.severity]}`} aria-hidden>
+            <span className={`mt-[2px] flex-shrink-0 ${BULLET_CLASS[r.severity]}`}>
               ●
             </span>
             <span>

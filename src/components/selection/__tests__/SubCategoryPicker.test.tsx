@@ -46,24 +46,19 @@ describe("SubCategoryPicker", () => {
     expect(onSelect).toHaveBeenCalledWith(CATS[1]);
   });
 
-  it("marks the clicked card as aria-checked=true", async () => {
+  it("reflects selection via data-selected attribute", async () => {
     const user = userEvent.setup();
     render(<SubCategoryPicker options={CATS} onSelect={() => {}} />);
 
     const deskButton = screen.getByText("Desk Fans").closest("button")!;
-    expect(deskButton).toHaveAttribute("aria-checked", "false");
+    expect(deskButton).toHaveAttribute("data-selected", "false");
 
     await user.click(deskButton);
-    expect(deskButton).toHaveAttribute("aria-checked", "true");
+    expect(deskButton).toHaveAttribute("data-selected", "true");
   });
 
   it("renders the warning footnote about variants", () => {
     render(<SubCategoryPicker options={CATS} onSelect={() => {}} />);
     expect(screen.getByText(/实际独立产品数更少/)).toBeInTheDocument();
-  });
-
-  it("has role=radiogroup with proper accessible name", () => {
-    render(<SubCategoryPicker options={CATS} onSelect={() => {}} />);
-    expect(screen.getByRole("radiogroup", { name: "选择子类目" })).toBeInTheDocument();
   });
 });

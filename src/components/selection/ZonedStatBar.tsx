@@ -61,7 +61,7 @@ export default function ZonedStatBar({
       </div>
 
       {/* Track — flex row of zones + absolute marker */}
-      <div className="relative flex h-2 overflow-hidden rounded" role="img" aria-label={`${label} ${clampedValue}%`}>
+      <div className="relative flex h-2 overflow-hidden rounded">
         {zones.map((z, i) => (
           <span
             key={i}
@@ -72,7 +72,6 @@ export default function ZonedStatBar({
         <span
           className="absolute top-[-3px] bottom-[-3px] w-[3px] rounded-sm bg-[var(--ink)] ring-2 ring-white"
           style={{ left: `calc(${clampedValue}% - 1.5px)` }}
-          aria-hidden="true"
         />
       </div>
 

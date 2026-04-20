@@ -42,7 +42,6 @@ export default function DetailPanel({ scene }: DetailPanelProps) {
 
   return (
     <aside
-      aria-label={`${TITLES[type]} 详情`}
       className={[
         // Mobile: absolute inside the parent split-row (which is `relative`),
         // covering main without doing viewport-level math. The parent sits
@@ -62,7 +61,6 @@ export default function DetailPanel({ scene }: DetailPanelProps) {
           size="small"
           icon={<CloseOutlined />}
           onClick={close}
-          aria-label="关闭详情面板"
         />
       </header>
 

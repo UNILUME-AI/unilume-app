@@ -29,8 +29,7 @@ export default function ProfitAnalysisCard({
     return (
       <section
         className="rounded-xl border border-[var(--border)] bg-white p-4 shadow-sm"
-        aria-label="利润拆解"
-      >
+        >
         <CardHeader title="利润拆解" />
         <p className="mt-2 text-[13px] leading-relaxed text-[var(--ink3)]">
           {response.metadata.degradation_reason ?? "未能计算利润。"}
@@ -45,7 +44,6 @@ export default function ProfitAnalysisCard({
         "rounded-xl border border-[var(--border)] bg-white p-4 shadow-sm transition-all",
         isInteractive ? "hover:shadow-md hover:border-[var(--border-hover)]" : "",
       ].join(" ")}
-      aria-label="利润拆解"
     >
       <CardHeader title="利润拆解" />
 

@@ -15,9 +15,9 @@ describe("PriceCompare", () => {
     render(<PriceCompare anchor={profit} />);
 
     expect(screen.getByText("Agent 建议")).toBeInTheDocument();
-    expect(screen.getByLabelText("试算售价")).toHaveValue(profit.suggestedPrice);
+    expect(screen.getByRole("spinbutton")).toHaveValue(profit.suggestedPrice);
     // Reset button hidden initially
-    expect(screen.queryByRole("button", { name: "重置为建议价" })).not.toBeInTheDocument();
+    expect(screen.queryByText("重置为建议价")).not.toBeInTheDocument();
   });
 
   it("recomputes margin and net profit when price changes", () => {
@@ -27,7 +27,7 @@ describe("PriceCompare", () => {
     const originalMargin = screen.getByText(/^\d+\.\d%$/).textContent!;
 
     // Double the price — margin should increase (fixed deductions shrink relatively).
-    setPrice(screen.getByLabelText("试算售价"), String(profit.suggestedPrice * 2));
+    setPrice(screen.getByRole("spinbutton"), String(profit.suggestedPrice * 2));
 
     const newMargin = screen.getByText(/^\d+\.\d%$/).textContent!;
     expect(parseFloat(newMargin)).toBeGreaterThan(parseFloat(originalMargin));
@@ -37,11 +37,11 @@ describe("PriceCompare", () => {
     const profit = getMockProfitResponse("happy").data!;
     render(<PriceCompare anchor={profit} />);
 
-    setPrice(screen.getByLabelText("试算售价"), String(profit.suggestedPrice + 10));
+    setPrice(screen.getByRole("spinbutton"), String(profit.suggestedPrice + 10));
 
     expect(screen.getByText("你的试算")).toBeInTheDocument();
     expect(screen.queryByText("Agent 建议")).not.toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "重置为建议价" })).toBeInTheDocument();
+    expect(screen.getByText("重置为建议价")).toBeInTheDocument();
   });
 
   it("resets back to anchor when reset button clicked", async () => {
@@ -49,11 +49,11 @@ describe("PriceCompare", () => {
     const profit = getMockProfitResponse("happy").data!;
     render(<PriceCompare anchor={profit} />);
 
-    const input = screen.getByLabelText("试算售价") as HTMLInputElement;
+    const input = screen.getByRole("spinbutton") as HTMLInputElement;
     setPrice(input, "120");
     expect(input.value).toBe("120");
 
-    await user.click(screen.getByRole("button", { name: "重置为建议价" }));
+    await user.click(screen.getByText("重置为建议价").closest("button")!);
     expect(input.value).toBe(String(profit.suggestedPrice));
     expect(screen.getByText("Agent 建议")).toBeInTheDocument();
   });

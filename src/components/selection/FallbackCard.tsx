@@ -17,10 +17,7 @@ export interface FallbackCardProps {
  */
 export default function FallbackCard({ reason, onRetry }: FallbackCardProps) {
   return (
-    <div
-      role="alert"
-      className="my-2 rounded-lg border border-amber-300 bg-amber-50 border-l-[3px] border-l-amber-500 px-4 py-3 text-[14px] leading-relaxed text-[var(--ink)]"
-    >
+    <div className="my-2 rounded-lg border border-amber-300 bg-amber-50 border-l-[3px] border-l-amber-500 px-4 py-3 text-[14px] leading-relaxed text-[var(--ink)]">
       <span className="font-semibold text-amber-700">数据暂时不可用 · </span>
       <span>{reason}</span>
       {onRetry && (
@@ -29,7 +26,6 @@ export default function FallbackCard({ reason, onRetry }: FallbackCardProps) {
             size="small"
             icon={<ReloadOutlined />}
             onClick={onRetry}
-            aria-label="重试获取数据"
           >
             稍后重试
           </Button>

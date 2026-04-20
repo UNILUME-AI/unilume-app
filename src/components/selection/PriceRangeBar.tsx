@@ -28,7 +28,7 @@ export default function PriceRangeBar({ distribution }: PriceRangeBarProps) {
   const suggestedPct = suggestedPrice !== undefined ? toPct(suggestedPrice) : null;
 
   return (
-    <div className="my-3" aria-label={`价格分布 ${min}-${max} ${currency}`}>
+    <div className="my-3">
       {/* Track: soft range fill (P25–P75) + markers + floating median badge */}
       <div className="relative my-2 h-8 rounded-md bg-stone-100">
         {/* Interquartile band */}
@@ -40,33 +40,28 @@ export default function PriceRangeBar({ distribution }: PriceRangeBarProps) {
             background:
               "linear-gradient(90deg, var(--color-brand-100), color-mix(in srgb, var(--brand) 25%, transparent))",
           }}
-          aria-hidden
         />
         {/* P25 marker */}
         <span
           className="absolute -top-0.5 -bottom-0.5 w-[2px] rounded-sm bg-blue-500"
           style={{ left: `calc(${p25Pct}% - 1px)` }}
-          aria-hidden
         />
         {/* Median marker (brand color, thicker) */}
         <span
           className="absolute -top-0.5 -bottom-0.5 w-[3px] rounded-sm bg-[var(--brand)]"
           style={{ left: `calc(${medianPct}% - 1.5px)` }}
-          aria-hidden
         />
         {/* P75 marker */}
         <span
           className="absolute -top-0.5 -bottom-0.5 w-[2px] rounded-sm bg-blue-500"
           style={{ right: `calc(${100 - p75Pct}% - 1px)` }}
-          aria-hidden
         />
         {/* Suggested-price chevron (if provided) */}
         {suggestedPct !== null && (
           <span
             className="absolute -bottom-[6px] text-[10px] text-[var(--brand)]"
             style={{ left: `calc(${suggestedPct}% - 4px)` }}
-            aria-hidden
-          >
+            >
             ▲
           </span>
         )}

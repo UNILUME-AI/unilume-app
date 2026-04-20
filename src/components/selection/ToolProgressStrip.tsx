@@ -50,10 +50,7 @@ export default function ToolProgressStrip({
   if (Object.values(tools).every((s) => s === "pending")) return null;
 
   return (
-    <section
-      className="my-3 rounded-lg border border-[var(--border)] bg-white px-4 py-3"
-      aria-label="工具执行状态"
-    >
+    <section className="my-3 rounded-lg border border-[var(--border)] bg-white px-4 py-3">
       <header className="mb-2 text-[11px] font-semibold uppercase tracking-widest text-[var(--ink3)]">
         {allDone ? "分析完成" : "分析中…"}
       </header>
@@ -95,7 +92,7 @@ function ToolRow({
 
   return (
     <li className="flex items-center gap-2 text-[13px]">
-      <span className="w-4 flex-shrink-0" aria-hidden>
+      <span className="w-4 flex-shrink-0">
         {icon}
       </span>
       <span className="min-w-[72px] font-medium text-[var(--ink2)]">{name}</span>

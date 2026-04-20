@@ -48,20 +48,15 @@ export default function MarketPicker({
   };
 
   return (
-    <div
-      role="radiogroup"
-      aria-label="选择目标市场"
-      className="my-3 grid grid-cols-1 gap-2.5 sm:grid-cols-2"
-    >
+    <div className="my-3 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
       {options.map((opt) => {
         const isSelected = selected === opt.code;
         return (
           <button
             key={opt.code}
             type="button"
-            role="radio"
-            aria-checked={isSelected}
             onClick={() => handlePick(opt)}
+            data-selected={isSelected}
             className={[
               "rounded-[10px] border-[1.5px] bg-white p-3.5 text-left transition-all duration-200",
               "hover:-translate-y-0.5 hover:border-[color-mix(in_srgb,var(--brand)_30%,transparent)] hover:bg-[var(--brand-soft)] hover:shadow-md",
@@ -71,7 +66,7 @@ export default function MarketPicker({
             ].join(" ")}
           >
             <div>
-              <span className="mr-1.5 text-[20px]" aria-hidden>
+              <span className="mr-1.5 text-[20px]">
                 {opt.flag}
               </span>
               <span className="text-[15px] font-semibold align-middle text-[var(--ink)]">

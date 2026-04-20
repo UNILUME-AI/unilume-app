@@ -30,8 +30,6 @@ export default function VerdictHeader({
   return (
     <div
       className={`rounded-xl border bg-white p-4 border-l-[3px] ${tokens.border} ${tokens.borderLeft} shadow-sm`}
-      role="region"
-      aria-label="Agent 综合结论"
     >
       <span
         className={`inline-block rounded-full px-2 py-0.5 text-[11px] font-bold uppercase tracking-wider ${tokens.chipBg} ${tokens.chipText}`}
@@ -48,7 +46,6 @@ export default function VerdictHeader({
             size="small"
             icon={<InfoCircleOutlined />}
             onClick={onOpenBasis}
-            aria-label="查看建议依据"
           >
             查看依据
           </Button>

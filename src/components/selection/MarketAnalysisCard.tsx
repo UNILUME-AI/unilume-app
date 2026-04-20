@@ -26,10 +26,7 @@ export default function MarketAnalysisCard({
 
   if (!data || response.status === "error" || response.status === "not_found") {
     return (
-      <section
-        className="rounded-xl border border-[var(--border)] bg-white p-4 shadow-sm"
-        aria-label="市场分析"
-      >
+      <section className="rounded-xl border border-[var(--border)] bg-white p-4 shadow-sm">
         <CardHeader title="市场分析" />
         <p className="mt-2 text-[13px] leading-relaxed text-[var(--ink3)]">
           {response.metadata.degradation_reason ?? "未能取回市场数据。"}
@@ -47,7 +44,6 @@ export default function MarketAnalysisCard({
         "group w-full rounded-xl border border-[var(--border)] bg-white p-4 text-left shadow-sm transition-all",
         isInteractive ? "cursor-pointer hover:-translate-y-px hover:shadow-md hover:border-[var(--border-hover)]" : "cursor-default",
       ].join(" ")}
-      aria-label="市场分析 · 点击查看完整数据"
     >
       <CardHeader title="市场分析" />
 

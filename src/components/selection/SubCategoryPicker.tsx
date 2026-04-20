@@ -36,20 +36,15 @@ export default function SubCategoryPicker({
 
   return (
     <>
-      <div
-        role="radiogroup"
-        aria-label="选择子类目"
-        className="my-3 grid grid-cols-1 gap-2 sm:grid-cols-2"
-      >
+      <div className="my-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
         {options.map((cat) => {
           const isSelected = selectedId === cat.id;
           return (
             <button
               key={cat.id}
               type="button"
-              role="radio"
-              aria-checked={isSelected}
               onClick={() => handlePick(cat)}
+              data-selected={isSelected}
               className={[
                 "group rounded-[10px] border-[1.5px] bg-white p-3 text-left transition-all duration-200",
                 "hover:-translate-y-0.5 hover:border-[color-mix(in_srgb,var(--brand)_30%,transparent)] hover:bg-[var(--brand-soft)] hover:shadow-md",
@@ -104,7 +99,7 @@ function CompetitionBars({
 
   return (
     <div className="mt-1 flex items-center gap-1.5">
-      <span className="flex gap-[1.5px]" aria-hidden>
+      <span className="flex gap-[1.5px]">
         {[0, 1, 2, 3, 4].map((i) => (
           <span
             key={i}
