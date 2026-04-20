@@ -52,7 +52,7 @@ npm run test         # Vitest
 - Server Component 为默认，仅交互组件加 `"use client"`
 - 文件命名 kebab-case（`price-trend-chart.tsx`）
 - antd 管组件交互，Tailwind 管布局和细节样式
-- 品牌色 `#533afd`，通过 antd ConfigProvider token 配置
+- 品牌色 `#e2740e`，通过 antd ConfigProvider token 配置（见 `src/components/shared/AntdProvider.tsx`）
 - 图表用 @ant-design/charts + `dynamic({ ssr: false })` 懒加载
 - SQL 用 Neon tagged template（自动参数化），禁止拼接
 - 数据库 schema 和迁移统一在 `unilume-db` 仓库管理（Drizzle ORM）

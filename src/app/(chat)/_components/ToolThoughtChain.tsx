@@ -1,17 +1,22 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { ThoughtChain } from "@ant-design/x";
 import type { ThoughtChainItemType } from "@ant-design/x";
 import type { BubbleExtra } from "../_lib/mapMessages";
 
 const TOOL_LABELS: Record<string, string> = {
+  // Policy / legacy market chat tools
   search_policy: "搜索政策文档",
   analyze_market: "分析市场数据",
   compare_markets: "对比市场",
   list_products: "列出产品",
   analyze_brands: "分析品牌",
   browse_keywords: "浏览关键词",
+  // Selection Agent tools (Sprint 2026-04-04, #111 / #112 / #113)
+  market_intelligence: "查询市场数据",
+  profit_calculator: "计算利润",
+  timing_intelligence: "查询时机",
 };
 
 function getToolLabel(toolName: string): string {
@@ -28,23 +33,28 @@ export default function ToolThoughtChain({ extra }: Props) {
   const hasReasoning = reasoningParts.length > 0;
   const hasTools = toolParts.length > 0;
 
-  // Track expanded keys — open during streaming, collapse when done
+  // Track expanded keys — open during streaming, collapse when done.
+  // Uses React 19's "adjust state during render" pattern to avoid the
+  // cascading-render trap of syncing state via useEffect.
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
-  const wasStreamingRef = useRef(false);
   const [showFullThinking, setShowFullThinking] = useState(false);
+  const [prevStreamingKey, setPrevStreamingKey] = useState<string>(
+    `${isStreaming}|${hasReasoning}`,
+  );
 
-  useEffect(() => {
+  const currentKey = `${isStreaming}|${hasReasoning}`;
+  if (currentKey !== prevStreamingKey) {
+    const [wasStreaming] = prevStreamingKey.split("|");
+    setPrevStreamingKey(currentKey);
     if (isStreaming && hasReasoning) {
-      // Auto-expand thinking during streaming
+      // Just entered streaming-with-reasoning → auto-expand
       setExpandedKeys(["thinking"]);
-      wasStreamingRef.current = true;
-    } else if (!isStreaming && wasStreamingRef.current) {
-      // Auto-collapse when streaming ends
+    } else if (!isStreaming && wasStreaming === "true") {
+      // Streaming just ended → auto-collapse + reset
       setExpandedKeys([]);
-      wasStreamingRef.current = false;
       setShowFullThinking(false);
     }
-  }, [isStreaming, hasReasoning]);
+  }
 
   if (!hasReasoning && !hasTools) return null;
 

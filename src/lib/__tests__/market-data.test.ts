@@ -191,10 +191,8 @@ describe("getProductList", () => {
 
     await getProductList("bluetooth speaker", "UAE", "position", 999);
 
-    // The second call should have limit = 100
-    const callArgs = mockSql.mock.calls[1];
-    // The template literal call includes the limit as a parameter
-    // We verify by checking the call was made (the clamping is internal)
+    // The second call should have limit = 100 (clamping is internal to the
+    // tagged template — we can only verify the call pattern count here).
     expect(mockSql).toHaveBeenCalledTimes(2);
   });
 

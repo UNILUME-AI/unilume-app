@@ -13,6 +13,10 @@ export default function CrossMarketSection({
 
   useEffect(() => {
     let cancelled = false;
+    // Data-fetch pattern: setLoading(true) marks the transition, then
+    // async fetch updates state in its response callbacks. Not a
+    // cascading render — gates on `cancelled` prevent stale writes.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLoading(true);
     fetch(`/api/market/compare?keyword=${encodeURIComponent(keyword)}`)
       .then((res) => (res.ok ? res.json() : null))

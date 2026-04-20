@@ -1,8 +1,34 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect, useCallback, useRef } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
 import { useUser } from "@clerk/nextjs";
 import type { ConversationListItem, ChatMessage } from "./types";
+
+// Module-level viewport subscription helpers for useSyncExternalStore.
+// Keeping these outside the component gives stable references across renders.
+const DESKTOP_MQ = "(min-width: 768px)";
+
+function subscribeViewport(cb: () => void): () => void {
+  const mq = window.matchMedia(DESKTOP_MQ);
+  mq.addEventListener("change", cb);
+  return () => mq.removeEventListener("change", cb);
+}
+
+function getViewportSnapshot(): boolean {
+  return window.matchMedia(DESKTOP_MQ).matches;
+}
+
+function getServerViewportSnapshot(): boolean {
+  return false;  // SSR default: treat as mobile (sidebar closed)
+}
 
 interface ChatContextValue {
   /* conversation list */
@@ -36,9 +62,30 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
   const { isSignedIn, isLoaded } = useUser();
 
   const [conversationList, setConversationList] = useState<ConversationListItem[]>([]);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showSignIn, setShowSignIn] = useState(false);
   const [pendingFirstMessage, setPendingFirstMessage] = useState<string | null>(null);
+
+  // Sidebar: viewport-driven default, user toggle overrides.
+  // Viewport is an external system → useSyncExternalStore is the idiomatic
+  // way to subscribe without cascading effects.
+  const isDesktop = useSyncExternalStore(
+    subscribeViewport,
+    getViewportSnapshot,
+    getServerViewportSnapshot,
+  );
+  const [userPreference, setUserPreference] = useState<boolean | null>(null);
+  const sidebarOpen = userPreference ?? isDesktop;
+  const setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>> = useCallback(
+    (next) => {
+      setUserPreference((prev) => {
+        const current = prev ?? isDesktop;
+        return typeof next === "function"
+          ? (next as (v: boolean) => boolean)(current)
+          : next;
+      });
+    },
+    [isDesktop],
+  );
 
   const addOptimisticConversation = useCallback(
     (id: string, label: string) => {
@@ -62,15 +109,6 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
     [],
   );
 
-  // Open sidebar on desktop
-  const initialized = useRef(false);
-  useEffect(() => {
-    if (!initialized.current) {
-      initialized.current = true;
-      if (window.innerWidth >= 768) setSidebarOpen(true);
-    }
-  }, []);
-
   const refreshConversationList = useCallback(async () => {
     try {
       const res = await fetch("/api/conversations");
@@ -82,9 +120,14 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  // Load conversation list on sign-in
+  // Load conversation list on sign-in. `refreshConversationList` is async —
+  // its setState happens inside the fetch-response callback, not in this
+  // effect body. The eslint rule can't statically detect that, hence suppress.
   useEffect(() => {
-    if (isLoaded && isSignedIn) refreshConversationList();
+    if (isLoaded && isSignedIn) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      refreshConversationList();
+    }
   }, [isLoaded, isSignedIn, refreshConversationList]);
 
   return (

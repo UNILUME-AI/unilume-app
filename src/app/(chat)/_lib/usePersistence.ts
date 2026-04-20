@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef } from "react";
 import type { ChatMessage } from "./types";
 
 const STREAM_PERSIST_INTERVAL = 2500; // ms
@@ -112,7 +112,7 @@ export function usePersistence({
           persistedIdsRef.current.delete(msg.id);
         });
     }
-  }, [messages, status, isSignedIn, isLoadingRef, apiBase]);
+  }, [messages, status, isSignedIn, isLoadingRef, apiBase, onConversationSaved]);
 
   // ── Streaming persistence: periodically PATCH parts ──
   useEffect(() => {
