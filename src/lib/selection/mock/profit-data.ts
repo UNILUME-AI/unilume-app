@@ -88,12 +88,14 @@ export function calculateProfit(inputs: ProfitInputs): ProfitCalc {
 
   const breakdown: ProfitLine[] = [
     {
+      category: "sale_price",
       label: "售价",
       amount: suggestedPrice,
       pctOfRevenue: 1,
       kind: "revenue",
     },
     {
+      category: "commission",
       label: "销售佣金",
       note: `${(assumptions.commissionRate * 100).toFixed(0)}%`,
       amount: commission,
@@ -101,12 +103,14 @@ export function calculateProfit(inputs: ProfitInputs): ProfitCalc {
       kind: "deduction",
     },
     {
+      category: "fbn_fee",
       label: "FBN 物流费",
       amount: assumptions.fbnFee,
       pctOfRevenue: assumptions.fbnFee / suggestedPrice,
       kind: "deduction",
     },
     {
+      category: "purchase",
       label: "采购成本",
       note: `¥${purchaseCostRmb} × ${assumptions.fxRate}`,
       amount: purchaseCostLocal,
@@ -114,6 +118,7 @@ export function calculateProfit(inputs: ProfitInputs): ProfitCalc {
       kind: "deduction",
     },
     {
+      category: "freight",
       label: "头程运费",
       note: "0.5kg 海运",
       amount: freightCostLocal,
@@ -121,6 +126,7 @@ export function calculateProfit(inputs: ProfitInputs): ProfitCalc {
       kind: "deduction",
     },
     {
+      category: "return",
       label: "退货分摊",
       note: `${(assumptions.returnRate * 100).toFixed(0)}%`,
       amount: returnReserve,
@@ -128,6 +134,7 @@ export function calculateProfit(inputs: ProfitInputs): ProfitCalc {
       kind: "deduction",
     },
     {
+      category: "vat",
       label: "VAT",
       note: "待确认",
       amount: 0,

@@ -29,10 +29,10 @@ export default function PriceCompare({ anchor }: PriceCompareProps) {
   const isAnchor = price === anchor.suggestedPrice;
 
   // Rebuild ProfitInputs from anchor so we can re-run calculateProfit
-  // with the user-edited price. Freight cost is the last deduction line
-  // matching label "头程运费".
+  // with the user-edited price. Freight comes from the breakdown line
+  // tagged with category="freight" (stable — label text may change).
   const inputs: ProfitInputs = useMemo(() => {
-    const freightLine = anchor.breakdown.find((l) => l.label === "头程运费");
+    const freightLine = anchor.breakdown.find((l) => l.category === "freight");
     return {
       market: anchor.market,
       currency: anchor.currency,
@@ -64,7 +64,6 @@ export default function PriceCompare({ anchor }: PriceCompareProps) {
             size="small"
             icon={<ReloadOutlined />}
             onClick={() => setPrice(anchor.suggestedPrice)}
-            aria-label="重置为建议价"
             className="!text-[11px]"
           >
             重置为建议价
@@ -102,7 +101,6 @@ export default function PriceCompare({ anchor }: PriceCompareProps) {
                   if (!isNaN(v)) setPrice(v);
                 }}
                 onFocus={(e) => e.currentTarget.select()}
-                aria-label="试算售价"
                 className="w-[90px] border-0 border-b-[1.5px] border-dashed border-[var(--ink4)] bg-transparent p-0 text-[26px] font-bold tabular-nums tracking-tight text-[var(--ink)] outline-none transition-colors hover:border-[var(--brand)] focus:border-solid focus:border-[var(--brand)]"
               />
               <span className="text-[14px] font-medium text-[var(--ink3)]">

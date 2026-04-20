@@ -155,10 +155,27 @@ export interface MarketIntelligence {
 // Shape of data returned by the `profit_calculator` tool.
 
 /**
+ * Semantic category for a ProfitLine. Use this (not the human `label`)
+ * for any programmatic lookup — labels change for copy / i18n, category
+ * is stable.
+ */
+export type ProfitCategory =
+  | "sale_price"
+  | "commission"
+  | "fbn_fee"
+  | "purchase"
+  | "freight"
+  | "return"
+  | "vat";
+
+/**
  * One line item in the profit breakdown — either income or a deduction.
  * `pctOfRevenue` is always expressed as a fraction of `salePrice`.
  */
 export interface ProfitLine {
+  /** Stable semantic identifier — use for lookups. */
+  category: ProfitCategory;
+  /** Human-readable display name — may change for copy / i18n. */
   label: string;              // "销售佣金" | "FBN 物流费" | ...
   note?: string;              // "¥35 × 0.51" | "0.5kg 海运" | ...
   amount: number;             // positive even for deductions

@@ -66,6 +66,36 @@ async function* happyStream(): AsyncGenerator<MockStreamEvent> {
 }
 
 /**
+ * KSA scene — structurally identical to happy but with scene-appropriate
+ * product-count hint (180 results vs happy's 150) and slightly different
+ * latencies (crawl of KSA endpoint is typically marginally faster).
+ */
+async function* ksaStream(): AsyncGenerator<MockStreamEvent> {
+  yield {
+    kind: "narrative",
+    text: "正在并行查询 3 个数据源，KSA 数据缓存命中率通常较低，稍等几秒。",
+    delayMs: 300,
+  };
+  yield { kind: "tool-running", tool: "profit_calculator", hint: "计算中…", delayMs: 120 };
+  yield { kind: "tool-running", tool: "timing_intelligence", hint: "查询日历…", delayMs: 160 };
+  yield { kind: "tool-running", tool: "market_intelligence", hint: "查询市场数据…", delayMs: 400 };
+
+  yield { kind: "tool-success", tool: "profit_calculator", elapsedMs: 130, delayMs: 500 };
+  yield { kind: "tool-success", tool: "timing_intelligence", elapsedMs: 160, delayMs: 300 };
+
+  yield {
+    kind: "tool-running",
+    tool: "market_intelligence",
+    hint: "整理 180 个产品数据…",
+    delayMs: 1100,
+  };
+  yield { kind: "tool-success", tool: "market_intelligence", elapsedMs: 4800, delayMs: 500 };
+
+  yield { kind: "analysis-ready", delayMs: 200 };
+  yield { kind: "followups-ready", delayMs: 150 };
+}
+
+/**
  * Degraded — profit/timing succeed, market_intelligence times out.
  * Surfaces a different narrative after the failure and triggers the
  * FallbackCard path in the UI.
@@ -178,8 +208,10 @@ export async function* mockStream(scene: SceneId): AsyncGenerator<MockStreamEven
   let source: AsyncGenerator<MockStreamEvent>;
   switch (scene) {
     case "happy":
-    case "ksa":
       source = happyStream();
+      break;
+    case "ksa":
+      source = ksaStream();
       break;
     case "ask_market":
       source = askMarketStream();

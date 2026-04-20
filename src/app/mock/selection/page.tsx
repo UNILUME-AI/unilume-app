@@ -3,7 +3,7 @@
 import { Suspense, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import { Bubble, Sender } from "@ant-design/x";
-import type { BubbleItemType } from "@ant-design/x";
+import type { BubbleItemType, BubbleListProps } from "@ant-design/x";
 import { Avatar, Empty } from "antd";
 import { RobotOutlined, UserOutlined } from "@ant-design/icons";
 
@@ -111,24 +111,24 @@ function Conversation({ scene }: { scene: SceneId }) {
     [scene],
   );
 
-  const roles = useMemo(
+  const roles: BubbleListProps["role"] = useMemo(
     () => ({
       user: {
-        placement: "end" as const,
-        variant: "filled" as const,
-        avatar: <Avatar icon={<UserOutlined />} style={{ background: "#1f2937" }} />,
+        placement: "end",
+        variant: "filled",
+        avatar: (
+          <Avatar icon={<UserOutlined />} style={{ background: "#1f2937" }} />
+        ),
         styles: {
-          content: {
-            borderRadius: 16,
-            fontSize: 14,
-            whiteSpace: "pre-wrap" as const,
-          },
+          content: { borderRadius: 16, fontSize: 14, whiteSpace: "pre-wrap" },
         },
       },
       ai: {
-        placement: "start" as const,
-        variant: "outlined" as const,
-        avatar: <Avatar icon={<RobotOutlined />} style={{ background: "var(--brand)" }} />,
+        placement: "start",
+        variant: "outlined",
+        avatar: (
+          <Avatar icon={<RobotOutlined />} style={{ background: "var(--brand)" }} />
+        ),
         styles: {
           content: {
             borderRadius: 16,
@@ -226,10 +226,7 @@ function AgentTurn({
 function AgentNarrativeLine({ text }: { text: string }) {
   return (
     <p className="my-3 flex items-center gap-2 text-[14px] leading-relaxed text-[var(--ink2)]">
-      <span
-        className="inline-block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[var(--brand)] animate-pulse"
-        aria-hidden
-      />
+      <span className="inline-block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[var(--brand)] animate-pulse" />
       <span>{text}</span>
     </p>
   );

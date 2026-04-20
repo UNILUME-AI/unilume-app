@@ -35,7 +35,8 @@ export default function ProfitDetail({ scene }: ProfitDetailProps) {
       return null;
     }
     const purchaseTotalRmb = qty * profit.purchaseCostRmb;
-    const freightLine = profit.breakdown.find((l) => l.label === "头程运费");
+    // Look up by semantic category (stable) rather than Chinese label (volatile).
+    const freightLine = profit.breakdown.find((l) => l.category === "freight");
     const freightPerUnit = freightLine?.amount ?? 0;
     const freightTotalLocal = freightPerUnit * qty;
     const freightTotalRmb = freightTotalLocal / profit.assumptions.fxRate;
@@ -144,7 +145,6 @@ export default function ProfitDetail({ scene }: ProfitDetailProps) {
               onChange={(v) => v && setQty(v)}
               size="small"
               style={{ width: 100 }}
-              aria-label="首批数量"
             />
             <span className="text-[12px] text-[var(--ink3)]">件</span>
           </label>
@@ -173,7 +173,6 @@ export default function ProfitDetail({ scene }: ProfitDetailProps) {
               onChange={(v) => v && setDaily(v)}
               size="small"
               style={{ width: 100 }}
-              aria-label="日均销量"
             />
             <span className="text-[12px] text-[var(--ink3)]">单/天</span>
           </label>
