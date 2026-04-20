@@ -1,6 +1,5 @@
 import fs from "fs";
 import path from "path";
-import Link from "next/link";
 import AppHeader from "@/components/shared/AppHeader";
 import DiffDetails from "./diff-details";
 import DatePicker from "./date-picker";

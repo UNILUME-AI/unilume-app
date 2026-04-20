@@ -62,12 +62,15 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
     [],
   );
 
-  // Open sidebar on desktop
+  // Open sidebar on desktop. One-time viewport check at mount; the ref
+  // guard prevents re-runs, so this is not a cascading sync.
   const initialized = useRef(false);
   useEffect(() => {
-    if (!initialized.current) {
-      initialized.current = true;
-      if (window.innerWidth >= 768) setSidebarOpen(true);
+    if (initialized.current) return;
+    initialized.current = true;
+    if (window.innerWidth >= 768) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setSidebarOpen(true);
     }
   }, []);
 
@@ -82,9 +85,14 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  // Load conversation list on sign-in
+  // Load conversation list on sign-in. `refreshConversationList` is async —
+  // its setState happens inside the fetch-response callback, not in this
+  // effect body. The eslint rule can't statically detect that, hence suppress.
   useEffect(() => {
-    if (isLoaded && isSignedIn) refreshConversationList();
+    if (isLoaded && isSignedIn) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      refreshConversationList();
+    }
   }, [isLoaded, isSignedIn, refreshConversationList]);
 
   return (
