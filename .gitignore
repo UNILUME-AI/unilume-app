@@ -63,3 +63,8 @@ dist/
 # clerk configuration (can include secrets)
 /.clerk/
 service-account.json
+
+# AI tool runtime state (per-machine, do not commit)
+.claude/
+.superpowers/
+.serena/
