@@ -21,6 +21,8 @@ import {
   CategoryResolveResultSchema,
   MapQuerySchema,
   CategoryMappingResultSchema,
+  TreeQuerySchema,
+  ConsumerTreeResponseSchema,
 } from "./categories";
 import {
   MarketOverviewSchema,
@@ -97,6 +99,22 @@ export const endpoints: EndpointSpec[] = [
     query: ConsumerSearchQuerySchema,
     responses: {
       200: { description: "搜索成功", schema: ConsumerSearchResponseSchema },
+      ...stdErrors,
+    },
+  },
+  {
+    method: "GET",
+    path: "/api/categories/consumer/tree",
+    tags: ["Categories"],
+    summary: "C 端类目树 (级联选择用)",
+    description:
+      "返回 C 端类目嵌套树, 用于 antd Cascader / Tree 等级联选择器.\n\n" +
+      "全树约 6265 个 active 节点 / max depth 6 / gzip 后 ~80KB. " +
+      "Response 设了 Cache-Control: max-age=3600 (数据每日 UTC 00:30 更新).\n\n" +
+      "可选 root 截取子树, maxDepth 修剪深度, leafOnly 返回扁平 leaf 数组.",
+    query: TreeQuerySchema,
+    responses: {
+      200: { description: "树或扁平 leaf 数组", schema: ConsumerTreeResponseSchema },
       ...stdErrors,
     },
   },
