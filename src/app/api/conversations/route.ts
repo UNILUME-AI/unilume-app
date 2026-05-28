@@ -1,3 +1,12 @@
+/**
+ * GET    /api/conversations         — list 当前用户对话 (或 ?id=<uuid> 取单个)
+ * DELETE /api/conversations?id=<uuid> — 删除指定对话
+ *
+ * Clerk auth 必填. id 必须 UUID v4 格式.
+ *
+ * Schema: src/lib/api-schemas/chat.ts (ConversationsGet/DeleteQuerySchema).
+ */
+
 import { auth } from "@clerk/nextjs/server";
 import {
   listConversations,
@@ -5,9 +14,10 @@ import {
   deleteConversation,
   cleanupStreamingMessages,
 } from "@/lib/db";
-
-const UUID_RE =
-  /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+import {
+  ConversationsGetQuerySchema,
+  ConversationsDeleteQuerySchema,
+} from "@/lib/api-schemas/chat";
 
 export async function GET(req: Request) {
   const { userId } = await auth();
@@ -15,16 +25,24 @@ export async function GET(req: Request) {
     return Response.json({ error: "Unauthorized" }, { status: 401 });
 
   const url = new URL(req.url);
-  const id = url.searchParams.get("id");
+  const parsed = ConversationsGetQuerySchema.safeParse(
+    Object.fromEntries(url.searchParams),
+  );
+  if (!parsed.success) {
+    const issue = parsed.error.issues[0];
+    return Response.json(
+      {
+        error: `Invalid parameter '${issue?.path?.join(".") || "query"}': ${issue?.message}`,
+        details: parsed.error.issues,
+      },
+      { status: 400 },
+    );
+  }
 
   try {
-    if (id) {
-      if (!UUID_RE.test(id))
-        return Response.json({ error: "Invalid id format" }, { status: 400 });
-
-      // Clean up any interrupted streams before loading
-      await cleanupStreamingMessages(id);
-      const conversation = await getConversationMessages(id, userId);
+    if (parsed.data.id) {
+      await cleanupStreamingMessages(parsed.data.id);
+      const conversation = await getConversationMessages(parsed.data.id, userId);
       return Response.json({ conversation });
     }
     const conversations = await listConversations(userId);
@@ -41,15 +59,22 @@ export async function DELETE(req: Request) {
     return Response.json({ error: "Unauthorized" }, { status: 401 });
 
   const url = new URL(req.url);
-  const id = url.searchParams.get("id");
-  if (!id || !UUID_RE.test(id))
+  const parsed = ConversationsDeleteQuerySchema.safeParse(
+    Object.fromEntries(url.searchParams),
+  );
+  if (!parsed.success) {
+    const issue = parsed.error.issues[0];
     return Response.json(
-      { error: "Missing or invalid id" },
+      {
+        error: `Invalid parameter '${issue?.path?.join(".") || "query"}': ${issue?.message}`,
+        details: parsed.error.issues,
+      },
       { status: 400 },
     );
+  }
 
   try {
-    await deleteConversation(id, userId);
+    await deleteConversation(parsed.data.id, userId);
     return Response.json({ ok: true });
   } catch (error) {
     console.error("Conversations DELETE error:", error);

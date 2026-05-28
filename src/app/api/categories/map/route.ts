@@ -1,37 +1,36 @@
 /**
  * GET /api/categories/map
  *
- * 取 C 端 → B 端类目映射. AI / 上架流程用此把 consumer code 转换成 seller pk/code.
+ * 取 C 端 → B 端类目映射. AI / 上架流程把 consumer code 转换成 seller pk/code.
  *
- * **Phase 1: category_mappings 表 0 行**, 永远返回 status='no_confirmed_mapping'.
- * AI tool 看到该 status 该走 concierge 兜底, 不要臆造 seller code (设计 §7.2 硬规则 4).
+ * **Phase 1: 永远返回 status='no_confirmed_mapping'** (category_mappings 表 0 行).
+ * AI tool 看到该 status 必须走 concierge 兜底, 不得臆造 seller code
+ * (设计文档 §7.2 硬规则 4).
  *
- * Phase 2 起会基于 consumer_id_category 命中 mapping (含 tier high/medium).
- *
- * Query params:
- *   consumer_code   (required) — C 端 slug 路径
- *
- * 返回:
- *   {status: 'ok', consumer_code, seller_pk, seller_code, tier, confidence, mapped_at}
- *   或
- *   {status: 'no_confirmed_mapping', consumer_code}
+ * Schema: src/lib/api-schemas/categories.ts (MapQuerySchema).
  */
 
 import { getCategoryMapping } from "@/lib/categories-data";
+import { MapQuerySchema } from "@/lib/api-schemas/categories";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
-  const consumerCode = searchParams.get("consumer_code");
+  const parsed = MapQuerySchema.safeParse(Object.fromEntries(searchParams));
 
-  if (!consumerCode || consumerCode.trim().length === 0) {
+  if (!parsed.success) {
+    const issue = parsed.error.issues[0];
+    const field = issue?.path?.join(".") || "query";
     return Response.json(
-      { error: "Missing required parameter: consumer_code" },
+      {
+        error: `Invalid parameter '${field}': ${issue?.message ?? "validation failed"}`,
+        details: parsed.error.issues,
+      },
       { status: 400 },
     );
   }
 
   try {
-    const result = await getCategoryMapping(consumerCode);
+    const result = await getCategoryMapping(parsed.data.consumer_code);
     return Response.json(result);
   } catch (error) {
     console.error("[/api/categories/map] error:", error);

@@ -1,3 +1,13 @@
+/**
+ * POST  /api/conversations/{id}/messages — append a new message
+ * PATCH /api/conversations/{id}/messages — update streaming message parts (partial)
+ * PUT   /api/conversations/{id}/messages — finalize a streaming message
+ *
+ * Clerk auth 必填. path id 必须 UUID v4.
+ *
+ * Schema: src/lib/api-schemas/chat.ts (Messages* schemas).
+ */
+
 import { auth } from "@clerk/nextjs/server";
 import {
   ensureConversation,
@@ -6,11 +16,32 @@ import {
   finalizeMessage,
   updateConversationTitle,
 } from "@/lib/db";
+import {
+  MessagesPathSchema,
+  MessagesPostBodySchema,
+  MessagesPatchBodySchema,
+  MessagesPutBodySchema,
+} from "@/lib/api-schemas/chat";
 
-const UUID_RE =
-  /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+async function resolvePath(params: Promise<{ id: string }>) {
+  const parsed = MessagesPathSchema.safeParse(await params);
+  if (!parsed.success) return null;
+  return parsed.data.id;
+}
 
-/** POST — append a new message */
+function validationError(
+  parsed: { error: { issues: Array<{ path?: (string | number)[]; message: string }> } },
+) {
+  const issue = parsed.error.issues[0];
+  return Response.json(
+    {
+      error: `Invalid field '${issue?.path?.join(".") || "body"}': ${issue?.message}`,
+      details: parsed.error.issues,
+    },
+    { status: 400 },
+  );
+}
+
 export async function POST(
   req: Request,
   { params }: { params: Promise<{ id: string }> },
@@ -19,43 +50,32 @@ export async function POST(
   if (!userId)
     return Response.json({ error: "Unauthorized" }, { status: 401 });
 
-  const { id: conversationId } = await params;
-  if (!UUID_RE.test(conversationId))
+  const conversationId = await resolvePath(params);
+  if (!conversationId)
     return Response.json({ error: "Invalid conversation id" }, { status: 400 });
 
-  let body: Record<string, unknown>;
+  let raw: unknown;
   try {
-    body = await req.json();
+    raw = await req.json();
   } catch {
     return Response.json({ error: "Invalid JSON" }, { status: 400 });
   }
 
-  const { id: msgId, parentMessageId, role, parts, status, ordinal, title } = body as {
-    id: string;
-    parentMessageId: string | null;
-    role: string;
-    parts: unknown[];
-    status?: string;
-    ordinal: number;
-    title?: string;
-  };
+  const parsed = MessagesPostBodySchema.safeParse(raw);
+  if (!parsed.success) return validationError(parsed);
 
-  if (!msgId || !role || !Array.isArray(parts) || typeof ordinal !== "number") {
-    return Response.json({ error: "Invalid message" }, { status: 400 });
-  }
+  const { id, parentMessageId, role, parts, status, ordinal, title } = parsed.data;
 
   try {
-    // Ensure conversation exists (no-op if already created)
     await ensureConversation(conversationId, userId, title);
     await appendMessage(conversationId, {
-      id: msgId,
+      id,
       parentMessageId: parentMessageId ?? null,
       role,
       parts,
       status,
       ordinal,
     });
-    // Set title from first user message
     if (role === "user" && ordinal === 0 && title) {
       await updateConversationTitle(conversationId, userId, title);
     }
@@ -66,7 +86,6 @@ export async function POST(
   }
 }
 
-/** PATCH — update streaming message parts */
 export async function PATCH(
   req: Request,
   { params }: { params: Promise<{ id: string }> },
@@ -75,21 +94,22 @@ export async function PATCH(
   if (!userId)
     return Response.json({ error: "Unauthorized" }, { status: 401 });
 
-  const { id: conversationId } = await params;
+  const conversationId = await resolvePath(params);
+  if (!conversationId)
+    return Response.json({ error: "Invalid conversation id" }, { status: 400 });
 
-  let body: Record<string, unknown>;
+  let raw: unknown;
   try {
-    body = await req.json();
+    raw = await req.json();
   } catch {
     return Response.json({ error: "Invalid JSON" }, { status: 400 });
   }
 
-  const { messageId, parts } = body as { messageId: string; parts: unknown[] };
-  if (!messageId || !Array.isArray(parts))
-    return Response.json({ error: "Invalid payload" }, { status: 400 });
+  const parsed = MessagesPatchBodySchema.safeParse(raw);
+  if (!parsed.success) return validationError(parsed);
 
   try {
-    await updateMessageParts(messageId, conversationId, parts);
+    await updateMessageParts(parsed.data.messageId, conversationId, parsed.data.parts);
     return Response.json({ ok: true });
   } catch (error) {
     console.error("Messages PATCH error:", error);
@@ -97,7 +117,6 @@ export async function PATCH(
   }
 }
 
-/** PUT — finalize a streaming message */
 export async function PUT(
   req: Request,
   { params }: { params: Promise<{ id: string }> },
@@ -106,21 +125,22 @@ export async function PUT(
   if (!userId)
     return Response.json({ error: "Unauthorized" }, { status: 401 });
 
-  const { id: conversationId } = await params;
+  const conversationId = await resolvePath(params);
+  if (!conversationId)
+    return Response.json({ error: "Invalid conversation id" }, { status: 400 });
 
-  let body: Record<string, unknown>;
+  let raw: unknown;
   try {
-    body = await req.json();
+    raw = await req.json();
   } catch {
     return Response.json({ error: "Invalid JSON" }, { status: 400 });
   }
 
-  const { messageId, parts } = body as { messageId: string; parts: unknown[] };
-  if (!messageId || !Array.isArray(parts))
-    return Response.json({ error: "Invalid payload" }, { status: 400 });
+  const parsed = MessagesPutBodySchema.safeParse(raw);
+  if (!parsed.success) return validationError(parsed);
 
   try {
-    await finalizeMessage(messageId, conversationId, parts);
+    await finalizeMessage(parsed.data.messageId, conversationId, parsed.data.parts);
     return Response.json({ ok: true });
   } catch (error) {
     console.error("Messages PUT error:", error);

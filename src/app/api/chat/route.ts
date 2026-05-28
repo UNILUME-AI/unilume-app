@@ -1,8 +1,22 @@
+/**
+ * POST /api/chat
+ *
+ * AI 对话主入口. 请求体含历史消息数组, 响应是 Vercel AI SDK 的
+ * UIMessage stream (Server-Sent Events, content-type: text/event-stream).
+ *
+ * 工具集: policyTools (Noon 政策) + marketTools (市场数据).
+ * 模型: Gemini 2.5 Flash via Vertex AI.
+ *
+ * Schema: src/lib/api-schemas/chat.ts (ChatRequestSchema).
+ */
+
 import { streamText, stepCountIs, convertToModelMessages } from "ai";
 import { buildSystemPrompt } from "@/lib/prompts";
 import { policyTools, marketTools } from "@/lib/tools";
 import { vertex } from "@/lib/vertex";
 import { auth } from "@clerk/nextjs/server";
+import { ChatRequestSchema } from "@/lib/api-schemas/chat";
+
 export const maxDuration = 60;
 
 export async function POST(req: Request) {
@@ -11,27 +25,27 @@ export async function POST(req: Request) {
     return Response.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  let body: Record<string, unknown>;
+  let raw: unknown;
   try {
-    body = await req.json();
+    raw = await req.json();
   } catch {
     return Response.json({ error: "Invalid JSON" }, { status: 400 });
   }
 
-  const { messages } = body;
-  if (!Array.isArray(messages) || messages.length === 0) {
+  const parsed = ChatRequestSchema.safeParse(raw);
+  if (!parsed.success) {
+    const issue = parsed.error.issues[0];
+    const field = issue?.path?.join(".") || "body";
     return Response.json(
-      { error: "Invalid request: messages must be a non-empty array" },
-      { status: 400 }
+      {
+        error: `Invalid field '${field}': ${issue?.message ?? "validation failed"}`,
+        details: parsed.error.issues,
+      },
+      { status: 400 },
     );
   }
 
-  if (messages.length > 50) {
-    return Response.json(
-      { error: "Too many messages" },
-      { status: 400 }
-    );
-  }
+  const { messages } = parsed.data;
 
   try {
     const result = streamText({
@@ -53,9 +67,6 @@ export async function POST(req: Request) {
     return result.toUIMessageStreamResponse();
   } catch (error) {
     console.error("Chat API error:", error);
-    return Response.json(
-      { error: "Internal server error" },
-      { status: 500 }
-    );
+    return Response.json({ error: "Internal server error" }, { status: 500 });
   }
 }

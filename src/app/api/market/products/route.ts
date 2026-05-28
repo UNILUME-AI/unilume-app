@@ -1,26 +1,36 @@
+/**
+ * GET /api/market/products
+ *
+ * 给定关键词 + 市场的商品列表 (前 N 条, 可按 position/price/rating 排序).
+ *
+ * Schema: src/lib/api-schemas/market.ts (ProductsQuerySchema).
+ */
+
 import { getProductList } from "@/lib/market-data";
+import { ProductsQuerySchema } from "@/lib/api-schemas/market";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
-  const keyword = searchParams.get("keyword");
-  const market = searchParams.get("market") ?? "UAE";
-  const sortBy = searchParams.get("sortBy") ?? "position";
-  const limitParam = searchParams.get("limit");
+  const parsed = ProductsQuerySchema.safeParse(Object.fromEntries(searchParams));
 
-  if (!keyword) {
+  if (!parsed.success) {
+    const issue = parsed.error.issues[0];
+    const field = issue?.path?.join(".") || "query";
     return Response.json(
-      { error: "Missing required parameter: keyword" },
-      { status: 400 }
+      {
+        error: `Invalid parameter '${field}': ${issue?.message ?? "validation failed"}`,
+        details: parsed.error.issues,
+      },
+      { status: 400 },
     );
   }
 
-  const limit = limitParam
-    ? Math.min(Math.max(1, parseInt(limitParam, 10) || 20), 100)
-    : 20;
+  const { keyword, market, sortBy } = parsed.data;
+  // 保留旧行为: 大 limit 静默 clamp 到 100 (不返 400)
+  const limit = Math.min(parsed.data.limit, 100);
 
   try {
     const products = await getProductList(keyword, market, sortBy, limit);
-
     return Response.json({
       keyword,
       market,
