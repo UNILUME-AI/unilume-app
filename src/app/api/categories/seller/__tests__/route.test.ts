@@ -70,6 +70,20 @@ describe("GET /api/categories/seller", () => {
     });
   });
 
+  it("returns 400 when level is invalid", async () => {
+    const res = await GET(makeRequest({ q: "phone", level: "garbage" }));
+    expect(res.status).toBe(400);
+    const body = await res.json();
+    expect(body.error).toMatch(/level/i);
+    expect(mockSearch).not.toHaveBeenCalled();
+  });
+
+  it("returns 400 when limit is not a positive integer", async () => {
+    const res = await GET(makeRequest({ q: "phone", limit: "abc" }));
+    expect(res.status).toBe(400);
+    expect(mockSearch).not.toHaveBeenCalled();
+  });
+
   it("returns 500 on data layer error", async () => {
     mockSearch.mockRejectedValue(new Error("DB error"));
 

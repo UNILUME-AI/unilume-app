@@ -22,13 +22,24 @@ export async function GET(req: Request) {
   const activeParam = searchParams.get("active");
   const active = activeParam === null ? true : activeParam !== "false";
   const limitParam = searchParams.get("limit");
-  const limit = limitParam ? parseInt(limitParam, 10) : undefined;
 
   if (!q || q.trim().length === 0) {
     return Response.json(
       { error: "Missing required parameter: q" },
       { status: 400 },
     );
+  }
+
+  let limit: number | undefined;
+  if (limitParam !== null) {
+    const parsed = Number.parseInt(limitParam, 10);
+    if (Number.isNaN(parsed) || parsed < 1) {
+      return Response.json(
+        { error: "Invalid parameter: limit must be a positive integer" },
+        { status: 400 },
+      );
+    }
+    limit = parsed;
   }
 
   try {

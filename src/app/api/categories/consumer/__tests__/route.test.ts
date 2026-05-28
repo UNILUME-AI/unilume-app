@@ -103,6 +103,20 @@ describe("GET /api/categories/consumer", () => {
     );
   });
 
+  it("returns 400 when limit is not a positive integer", async () => {
+    const res = await GET(makeRequest({ q: "phone", limit: "abc" }));
+    expect(res.status).toBe(400);
+    const body = await res.json();
+    expect(body.error).toMatch(/limit/i);
+    expect(mockSearch).not.toHaveBeenCalled();
+  });
+
+  it("returns 400 when limit is zero or negative", async () => {
+    const res = await GET(makeRequest({ q: "phone", limit: "0" }));
+    expect(res.status).toBe(400);
+    expect(mockSearch).not.toHaveBeenCalled();
+  });
+
   it("returns 500 on data layer error", async () => {
     mockSearch.mockRejectedValue(new Error("DB connection failed"));
 

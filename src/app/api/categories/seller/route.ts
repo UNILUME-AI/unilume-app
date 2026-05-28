@@ -16,18 +16,40 @@
 
 import { searchSellerCategories } from "@/lib/categories-data";
 
+const VALID_LEVELS = ["family", "type", "fulltype"] as const;
+
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const q = searchParams.get("q");
   const level = searchParams.get("level") ?? undefined;
   const limitParam = searchParams.get("limit");
-  const limit = limitParam ? parseInt(limitParam, 10) : undefined;
 
   if (!q || q.trim().length === 0) {
     return Response.json(
       { error: "Missing required parameter: q" },
       { status: 400 },
     );
+  }
+
+  if (level && !VALID_LEVELS.includes(level as (typeof VALID_LEVELS)[number])) {
+    return Response.json(
+      {
+        error: `Invalid parameter: level must be one of ${VALID_LEVELS.join(", ")}`,
+      },
+      { status: 400 },
+    );
+  }
+
+  let limit: number | undefined;
+  if (limitParam !== null) {
+    const parsed = Number.parseInt(limitParam, 10);
+    if (Number.isNaN(parsed) || parsed < 1) {
+      return Response.json(
+        { error: "Invalid parameter: limit must be a positive integer" },
+        { status: 400 },
+      );
+    }
+    limit = parsed;
   }
 
   try {

@@ -79,6 +79,27 @@ describe("GET /api/categories/resolve", () => {
     expect(body.canonical_code).toBe("new-slug");
   });
 
+  it("returns 200 with status='removed' for inactive direct hit", async () => {
+    mockResolve.mockResolvedValue({
+      status: "removed",
+      side: "consumer",
+      input_code: "deprecated-slug",
+      canonical_code: "deprecated-slug",
+      id: 99999,
+      name: "Deprecated Category",
+      as_of: "2026-05-28T00:00:00Z",
+    });
+
+    const res = await GET(
+      makeRequest({ side: "consumer", code: "deprecated-slug" }),
+    );
+    expect(res.status).toBe(200); // removed is a valid resolution, not HTTP 410
+    const body = await res.json();
+    expect(body.status).toBe("removed");
+    expect(body.canonical_code).toBe("deprecated-slug");
+    expect(body.id).toBe(99999);
+  });
+
   it("returns 200 with status='not_found' when no match", async () => {
     mockResolve.mockResolvedValue({
       status: "not_found",

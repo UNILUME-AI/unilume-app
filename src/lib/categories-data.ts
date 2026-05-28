@@ -87,7 +87,8 @@ export async function searchConsumerCategories(
   const sql = getDb();
   const limit = Math.min(opts.limit ?? 20, 100);
   const activeOnly = opts.active ?? true;
-  const like = `%${escapeLikePattern(query.toLowerCase().trim())}%`;
+  const normalizedQuery = query.toLowerCase().trim();
+  const like = `%${escapeLikePattern(normalizedQuery)}%`;
 
   // 用 sql\`...\` 模板自动参数化, 防 SQL 注入
   const rows = await sql`
@@ -99,8 +100,8 @@ export async function searchConsumerCategories(
       AND (${opts.parent ?? null}::text IS NULL OR parent_code = ${opts.parent ?? null})
     ORDER BY
       -- name 完全相等优先, 然后 code 完全相等, 然后字母序
-      (LOWER(name) = ${query.toLowerCase().trim()}) DESC,
-      (LOWER(code) = ${query.toLowerCase().trim()}) DESC,
+      (LOWER(name) = ${normalizedQuery}) DESC,
+      (LOWER(code) = ${normalizedQuery}) DESC,
       depth ASC,
       code ASC
     LIMIT ${limit}
@@ -309,26 +310,39 @@ export async function getCategoryMapping(
 ): Promise<CategoryMappingResult> {
   const sql = getDb();
 
-  // 先把 consumer_code resolve 成 id_category (handles renames)
-  const consumer = await sql`
-    SELECT id_category FROM consumer_categories WHERE code = ${consumerCode} AND is_active = TRUE
-    LIMIT 1
-  `;
-  if (consumer.length === 0) {
-    // 试查 alias
+  // 沿 alias 链迭代解析到 active code (handles renames). 限深度 + visited set
+  // 防数据脏导致的循环 (a→b, b→a) 或退化链 (a→b→c→...) 把栈撑爆.
+  const MAX_ALIAS_HOPS = 3;
+  const visited = new Set<string>();
+  let currentCode = consumerCode;
+  let idCat: number | null = null;
+
+  for (let hop = 0; hop <= MAX_ALIAS_HOPS; hop++) {
+    if (visited.has(currentCode)) break; // 循环检测
+    visited.add(currentCode);
+
+    const consumer = await sql`
+      SELECT id_category FROM consumer_categories WHERE code = ${currentCode} AND is_active = TRUE
+      LIMIT 1
+    `;
+    if (consumer.length > 0) {
+      idCat = Number(consumer[0].id_category);
+      break;
+    }
+
+    // 没找到 active code, 试一次 alias
     const alias = await sql`
       SELECT new_code FROM category_aliases
-      WHERE side = 'consumer' AND old_code = ${consumerCode}
+      WHERE side = 'consumer' AND old_code = ${currentCode}
       ORDER BY created_at DESC LIMIT 1
     `;
-    if (alias.length === 0) {
-      return { status: "no_confirmed_mapping", consumer_code: consumerCode };
-    }
-    // 用 new_code 重试
-    return getCategoryMapping(alias[0].new_code);
+    if (alias.length === 0) break;
+    currentCode = alias[0].new_code;
   }
 
-  const idCat = Number(consumer[0].id_category);
+  if (idCat === null) {
+    return { status: "no_confirmed_mapping", consumer_code: consumerCode };
+  }
   const mapping = await sql`
     SELECT seller_pk, seller_code, tier, confidence, mapped_at
     FROM category_mappings
