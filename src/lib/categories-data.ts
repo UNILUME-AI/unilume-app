@@ -110,6 +110,137 @@ export async function searchConsumerCategories(
   return rows.map(rowToConsumerCategory);
 }
 
+/**
+ * 取 C 端类目树, 供前端级联选择器使用.
+ *
+ * 实现:
+ *   1. 一次 SQL 拉全部 (filtered) 行 — 6265 active 行约 50ms
+ *   2. 在 Node 里按 parent_code 索引构树 — O(n) 内存操作 ~10ms
+ *   3. 可选 root 截取子树, 可选 maxDepth 修剪深度
+ *
+ * 性能: gzip 后 JSON 约 80KB, 适合一次性加载 + 客户端缓存 1h.
+ */
+export interface ConsumerTreeNode {
+  id_category: number;
+  code: string;
+  name: string;
+  parent_code: string | null;
+  depth: number | null;
+  is_leaf: boolean;
+  children: ConsumerTreeNode[];
+}
+
+export async function getConsumerCategoryTree(
+  opts: {
+    root?: string;
+    maxDepth?: number;
+    leafOnly?: boolean;
+    active?: boolean;
+  } = {},
+): Promise<{ count: number; depth_max: number; tree: ConsumerTreeNode[] }> {
+  const sql = getDb();
+  const activeOnly = opts.active ?? true;
+
+  // (a) 一次 SQL 拉全部行 (按 depth ASC 让父节点先到, 简化构树)
+  const rows = await sql`
+    SELECT id_category, code, name, parent_code, depth, is_leaf
+    FROM consumer_categories
+    WHERE (${activeOnly}::boolean = FALSE OR is_active = TRUE)
+    ORDER BY depth ASC NULLS LAST, code ASC
+  `;
+
+  // (b) 构树: 按 code 索引, 然后按 parent_code 挂到对应 parent.children.
+  // is_leaf 在构完树后用 children.length === 0 运行时推断 (不信 DB 字段,
+  // 因为 crawler 可能没填; 集合内一致性更重要).
+  const byCode = new Map<string, ConsumerTreeNode>();
+  for (const r of rows) {
+    byCode.set(r.code, {
+      id_category: Number(r.id_category),
+      code: r.code,
+      name: r.name,
+      parent_code: r.parent_code,
+      depth: r.depth == null ? null : Number(r.depth),
+      is_leaf: false, // 先占位, 构完树后回填
+      children: [],
+    });
+  }
+  const roots: ConsumerTreeNode[] = [];
+  for (const node of byCode.values()) {
+    if (node.parent_code && byCode.has(node.parent_code)) {
+      byCode.get(node.parent_code)!.children.push(node);
+    } else {
+      // parent_code 为 null 或不在结果集 (例如父节点 is_active=false) 都视作根
+      roots.push(node);
+    }
+  }
+  // 回填 is_leaf
+  for (const node of byCode.values()) {
+    node.is_leaf = node.children.length === 0;
+  }
+
+  // (c) leafOnly 短路: 跑完构树后, 取所有 leaf, 配合 root 过滤
+  if (opts.leafOnly) {
+    const rootPrefix = opts.root ? opts.root + "/" : null;
+    const leaves: ConsumerTreeNode[] = [];
+    for (const node of byCode.values()) {
+      if (!node.is_leaf) continue;
+      if (
+        rootPrefix &&
+        !node.code.startsWith(rootPrefix) &&
+        node.code !== opts.root
+      )
+        continue;
+      // 拷贝一份并清空 children (理论上 leaf 没有, 但保持显式)
+      leaves.push({ ...node, children: [] });
+    }
+    const depthMax = leaves.reduce((m, n) => Math.max(m, n.depth ?? 0), 0);
+    return { count: leaves.length, depth_max: depthMax, tree: leaves };
+  }
+
+  // (d) root 子树过滤
+  let resultRoots: ConsumerTreeNode[];
+  if (opts.root) {
+    const subtreeRoot = byCode.get(opts.root);
+    resultRoots = subtreeRoot ? [subtreeRoot] : [];
+  } else {
+    resultRoots = roots;
+  }
+
+  // (e) maxDepth 修剪 (相对 root, root 算 depth=1)
+  if (opts.maxDepth != null) {
+    pruneByMaxDepth(resultRoots, opts.maxDepth, 1);
+  }
+
+  // (f) 统计 count + depth_max
+  let count = 0;
+  let depthMax = 0;
+  const walk = (nodes: ConsumerTreeNode[]) => {
+    for (const n of nodes) {
+      count += 1;
+      if (n.depth != null && n.depth > depthMax) depthMax = n.depth;
+      walk(n.children);
+    }
+  };
+  walk(resultRoots);
+
+  return { count, depth_max: depthMax, tree: resultRoots };
+}
+
+/** 原地修剪: 把超过 maxDepth 层的子节点清空 (变成 leaf). */
+function pruneByMaxDepth(
+  nodes: ConsumerTreeNode[],
+  maxDepth: number,
+  currentLevel: number,
+) {
+  for (const n of nodes) {
+    if (currentLevel >= maxDepth) {
+      n.children = [];
+    } else {
+      pruneByMaxDepth(n.children, maxDepth, currentLevel + 1);
+    }
+  }
+}
+
 /** Look up a single C 端 category by exact code (active OR inactive). */
 export async function getConsumerCategoryByCode(
   code: string,

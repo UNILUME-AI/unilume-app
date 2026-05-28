@@ -7,7 +7,7 @@ vi.mock("@/lib/db", () => ({
   getDb: () => mockSql,
 }));
 
-import { getCategoryMapping } from "../categories-data";
+import { getCategoryMapping, getConsumerCategoryTree } from "../categories-data";
 
 beforeEach(() => {
   mockSql.mockReset();
@@ -89,5 +89,89 @@ describe("getCategoryMapping alias resolution", () => {
 
     const result = await getCategoryMapping("home-and-kitchen");
     expect(result.status).toBe("no_confirmed_mapping");
+  });
+});
+
+// ── getConsumerCategoryTree: 内存构树正确性 ─────
+
+describe("getConsumerCategoryTree", () => {
+  // 一个 3 层小样本: root1 -> child1 -> grandchild1
+  //                  root2 (leaf)
+  const sampleRows = [
+    { id_category: 1, code: "root1", name: "Root 1", parent_code: null, depth: 1, is_leaf: false, is_active: true },
+    { id_category: 2, code: "root2", name: "Root 2", parent_code: null, depth: 1, is_leaf: true, is_active: true },
+    { id_category: 3, code: "root1/child1", name: "Child 1", parent_code: "root1", depth: 2, is_leaf: false, is_active: true },
+    { id_category: 4, code: "root1/child1/gc1", name: "Grandchild 1", parent_code: "root1/child1", depth: 3, is_leaf: true, is_active: true },
+  ];
+
+  it("builds nested tree from flat rows", async () => {
+    mockSql.mockResolvedValueOnce(sampleRows);
+    const { count, depth_max, tree } = await getConsumerCategoryTree();
+
+    expect(count).toBe(4);
+    expect(depth_max).toBe(3);
+    expect(tree).toHaveLength(2); // 2 roots
+    const root1 = tree.find((n) => n.code === "root1")!;
+    expect(root1.children).toHaveLength(1);
+    expect(root1.children[0].code).toBe("root1/child1");
+    expect(root1.children[0].children[0].code).toBe("root1/child1/gc1");
+    expect(root1.children[0].children[0].is_leaf).toBe(true);
+  });
+
+  it("root='root1' returns only that subtree", async () => {
+    mockSql.mockResolvedValueOnce(sampleRows);
+    const { count, tree } = await getConsumerCategoryTree({ root: "root1" });
+
+    expect(tree).toHaveLength(1);
+    expect(tree[0].code).toBe("root1");
+    expect(count).toBe(3); // root1 + child1 + gc1
+  });
+
+  it("root='nonexistent' returns empty tree", async () => {
+    mockSql.mockResolvedValueOnce(sampleRows);
+    const { count, tree } = await getConsumerCategoryTree({ root: "ghost" });
+
+    expect(tree).toHaveLength(0);
+    expect(count).toBe(0);
+  });
+
+  it("maxDepth=1 prunes to root level only", async () => {
+    mockSql.mockResolvedValueOnce(sampleRows);
+    const { count, tree } = await getConsumerCategoryTree({ maxDepth: 1 });
+
+    expect(tree).toHaveLength(2);
+    expect(tree[0].children).toHaveLength(0); // children pruned
+    expect(tree[1].children).toHaveLength(0);
+    expect(count).toBe(2);
+  });
+
+  it("maxDepth=2 keeps 2 levels", async () => {
+    mockSql.mockResolvedValueOnce(sampleRows);
+    const { count, tree } = await getConsumerCategoryTree({ maxDepth: 2 });
+    const root1 = tree.find((n) => n.code === "root1")!;
+    expect(root1.children).toHaveLength(1); // child1 visible
+    expect(root1.children[0].children).toHaveLength(0); // grandchild pruned
+    expect(count).toBe(3);
+  });
+
+  it("leafOnly=true returns flat leaf array (no children)", async () => {
+    mockSql.mockResolvedValueOnce(sampleRows);
+    const { count, tree } = await getConsumerCategoryTree({ leafOnly: true });
+    // is_leaf=true rows: root2 + gc1
+    expect(tree).toHaveLength(2);
+    expect(tree.every((n) => n.is_leaf === true)).toBe(true);
+    expect(tree.every((n) => n.children.length === 0)).toBe(true);
+    expect(count).toBe(2);
+  });
+
+  it("orphan rows (parent missing from result set) are promoted to roots", async () => {
+    // 模拟: parent (root1) 不在结果集 (例如被 active=false 过滤掉)
+    const rowsMinusParent = sampleRows.filter((r) => r.code !== "root1");
+    mockSql.mockResolvedValueOnce(rowsMinusParent);
+    const { tree } = await getConsumerCategoryTree();
+    // root2, root1/child1 都成了 root (child1 因为找不到 parent 也成了 orphan-root)
+    const codes = tree.map((n) => n.code).sort();
+    expect(codes).toContain("root1/child1");
+    expect(codes).toContain("root2");
   });
 });

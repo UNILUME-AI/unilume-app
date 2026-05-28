@@ -98,6 +98,81 @@ export const ConsumerSearchResponseSchema = z
     description: "搜索结果 (count = results.length)",
   });
 
+// ── GET /api/categories/consumer/tree (级联用) ──
+
+export interface ConsumerCategoryTreeNode {
+  id_category: number;
+  code: string;
+  name: string;
+  parent_code: string | null;
+  depth: number | null;
+  is_leaf: boolean;
+  children: ConsumerCategoryTreeNode[];
+}
+
+/**
+ * 递归 zod schema. z.lazy() 让 schema 引用自己,
+ * toJSONSchema 输出 $ref 自引用 (id="ConsumerCategoryTreeNode").
+ */
+export const ConsumerCategoryTreeNodeSchema: z.ZodType<ConsumerCategoryTreeNode> =
+  z.lazy(() =>
+    z
+      .object({
+        id_category: z.number().int(),
+        code: z.string(),
+        name: z.string(),
+        parent_code: z.string().nullable(),
+        depth: z.number().int().nullable(),
+        is_leaf: z.boolean(),
+        children: z.array(ConsumerCategoryTreeNodeSchema),
+      })
+      .meta({ id: "ConsumerCategoryTreeNode" }),
+  );
+
+export const TreeQuerySchema = z.object({
+  root: z
+    .string()
+    .trim()
+    .min(1)
+    .optional()
+    .meta({
+      description:
+        "可选子树根 (传顶层 code 时只返回那个部门的树); 不传则返回全树",
+      examples: ["home-and-kitchen"],
+    }),
+  maxDepth: z.coerce
+    .number()
+    .int()
+    .min(1)
+    .max(10)
+    .optional()
+    .meta({
+      description: "返回的最大层级 (相对 root). 不传则返回所有",
+      examples: [3],
+    }),
+  leafOnly: z
+    .enum(["true", "false"])
+    .default("false")
+    .meta({
+      description:
+        "true 时返回扁平 leaf 数组而非嵌套树, 给 typeahead / 搜索建议用",
+    }),
+  active: z
+    .enum(["true", "false"])
+    .default("true")
+    .meta({ description: "只看 active=true 类目, 默认 true" }),
+});
+
+export const ConsumerTreeResponseSchema = z
+  .object({
+    count: z.number().int().meta({ description: "本次返回节点总数 (含嵌套子节点)" }),
+    depth_max: z.number().int().meta({ description: "本次返回中最深 depth" }),
+    tree: z.array(ConsumerCategoryTreeNodeSchema).meta({
+      description: "根节点列表; leafOnly=true 时为扁平 leaf 列表 (无 children)",
+    }),
+  })
+  .meta({ id: "ConsumerTreeResponse" });
+
 // ── SellerCategory (Phase 2 才有数据) ───────────
 
 export const SellerCategorySchema = z
