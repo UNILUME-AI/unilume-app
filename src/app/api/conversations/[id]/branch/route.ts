@@ -1,3 +1,12 @@
+/**
+ * POST /api/conversations/{id}/branch — 在指定位置创建新分支 (edit / regenerate)
+ * GET  /api/conversations/{id}/branch — 取当前 parent 下的 siblings, 或 switchTo 切换 active branch
+ *
+ * Clerk auth 必填. path id 必须 UUID v4.
+ *
+ * Schema: src/lib/api-schemas/chat.ts (Branch* schemas).
+ */
+
 import { auth } from "@clerk/nextjs/server";
 import {
   deactivateSiblings,
@@ -7,11 +16,12 @@ import {
   switchBranch,
   getConversationMessages,
 } from "@/lib/db";
+import {
+  BranchPathSchema,
+  BranchPostBodySchema,
+  BranchGetQuerySchema,
+} from "@/lib/api-schemas/chat";
 
-const UUID_RE =
-  /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-
-/** POST — create a branch (edit or regenerate) */
 export async function POST(
   req: Request,
   { params }: { params: Promise<{ id: string }> },
@@ -20,33 +30,36 @@ export async function POST(
   if (!userId)
     return Response.json({ error: "Unauthorized" }, { status: 401 });
 
-  const { id: conversationId } = await params;
-  if (!UUID_RE.test(conversationId))
+  const pathParsed = BranchPathSchema.safeParse(await params);
+  if (!pathParsed.success) {
     return Response.json({ error: "Invalid conversation id" }, { status: 400 });
+  }
+  const conversationId = pathParsed.data.id;
 
-  let body: Record<string, unknown>;
+  let raw: unknown;
   try {
-    body = await req.json();
+    raw = await req.json();
   } catch {
     return Response.json({ error: "Invalid JSON" }, { status: 400 });
   }
 
-  const { parentMessageId, message, branchOrdinal } = body as {
-    parentMessageId: string | null;
-    message: { id: string; role: string; parts: unknown[] };
-    branchOrdinal: number;
-  };
-
-  if (!message?.id || !message?.role || !Array.isArray(message?.parts)) {
-    return Response.json({ error: "Invalid message" }, { status: 400 });
+  const parsed = BranchPostBodySchema.safeParse(raw);
+  if (!parsed.success) {
+    const issue = parsed.error.issues[0];
+    return Response.json(
+      {
+        error: `Invalid field '${issue?.path?.map(String).join(".") || "body"}': ${issue?.message}`,
+        details: parsed.error.issues,
+      },
+      { status: 400 },
+    );
   }
 
+  const { parentMessageId, message, branchOrdinal } = parsed.data;
+
   try {
-    // Deactivate siblings at the branch point
     await deactivateSiblings(conversationId, parentMessageId);
-    // Deactivate all descendants after the branch point
     await deactivateDescendants(conversationId, branchOrdinal - 1);
-    // Insert new message as the active child
     await appendMessage(conversationId, {
       id: message.id,
       parentMessageId: parentMessageId ?? null,
@@ -62,7 +75,6 @@ export async function POST(
   }
 }
 
-/** GET — get siblings for branch navigator, or switch active branch */
 export async function GET(
   req: Request,
   { params }: { params: Promise<{ id: string }> },
@@ -71,27 +83,39 @@ export async function GET(
   if (!userId)
     return Response.json({ error: "Unauthorized" }, { status: 401 });
 
-  const { id: conversationId } = await params;
+  const pathParsed = BranchPathSchema.safeParse(await params);
+  if (!pathParsed.success) {
+    return Response.json({ error: "Invalid conversation id" }, { status: 400 });
+  }
+  const conversationId = pathParsed.data.id;
+
   const url = new URL(req.url);
-  const parentMessageId = url.searchParams.get("parentMessageId"); // null-string = root
-  const switchTo = url.searchParams.get("switchTo"); // optional: switch active branch
+  const parsed = BranchGetQuerySchema.safeParse(
+    Object.fromEntries(url.searchParams),
+  );
+  if (!parsed.success) {
+    const issue = parsed.error.issues[0];
+    return Response.json(
+      {
+        error: `Invalid parameter '${issue?.path?.map(String).join(".") || "query"}': ${issue?.message}`,
+        details: parsed.error.issues,
+      },
+      { status: 400 },
+    );
+  }
+
+  const parentMessageId = parsed.data.parentMessageId;
+  const switchTo = parsed.data.switchTo;
+  const normalizedParent =
+    parentMessageId === "null" ? null : parentMessageId;
 
   try {
     if (switchTo) {
-      await switchBranch(
-        conversationId,
-        parentMessageId === "null" ? null : parentMessageId,
-        switchTo,
-      );
-      // Return the reloaded active branch
+      await switchBranch(conversationId, normalizedParent, switchTo);
       const conversation = await getConversationMessages(conversationId, userId);
       return Response.json({ conversation });
     }
-
-    const siblings = await getMessageSiblings(
-      conversationId,
-      parentMessageId === "null" ? null : parentMessageId,
-    );
+    const siblings = await getMessageSiblings(conversationId, normalizedParent);
     return Response.json({ siblings });
   } catch (error) {
     console.error("Branch GET error:", error);

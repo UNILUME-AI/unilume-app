@@ -9,6 +9,8 @@
     "lint": "eslint",
     "enrich-report": "tsx scripts/market/enrich-change-report.ts",
     "store-report": "tsx scripts/market/store-change-report.ts",
+    "docs:api": "tsx scripts/docs/generate-api-docs.ts",
+    "docs:api:check": "tsx scripts/docs/generate-api-docs.ts --check",
     "test": "vitest run",
     "test:watch": "vitest"
   },

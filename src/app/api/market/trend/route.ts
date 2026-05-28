@@ -1,24 +1,32 @@
+/**
+ * GET /api/market/trend
+ *
+ * 给定关键词的价格趋势 (回溯 N 天, 默认 7 天, 上限 90).
+ *
+ * Schema: src/lib/api-schemas/market.ts (TrendQuerySchema).
+ */
+
 import { getPriceTrend } from "@/lib/market-data";
+import { TrendQuerySchema } from "@/lib/api-schemas/market";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
-  const keyword = searchParams.get("keyword");
-  const daysParam = searchParams.get("days");
+  const parsed = TrendQuerySchema.safeParse(Object.fromEntries(searchParams));
 
-  if (!keyword) {
+  if (!parsed.success) {
+    const issue = parsed.error.issues[0];
+    const field = issue?.path?.map(String).join(".") || "query";
     return Response.json(
-      { error: "Missing required parameter: keyword" },
-      { status: 400 }
+      {
+        error: `Invalid parameter '${field}': ${issue?.message ?? "validation failed"}`,
+        details: parsed.error.issues,
+      },
+      { status: 400 },
     );
   }
 
-  let days = 7;
-  if (daysParam) {
-    days = Math.min(Math.max(1, parseInt(daysParam, 10) || 7), 90);
-  }
-
   try {
-    const data = await getPriceTrend(keyword, days);
+    const data = await getPriceTrend(parsed.data.keyword, parsed.data.days);
     return Response.json(data);
   } catch (error) {
     console.error("Price trend API error:", error);

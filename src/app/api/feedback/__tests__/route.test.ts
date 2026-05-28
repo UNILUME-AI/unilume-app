@@ -47,7 +47,7 @@ describe("POST /api/feedback", () => {
     );
     expect(res.status).toBe(400);
     const data = await res.json();
-    expect(data.error).toBe("Invalid rating");
+    expect(data.error).toMatch(/rating/i);
   });
 
   it("returns 400 for missing fields", async () => {
@@ -56,7 +56,8 @@ describe("POST /api/feedback", () => {
     );
     expect(res.status).toBe(400);
     const data = await res.json();
-    expect(data.error).toBe("Missing fields");
+    // 现在 zod 报错 'userQuery' 字段缺失
+    expect(data.error).toMatch(/userQuery|assistantResponse/i);
   });
 
   it("returns 400 when userQuery is not a string", async () => {
