@@ -68,6 +68,17 @@ describe("buildSystemPrompt", () => {
     expect(prompt).toContain("fulfilled_by_noon_fbn");
   });
 
+  it("instructs category_lookup BEFORE market tools", () => {
+    expect(prompt).toContain("category_lookup");
+    expect(prompt).toMatch(/FIRST call category_lookup/i);
+    expect(prompt).toMatch(/never invent category codes/i);
+  });
+
+  it("guides on no_match handling", () => {
+    expect(prompt).toMatch(/no_match/i);
+    expect(prompt).toMatch(/broader english/i);
+  });
+
   // Scope guard tests
   it("defines scope for Noon seller operations", () => {
     expect(prompt).toContain("politely decline");

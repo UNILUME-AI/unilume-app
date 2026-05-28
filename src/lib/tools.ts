@@ -19,6 +19,7 @@ import {
   getBrandDistribution,
   getKeywordCategories,
 } from "./market-data";
+import { searchConsumerCategories } from "./categories-data";
 
 async function embedQuery(query: string): Promise<number[]> {
   const model = vertex.textEmbeddingModel("text-embedding-005");
@@ -313,4 +314,177 @@ export const marketTools = {
       };
     },
   }),
+};
+
+// ── Category lookup (Selection Agent 主路径) ──────────
+
+export const categoryTools = {
+  category_lookup: tool({
+    description:
+      "Resolve a natural-language product term to a valid Noon consumer category code. " +
+      "ALWAYS call this BEFORE calling analyze_market / compare_markets / list_products / analyze_brands " +
+      "when the user mentions a product or category (例如 '挂脖风扇', '手机壳', 'air fryer'). " +
+      "Returns the canonical id_category + slug + parent + last_seen date. " +
+      "**Never invent category codes** — only use what this tool returns. " +
+      "Query MUST be in English; if the user's term is Chinese / Arabic, translate it first " +
+      "(Noon category names are all English).",
+    inputSchema: z.object({
+      query: z
+        .string()
+        .describe(
+          "Product / category term in English, e.g. 'neck fan', 'phone case', 'air fryer'. " +
+            "Translate non-English user input before calling.",
+        ),
+      market: z
+        .enum(["UAE", "KSA"])
+        .optional()
+        .describe(
+          "Optional market hint — filters to categories that have been seen in that locale " +
+            "(UAE → 'ae', KSA → 'sa'). Omit to search across all locales.",
+        ),
+    }),
+    execute: async ({ query, market }) => {
+      const normalized = query.toLowerCase().trim();
+      const results = await searchConsumerCategories(normalized, {
+        active: true,
+        limit: 10,
+      });
+
+      // Market filter via seen_in_locales (post-filter, search already small)
+      let filtered = results;
+      if (market) {
+        const locale = market === "UAE" ? "ae" : "sa";
+        filtered = results.filter((c) => c.seen_in_locales.includes(locale));
+      }
+
+      if (filtered.length === 0) {
+        const reason =
+          results.length === 0
+            ? "no_match"
+            : `found_but_not_in_${market}`;
+        return {
+          status: "no_match" as const,
+          query: normalized,
+          market: market ?? "any",
+          reason,
+          message:
+            results.length > 0 && market
+              ? `Found ${results.length} matches in other markets but none in ${market}.`
+              : "No matching categories found in Noon's taxonomy.",
+          instruction:
+            "不要使用【N】引用角标。" +
+            "告诉用户没有匹配到 Noon 上的类目, 并给两个具体后续: " +
+            "1) 改用更宽泛的英文词 (例如不要用 '挂脖小风扇' 这种具体描述, 用 'fan' 'cooling fan'). " +
+            "2) 或者用户可以描述场景, 我们换更上层的关键词. " +
+            "**绝对不要凭记忆生成 category code 或继续调用 analyze_market 等工具**.",
+        };
+      }
+
+      return {
+        status: "ok" as const,
+        query: normalized,
+        market: market ?? "any",
+        match_count: filtered.length,
+        candidates: filtered.slice(0, 5).map((c) => ({
+          id_category: c.id_category,
+          code: c.code,
+          name: c.name,
+          parent_code: c.parent_code,
+          depth: c.depth,
+          is_leaf: c.is_leaf,
+          seen_in_locales: c.seen_in_locales,
+          last_seen: c.last_seen,
+        })),
+        instruction:
+          "不要使用【N】引用角标。" +
+          "用第一个候选作为主答案, 引用 code + name + (As of <last_seen>). " +
+          "如果用户问市场/价格/竞争, 拿候选的 code 调用 analyze_market 等工具 " +
+          "(注意: market 工具用的是 keyword 不是 code, 但 code 通常含可用作 keyword 的英文词). " +
+          "**绝对不要凭记忆生成 code 或翻译 code**. " +
+          "如果第一个候选 depth 较浅 (例如 depth=1 或 2), 可能是父类目, 简要告诉用户" +
+          "'这是一个较宽泛的类目, 你具体想做哪一种?' 然后让用户选更精确的子类目.",
+      };
+    },
+  }),
+};
+
+// ── Tool metadata for auto-generated docs (npm run docs:tools) ──
+//
+// 跟 tool 定义放同一文件, 改 tool 时一眼看到 meta 在旁边, 不容易漏更新.
+// dump-ai-tools.ts 扫描这个表 + 每个 tool 的 description/inputSchema 生成 markdown.
+
+export type ToolGroup = "policy" | "market" | "category";
+
+export interface ToolMeta {
+  group: ToolGroup;
+  dataSource: string;
+  whenToCall: string;
+  /** Possible string values returned in `status` field; empty if tool has no status enum. */
+  statuses?: string[];
+  /** Optional ordering constraint, e.g. "必须先于 market 工具" */
+  callOrder?: string;
+  /** Related design docs (relative paths under unilume-docs/). */
+  relatedDocs?: string[];
+}
+
+export const TOOL_META: Record<string, ToolMeta> = {
+  search_policy: {
+    group: "policy",
+    dataSource:
+      "kb_articles + pgvector embeddings (semantic) / kb_categories (keyword fallback)",
+    whenToCall:
+      "用户问 Noon 政策 / 规则 / 费率 / 流程 / 退货 / 物流 / 入驻要求等",
+    relatedDocs: ["architecture/intelligence/04-policy-agent.md"],
+  },
+
+  analyze_market: {
+    group: "market",
+    dataSource: "market_snapshots + market_products tables",
+    whenToCall:
+      "用户问市场需求 / 竞争密度 / 价格分布 / 价格趋势 / 选品是否值得",
+    statuses: ["ok", "no_data"],
+    callOrder: "应在 category_lookup 之后调用 (用 canonical code 当 keyword)",
+    relatedDocs: ["architecture/intelligence/01-architecture.md"],
+  },
+
+  compare_markets: {
+    group: "market",
+    dataSource: "market_snapshots (UAE + KSA 跨市场)",
+    whenToCall: "用户问跨市场对比, 哪个市场更值得做",
+    callOrder: "应在 category_lookup 之后调用",
+    relatedDocs: ["architecture/intelligence/01-architecture.md"],
+  },
+
+  list_products: {
+    group: "market",
+    dataSource: "market_products table",
+    whenToCall: "用户要看具体商品 / top sellers / 浏览 listings",
+    callOrder: "应在 category_lookup 之后调用",
+  },
+
+  analyze_brands: {
+    group: "market",
+    dataSource: "market_products aggregated by brand",
+    whenToCall: "用户问品牌竞争格局 / 白牌 (unbranded) 机会",
+    statuses: ["ok", "no_data"],
+    callOrder: "应在 category_lookup 之后调用",
+  },
+
+  browse_keywords: {
+    group: "market",
+    dataSource: "market_snapshots distinct keywords + kb_categories grouping",
+    whenToCall: "用户想浏览有哪些可分析的关键词 / 数据探索",
+  },
+
+  category_lookup: {
+    group: "category",
+    dataSource:
+      "consumer_categories table (LIKE on code/name, optional seen_in_locales filter)",
+    whenToCall:
+      "用户提产品 / 类目时 (例如 '挂脖风扇' / '手机壳' / 'air fryer')",
+    statuses: ["ok", "no_match"],
+    callOrder:
+      "**必须先于** analyze_market / compare_markets / list_products / analyze_brands; query 必须为英文 (LLM 翻译后再调)",
+    relatedDocs: ["architecture/crawler/09-category-data-lifecycle.md"],
+  },
 };
