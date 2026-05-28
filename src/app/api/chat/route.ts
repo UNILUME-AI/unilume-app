@@ -12,7 +12,7 @@
 
 import { streamText, stepCountIs, convertToModelMessages } from "ai";
 import { buildSystemPrompt } from "@/lib/prompts";
-import { policyTools, marketTools } from "@/lib/tools";
+import { policyTools, marketTools, categoryTools } from "@/lib/tools";
 import { vertex } from "@/lib/vertex";
 import { auth } from "@clerk/nextjs/server";
 import { ChatRequestSchema } from "@/lib/api-schemas/chat";
@@ -52,7 +52,7 @@ export async function POST(req: Request) {
       model: vertex("gemini-2.5-flash"),
       system: await buildSystemPrompt(),
       messages: await convertToModelMessages(messages),
-      tools: { ...policyTools, ...marketTools },
+      tools: { ...policyTools, ...marketTools, ...categoryTools },
       stopWhen: stepCountIs(3),
       providerOptions: {
         google: {

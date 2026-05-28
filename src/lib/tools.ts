@@ -19,6 +19,7 @@ import {
   getBrandDistribution,
   getKeywordCategories,
 } from "./market-data";
+import { searchConsumerCategories } from "./categories-data";
 
 async function embedQuery(query: string): Promise<number[]> {
   const model = vertex.textEmbeddingModel("text-embedding-005");
@@ -310,6 +311,98 @@ export const marketTools = {
           "Show each keyword with its available markets and last updated date. " +
           "This helps users discover what data they can query. " +
           "Suggest the user pick a keyword to analyze further with analyze_market, compare_markets, or analyze_brands.",
+      };
+    },
+  }),
+};
+
+// ── Category lookup (Selection Agent 主路径) ──────────
+
+export const categoryTools = {
+  category_lookup: tool({
+    description:
+      "Resolve a natural-language product term to a valid Noon consumer category code. " +
+      "ALWAYS call this BEFORE calling analyze_market / compare_markets / list_products / analyze_brands " +
+      "when the user mentions a product or category (例如 '挂脖风扇', '手机壳', 'air fryer'). " +
+      "Returns the canonical id_category + slug + parent + last_seen date. " +
+      "**Never invent category codes** — only use what this tool returns. " +
+      "Query MUST be in English; if the user's term is Chinese / Arabic, translate it first " +
+      "(Noon category names are all English).",
+    inputSchema: z.object({
+      query: z
+        .string()
+        .describe(
+          "Product / category term in English, e.g. 'neck fan', 'phone case', 'air fryer'. " +
+            "Translate non-English user input before calling.",
+        ),
+      market: z
+        .enum(["UAE", "KSA"])
+        .optional()
+        .describe(
+          "Optional market hint — filters to categories that have been seen in that locale " +
+            "(UAE → 'ae', KSA → 'sa'). Omit to search across all locales.",
+        ),
+    }),
+    execute: async ({ query, market }) => {
+      const normalized = query.toLowerCase().trim();
+      const results = await searchConsumerCategories(normalized, {
+        active: true,
+        limit: 10,
+      });
+
+      // Market filter via seen_in_locales (post-filter, search already small)
+      let filtered = results;
+      if (market) {
+        const locale = market === "UAE" ? "ae" : "sa";
+        filtered = results.filter((c) => c.seen_in_locales.includes(locale));
+      }
+
+      if (filtered.length === 0) {
+        const reason =
+          results.length === 0
+            ? "no_match"
+            : `found_but_not_in_${market}`;
+        return {
+          status: "no_match" as const,
+          query: normalized,
+          market: market ?? "any",
+          reason,
+          message:
+            results.length > 0 && market
+              ? `Found ${results.length} matches in other markets but none in ${market}.`
+              : "No matching categories found in Noon's taxonomy.",
+          instruction:
+            "不要使用【N】引用角标。" +
+            "告诉用户没有匹配到 Noon 上的类目, 并给两个具体后续: " +
+            "1) 改用更宽泛的英文词 (例如不要用 '挂脖小风扇' 这种具体描述, 用 'fan' 'cooling fan'). " +
+            "2) 或者用户可以描述场景, 我们换更上层的关键词. " +
+            "**绝对不要凭记忆生成 category code 或继续调用 analyze_market 等工具**.",
+        };
+      }
+
+      return {
+        status: "ok" as const,
+        query: normalized,
+        market: market ?? "any",
+        match_count: filtered.length,
+        candidates: filtered.slice(0, 5).map((c) => ({
+          id_category: c.id_category,
+          code: c.code,
+          name: c.name,
+          parent_code: c.parent_code,
+          depth: c.depth,
+          is_leaf: c.is_leaf,
+          seen_in_locales: c.seen_in_locales,
+          last_seen: c.last_seen,
+        })),
+        instruction:
+          "不要使用【N】引用角标。" +
+          "用第一个候选作为主答案, 引用 code + name + (As of <last_seen>). " +
+          "如果用户问市场/价格/竞争, 拿候选的 code 调用 analyze_market 等工具 " +
+          "(注意: market 工具用的是 keyword 不是 code, 但 code 通常含可用作 keyword 的英文词). " +
+          "**绝对不要凭记忆生成 code 或翻译 code**. " +
+          "如果第一个候选 depth 较浅 (例如 depth=1 或 2), 可能是父类目, 简要告诉用户" +
+          "'这是一个较宽泛的类目, 你具体想做哪一种?' 然后让用户选更精确的子类目.",
       };
     },
   }),
