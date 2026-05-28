@@ -407,3 +407,84 @@ export const categoryTools = {
     },
   }),
 };
+
+// ── Tool metadata for auto-generated docs (npm run docs:tools) ──
+//
+// 跟 tool 定义放同一文件, 改 tool 时一眼看到 meta 在旁边, 不容易漏更新.
+// dump-ai-tools.ts 扫描这个表 + 每个 tool 的 description/inputSchema 生成 markdown.
+
+export type ToolGroup = "policy" | "market" | "category";
+
+export interface ToolMeta {
+  group: ToolGroup;
+  dataSource: string;
+  whenToCall: string;
+  /** Possible string values returned in `status` field; empty if tool has no status enum. */
+  statuses?: string[];
+  /** Optional ordering constraint, e.g. "必须先于 market 工具" */
+  callOrder?: string;
+  /** Related design docs (relative paths under unilume-docs/). */
+  relatedDocs?: string[];
+}
+
+export const TOOL_META: Record<string, ToolMeta> = {
+  search_policy: {
+    group: "policy",
+    dataSource:
+      "kb_articles + pgvector embeddings (semantic) / kb_categories (keyword fallback)",
+    whenToCall:
+      "用户问 Noon 政策 / 规则 / 费率 / 流程 / 退货 / 物流 / 入驻要求等",
+    relatedDocs: ["architecture/intelligence/04-policy-agent.md"],
+  },
+
+  analyze_market: {
+    group: "market",
+    dataSource: "market_snapshots + market_products tables",
+    whenToCall:
+      "用户问市场需求 / 竞争密度 / 价格分布 / 价格趋势 / 选品是否值得",
+    statuses: ["ok", "no_data"],
+    callOrder: "应在 category_lookup 之后调用 (用 canonical code 当 keyword)",
+    relatedDocs: ["architecture/intelligence/01-architecture.md"],
+  },
+
+  compare_markets: {
+    group: "market",
+    dataSource: "market_snapshots (UAE + KSA 跨市场)",
+    whenToCall: "用户问跨市场对比, 哪个市场更值得做",
+    callOrder: "应在 category_lookup 之后调用",
+    relatedDocs: ["architecture/intelligence/01-architecture.md"],
+  },
+
+  list_products: {
+    group: "market",
+    dataSource: "market_products table",
+    whenToCall: "用户要看具体商品 / top sellers / 浏览 listings",
+    callOrder: "应在 category_lookup 之后调用",
+  },
+
+  analyze_brands: {
+    group: "market",
+    dataSource: "market_products aggregated by brand",
+    whenToCall: "用户问品牌竞争格局 / 白牌 (unbranded) 机会",
+    statuses: ["ok", "no_data"],
+    callOrder: "应在 category_lookup 之后调用",
+  },
+
+  browse_keywords: {
+    group: "market",
+    dataSource: "market_snapshots distinct keywords + kb_categories grouping",
+    whenToCall: "用户想浏览有哪些可分析的关键词 / 数据探索",
+  },
+
+  category_lookup: {
+    group: "category",
+    dataSource:
+      "consumer_categories table (LIKE on code/name, optional seen_in_locales filter)",
+    whenToCall:
+      "用户提产品 / 类目时 (例如 '挂脖风扇' / '手机壳' / 'air fryer')",
+    statuses: ["ok", "no_match"],
+    callOrder:
+      "**必须先于** analyze_market / compare_markets / list_products / analyze_brands; query 必须为英文 (LLM 翻译后再调)",
+    relatedDocs: ["architecture/crawler/09-category-data-lifecycle.md"],
+  },
+};
