@@ -27,7 +27,7 @@ export async function POST(req: Request) {
   const parsed = FeedbackBodySchema.safeParse(raw);
   if (!parsed.success) {
     const issue = parsed.error.issues[0];
-    const field = issue?.path?.join(".") || "body";
+    const field = issue?.path?.map(String).join(".") || "body";
     return Response.json(
       {
         error: `Invalid field '${field}': ${issue?.message ?? "validation failed"}`,

@@ -22,6 +22,7 @@ import {
   MessagesPatchBodySchema,
   MessagesPutBodySchema,
 } from "@/lib/api-schemas/chat";
+import type { ZodError } from "zod";
 
 async function resolvePath(params: Promise<{ id: string }>) {
   const parsed = MessagesPathSchema.safeParse(await params);
@@ -29,14 +30,14 @@ async function resolvePath(params: Promise<{ id: string }>) {
   return parsed.data.id;
 }
 
-function validationError(
-  parsed: { error: { issues: Array<{ path?: (string | number)[]; message: string }> } },
-) {
-  const issue = parsed.error.issues[0];
+function validationError(error: ZodError) {
+  const issue = error.issues[0];
+  // path 在 zod 4 是 PropertyKey[] (允许 symbol), 用 String() cast 一下兼容
+  const fieldPath = issue?.path?.map(String).join(".") || "body";
   return Response.json(
     {
-      error: `Invalid field '${issue?.path?.join(".") || "body"}': ${issue?.message}`,
-      details: parsed.error.issues,
+      error: `Invalid field '${fieldPath}': ${issue?.message ?? "validation failed"}`,
+      details: error.issues,
     },
     { status: 400 },
   );
@@ -62,7 +63,7 @@ export async function POST(
   }
 
   const parsed = MessagesPostBodySchema.safeParse(raw);
-  if (!parsed.success) return validationError(parsed);
+  if (!parsed.success) return validationError(parsed.error);
 
   const { id, parentMessageId, role, parts, status, ordinal, title } = parsed.data;
 
@@ -106,7 +107,7 @@ export async function PATCH(
   }
 
   const parsed = MessagesPatchBodySchema.safeParse(raw);
-  if (!parsed.success) return validationError(parsed);
+  if (!parsed.success) return validationError(parsed.error);
 
   try {
     await updateMessageParts(parsed.data.messageId, conversationId, parsed.data.parts);
@@ -137,7 +138,7 @@ export async function PUT(
   }
 
   const parsed = MessagesPutBodySchema.safeParse(raw);
-  if (!parsed.success) return validationError(parsed);
+  if (!parsed.success) return validationError(parsed.error);
 
   try {
     await finalizeMessage(parsed.data.messageId, conversationId, parsed.data.parts);

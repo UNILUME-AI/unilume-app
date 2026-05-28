@@ -48,7 +48,7 @@ export async function POST(
     const issue = parsed.error.issues[0];
     return Response.json(
       {
-        error: `Invalid field '${issue?.path?.join(".") || "body"}': ${issue?.message}`,
+        error: `Invalid field '${issue?.path?.map(String).join(".") || "body"}': ${issue?.message}`,
         details: parsed.error.issues,
       },
       { status: 400 },
@@ -97,7 +97,7 @@ export async function GET(
     const issue = parsed.error.issues[0];
     return Response.json(
       {
-        error: `Invalid parameter '${issue?.path?.join(".") || "query"}': ${issue?.message}`,
+        error: `Invalid parameter '${issue?.path?.map(String).join(".") || "query"}': ${issue?.message}`,
         details: parsed.error.issues,
       },
       { status: 400 },

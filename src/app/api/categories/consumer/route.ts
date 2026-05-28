@@ -20,7 +20,7 @@ export async function GET(req: Request) {
 
   if (!parsed.success) {
     const issue = parsed.error.issues[0];
-    const field = issue?.path?.join(".") || "query";
+    const field = issue?.path?.map(String).join(".") || "query";
     return Response.json(
       {
         error: `Invalid parameter '${field}': ${issue?.message ?? "validation failed"}`,

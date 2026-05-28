@@ -32,7 +32,7 @@ export async function GET(req: Request) {
     const issue = parsed.error.issues[0];
     return Response.json(
       {
-        error: `Invalid parameter '${issue?.path?.join(".") || "query"}': ${issue?.message}`,
+        error: `Invalid parameter '${issue?.path?.map(String).join(".") || "query"}': ${issue?.message}`,
         details: parsed.error.issues,
       },
       { status: 400 },
@@ -66,7 +66,7 @@ export async function DELETE(req: Request) {
     const issue = parsed.error.issues[0];
     return Response.json(
       {
-        error: `Invalid parameter '${issue?.path?.join(".") || "query"}': ${issue?.message}`,
+        error: `Invalid parameter '${issue?.path?.map(String).join(".") || "query"}': ${issue?.message}`,
         details: parsed.error.issues,
       },
       { status: 400 },

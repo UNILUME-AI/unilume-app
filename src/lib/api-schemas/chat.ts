@@ -27,7 +27,8 @@ const OkResponseSchema = z
 const UIMessageSchema = z.object({
   id: z.string(),
   role: z.enum(["user", "assistant", "system"]),
-  parts: z.array(z.unknown()).meta({
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- z.any() (not z.unknown()) so inferred type is `any[]`, compatible with AI SDK's UIMessagePart<UIDataTypes, UITools>[] without narrowing. zod 只校验是数组, 不复刻 SDK 部件联合.
+  parts: z.array(z.any()).meta({
     description: "AI SDK message parts (text / tool-call / tool-result 等), 见 Vercel AI SDK 文档",
   }),
 });
@@ -64,7 +65,8 @@ export const BranchPostBodySchema = z
     message: z.object({
       id: z.string(),
       role: z.enum(["user", "assistant", "system"]),
-      parts: z.array(z.unknown()),
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- z.any() (not z.unknown()) so inferred type is `any[]`, compatible with AI SDK's UIMessagePart<UIDataTypes, UITools>[] without further narrow. zod 只校验是数组, 不复刻 SDK 部件联合.
+    parts: z.array(z.any()),
     }),
     branchOrdinal: z.number().int().min(0),
   })
@@ -90,7 +92,8 @@ export const MessagesPostBodySchema = z
     id: z.string().meta({ description: "新消息 id" }),
     parentMessageId: z.string().nullable(),
     role: z.enum(["user", "assistant", "system"]),
-    parts: z.array(z.unknown()),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- z.any() (not z.unknown()) so inferred type is `any[]`, compatible with AI SDK's UIMessagePart<UIDataTypes, UITools>[] without further narrow. zod 只校验是数组, 不复刻 SDK 部件联合.
+    parts: z.array(z.any()),
     status: z.enum(["streaming", "complete"]).optional(),
     ordinal: z.number().int().min(0),
     title: z.string().optional().meta({
@@ -102,7 +105,8 @@ export const MessagesPostBodySchema = z
 export const MessagesPatchBodySchema = z
   .object({
     messageId: z.string(),
-    parts: z.array(z.unknown()),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- z.any() (not z.unknown()) so inferred type is `any[]`, compatible with AI SDK's UIMessagePart<UIDataTypes, UITools>[] without further narrow. zod 只校验是数组, 不复刻 SDK 部件联合.
+    parts: z.array(z.any()),
   })
   .meta({ id: "MessagesPatchBody" });
 
