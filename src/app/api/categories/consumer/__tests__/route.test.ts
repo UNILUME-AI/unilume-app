@@ -76,6 +76,7 @@ describe("GET /api/categories/consumer", () => {
     await GET(
       makeRequest({ q: "phone", parent: "electronics", active: "false", limit: "5" }),
     );
+    // zod schema 把所有 query 字段 normalize 后传入: parent string, active boolean, limit number
     expect(mockSearch).toHaveBeenCalledWith("phone", {
       parent: "electronics",
       active: false,
@@ -83,14 +84,14 @@ describe("GET /api/categories/consumer", () => {
     });
   });
 
-  it("defaults active=true when active param missing", async () => {
+  it("defaults active=true and limit=20 when params missing", async () => {
     mockSearch.mockResolvedValue([]);
 
     await GET(makeRequest({ q: "phone" }));
     expect(mockSearch).toHaveBeenCalledWith("phone", {
       parent: undefined,
       active: true,
-      limit: undefined,
+      limit: 20,
     });
   });
 

@@ -1,50 +1,40 @@
 /**
  * GET /api/categories/consumer
  *
- * Search active C 端 (consumer) categories by code/name.
- * AI 主路径 — Selection Agent 的 category_lookup tool 用此。
+ * 搜索 C 端 (consumer) 类目. AI Selection Agent 的 category_lookup tool 主路径.
  *
- * Query params:
- *   q        (required) — search term, 在 code/name 上 LIKE 匹配
- *   parent   (optional) — 限定 parent_code 精确匹配
- *   active   (optional) — 'true' (默认) / 'false'. false 时返回 inactive 行
- *   limit    (optional) — 默认 20, 上限 100
+ * 参数 / 响应 schema 定义在 src/lib/api-schemas/categories.ts (是文档的 source of truth).
+ * 端到端文档见 /api-docs (基于 /api/openapi.json 渲染).
  *
- * 详细设计见 unilume-docs/architecture/crawler/09-category-data-lifecycle.md §7.1
+ * 设计文档: unilume-docs/architecture/crawler/09-category-data-lifecycle.md §7.1
  */
 
 import { searchConsumerCategories } from "@/lib/categories-data";
+import { ConsumerSearchQuerySchema } from "@/lib/api-schemas/categories";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
-  const q = searchParams.get("q");
-  const parent = searchParams.get("parent") ?? undefined;
-  const activeParam = searchParams.get("active");
-  const active = activeParam === null ? true : activeParam !== "false";
-  const limitParam = searchParams.get("limit");
+  const parsed = ConsumerSearchQuerySchema.safeParse(
+    Object.fromEntries(searchParams),
+  );
 
-  if (!q || q.trim().length === 0) {
+  if (!parsed.success) {
+    const issue = parsed.error.issues[0];
+    const field = issue?.path?.join(".") || "query";
     return Response.json(
-      { error: "Missing required parameter: q" },
+      {
+        error: `Invalid parameter '${field}': ${issue?.message ?? "validation failed"}`,
+        details: parsed.error.issues,
+      },
       { status: 400 },
     );
   }
 
-  let limit: number | undefined;
-  if (limitParam !== null) {
-    const parsed = Number.parseInt(limitParam, 10);
-    if (Number.isNaN(parsed) || parsed < 1) {
-      return Response.json(
-        { error: "Invalid parameter: limit must be a positive integer" },
-        { status: 400 },
-      );
-    }
-    limit = parsed;
-  }
+  const { q, parent, active: activeStr, limit } = parsed.data;
+  const active = activeStr === "true";
 
   try {
     const results = await searchConsumerCategories(q, { parent, active, limit });
-
     return Response.json({
       query: q,
       count: results.length,
