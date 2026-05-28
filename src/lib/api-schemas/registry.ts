@@ -379,10 +379,16 @@ export const endpoints: EndpointSpec[] = [
 
 // ── OpenAPI 3.1 generation ───────────────────
 
+// "/" 作为相对 URL, OpenAPI 3.1 / Scalar 都会基于当前 origin 解析:
+//   localhost:3000/api-docs   -> 发到 localhost:3000
+//   staging.unilume.com/...   -> 发到 staging.unilume.com
+//   unilume.com/...           -> 发到 unilume.com
+// 列在第一位作为默认; 后面三条供切换调试 (例如想从本地 UI 打 staging).
 const SERVERS = [
-  { url: "https://unilume.com", description: "Production" },
-  { url: "https://staging.unilume.com", description: "Staging" },
+  { url: "/", description: "Current origin (auto)" },
   { url: "http://localhost:3000", description: "Local dev" },
+  { url: "https://staging.unilume.com", description: "Staging" },
+  { url: "https://unilume.com", description: "Production" },
 ];
 
 export function generateOpenApiSpec() {
