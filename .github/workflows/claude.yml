@@ -13,19 +13,15 @@ on:
 
 jobs:
   claude:
-    # 双重过滤：① 评论/Issue 里 @claude ② 触发者必须是 org 内部成员
-    # ②很关键——本仓库 PUBLIC，没有这道闸任何人都能 @claude 烧掉你的订阅额度
+    # 过滤：评论/Issue 正文里 @claude 才触发。
+    # 触发者授权由 claude-code-action 内置校验把关——仅有仓库【写权限】者能真正跑起来；
+    # 无写权限者的 @claude 会起 runner 但 action 立即退出（public 仓库 runner 免费、不烧额度）。
+    # 不要加回 author_association 闸：private org 成员在 webhook 载荷里会被显示成 NONE 而被误挡。
     if: |
-      (
-        (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude') &&
-          contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.comment.author_association)) ||
-        (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude') &&
-          contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.comment.author_association)) ||
-        (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@claude') &&
-          contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.review.author_association)) ||
-        (github.event_name == 'issues' && contains(github.event.issue.body, '@claude') &&
-          contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.issue.author_association))
-      )
+      (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude')) ||
+      (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude')) ||
+      (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@claude')) ||
+      (github.event_name == 'issues' && contains(github.event.issue.body, '@claude'))
     runs-on: ubuntu-latest
     permissions:
       contents: write        # 读写仓库文件、推送分支
