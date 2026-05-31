@@ -1,0 +1,47 @@
+name: Claude Code
+
+# 仅在评论/Issue 中 @claude 时触发（不自动跑每个 PR，避免烧订阅额度）
+on:
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+  pull_request_review:
+    types: [submitted]
+  issues:
+    types: [opened, assigned]
+
+jobs:
+  claude:
+    # 双重过滤：① 评论/Issue 里 @claude ② 触发者必须是 org 内部成员
+    # ②很关键——本仓库 PUBLIC，没有这道闸任何人都能 @claude 烧掉你的订阅额度
+    if: |
+      (
+        (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude') &&
+          contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.comment.author_association)) ||
+        (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude') &&
+          contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.comment.author_association)) ||
+        (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@claude') &&
+          contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.review.author_association)) ||
+        (github.event_name == 'issues' && contains(github.event.issue.body, '@claude') &&
+          contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.issue.author_association))
+      )
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write        # 读写仓库文件、推送分支
+      pull-requests: write   # 创建 PR、评论
+      issues: write          # 回复 Issue
+      id-token: write        # OIDC（action 内部认证用）
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Run Claude Code
+        uses: anthropics/claude-code-action@v1
+        with:
+          # 订阅授权（Pro/Max）：本地 `claude setup-token` 生成后存到仓库 Secrets
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          # 默认 Sonnet。要用 Opus（更强但更费额度）就取消下一行注释：
+          # claude_args: "--model claude-opus-4-8 --max-turns 15"
