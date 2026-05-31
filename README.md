@@ -1,3 +1,5 @@
+**unilume-app** 是专为 Noon 卖家打造的 AI 运营合伙人，集选品分析、订单管理与政策问答于一体。
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
