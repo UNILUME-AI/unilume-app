@@ -56,6 +56,13 @@ npm run test         # Vitest
 - 图表用 @ant-design/charts + `dynamic({ ssr: false })` 懒加载
 - SQL 用 Neon tagged template（自动参数化），禁止拼接
 
+## Commit 规范
+
+- 格式 `<type>: <短描述>`，纯前缀不带 scope（用 `feat:` 不要 `feat(x):`）
+- type：`feat` / `fix` / `refactor` / `infra` / `docs` / `test` / `chore` / `ci`
+- 署名用 `git commit --trailer "Co-Authored-By: ..."` 追加，而非再开一个 `-m`
+- 分支 `feature/* → staging → main`，一律走 PR，不直接提交 main/staging
+
 ## Environment
 
 - Development: Preview URL (Clerk Dev + Neon Staging)
